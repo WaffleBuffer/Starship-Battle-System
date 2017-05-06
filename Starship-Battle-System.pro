@@ -24,8 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    nbproject/private/cpp_standard_headers_indexer.cpp \
+    nbproject/private/c_standard_headers_indexer.c \
+    src/iship.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    src/iship.h
 
 FORMS    += mainwindow.ui
