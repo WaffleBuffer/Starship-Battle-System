@@ -27,9 +27,47 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     nbproject/private/cpp_standard_headers_indexer.cpp \
     nbproject/private/c_standard_headers_indexer.c \
-    src/ship/iship.cpp
+    src/ship/iship.cpp \
+    src/ship/abstractship.cpp \
+    src/ship/ship.cpp \
+    src/ship/abstracthull.cpp \
+    src/ship/armor.cpp \
+    src/utils/constants.cpp \
+    src/ship/component/icomponent.cpp \
+    src/ship/component/abstractcomponent.cpp \
+    src/ship/component/energycomponent.cpp \
+    src/ship/component/thruster.cpp \
+    src/ship/component/abstractgenerator.cpp \
+    src/ship/component/stagegenerator.cpp \
+    src/diceExpression/diceexpression.cpp \
+    src/diceExpression/subexpression.cpp \
+    src/diceExpression/constexpression.cpp \
+    src/diceExpression/dice.cpp \
+    src/diceExpression/d6.cpp \
+    src/diceExpression/d10.cpp \
+    src/diceExpression/binaryoperator.cpp \
+    src/diceExpression/sum.cpp \
+    src/utils/utils.cpp
 
 HEADERS  += mainwindow.h \
-    src/ship/iship.h
+    src/ship/iship.h \
+    src/ship/abstractship.h \
+    src/ship/ship.h \
+    src/ship/abstracthull.h \
+    src/ship/armor.h \
+    src/ship/component/icomponent.h \
+    src/ship/component/abstractcomponent.h \
+    src/ship/component/energycomponent.h \
+    src/ship/component/thruster.h \
+    src/ship/component/abstractgenerator.h \
+    src/ship/component/stagegenerator.h \
+    src/diceExpression/diceexpression.h \
+    src/diceExpression/subexpression.h \
+    src/diceExpression/constexpression.h \
+    src/diceExpression/dice.h \
+    src/diceExpression/d6.h \
+    src/diceExpression/d10.h \
+    src/diceExpression/binaryoperator.h \
+    src/diceExpression/sum.h
 
 FORMS    += mainwindow.ui
