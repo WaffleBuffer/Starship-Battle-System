@@ -27,9 +27,9 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     nbproject/private/cpp_standard_headers_indexer.cpp \
     nbproject/private/c_standard_headers_indexer.c \
-    src/iship.cpp
+    src/ship/iship.cpp
 
 HEADERS  += mainwindow.h \
-    src/iship.h
+    src/ship/iship.h
 
 FORMS    += mainwindow.ui
