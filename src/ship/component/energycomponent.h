@@ -6,7 +6,8 @@
 class EnergyComponent: public AbstractComponent
 {
 public:
-    EnergyComponent();
+    EnergyComponent(const std::string & name, const std::string & description, IShip *ship,
+                    const int & maxEnergy);
 private:
     int maxEnergy;
     int currentEnergy;

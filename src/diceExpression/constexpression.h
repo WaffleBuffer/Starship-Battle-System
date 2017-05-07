@@ -6,11 +6,13 @@
 class ConstExpression: public SubExpression
 {
 public:
-    ConstExpression(const unsigned & value);
-    virtual int roll();
-    virtual int getMaxValue();
+    ConstExpression(const unsigned & value, const std::string & name);
+    int roll() override;
+    int getMaxValue() override;
+    std::string toString() override;
 private:
     unsigned value;
+    std::string name;
 };
 
 #endif // CONSTEXPRESSION_H

@@ -1,21 +1,41 @@
 #include "diceexpression.h"
 
 SubExpression *parseWord(const string & word, istringstream & iss, SubExpression *left) {
-    if (word[0] == 'D'){
-        string diceNumber = word.substr(1, word.length() - 1);
-        if (diceNumber == "6") {
-            return new D6();
+    size_t dPos = word.find('D');
+    if (dPos != std::string::npos){
+
+        string diceNumberStr = word.substr(0, dPos);
+        unsigned diceNumber = 0;
+
+        if(!diceNumberStr.empty()) {
+            if(utils::isUnsigned(diceNumberStr)) {
+                diceNumber = utils::stoui(word);
+            }
+            else {
+                throw std::invalid_argument("Bad dice name on " + word);
+            }
         }
-        else if(diceNumber == "10") {
-            return new D10();
+
+        string diceMaxValue = word.substr(dPos + 1, word.length() - dPos);
+        unsigned maxValue = 0;
+
+        if(utils::isUnsigned(diceMaxValue)) {
+            maxValue = utils::stoui(diceMaxValue);
         }
         else {
-            throw std::invalid_argument( "unsupported dice " + word);
+            throw std::invalid_argument("Bad dice name on " + word);
         }
+
+        Dice *dice = new Dice(word, maxValue);
+        if (diceNumber > 0) {
+            dice->setDiceNumer(diceNumber);
+        }
+
+        return dice;
     }
     else if(utils::isUnsigned(word)) {
         unsigned value = utils::stoui(word);
-        return new ConstExpression(value);
+        return new ConstExpression(value, word);
     }
     else if (word == "+") {
         string right;
@@ -56,4 +76,9 @@ int DiceExpression::roll() {
 
 int DiceExpression::getMaxValue() {
     return this->parsedExpression->getMaxValue();
+}
+
+string DiceExpression::toString()
+{
+    return this->parsedExpression->toString();
 }

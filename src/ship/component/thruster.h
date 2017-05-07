@@ -3,10 +3,14 @@
 
 #include "abstractcomponent.h"
 
-class Thruster: public AbstractComponent
-{
+class IShip;
+
+class Thruster: public AbstractComponent {
 public:
-    Thruster();
+    Thruster(const std::string & name, const std::string & description, IShip *ship, const int & maxEnergy);
+    Thruster(Thruster *model);
+
+    int getMaxEnergy();
 private:
     int maxEnergy;
 };

@@ -1,7 +1,8 @@
 #include "binaryoperator.h"
 
-string BinaryOperator::getName() {
-    return this->name;
+std::string BinaryOperator::toString() {
+    std::string res = this->left->toString() + " " + this->name + " " + this->right->toString();
+    return res;
 }
 
 BinaryOperator::~BinaryOperator() {

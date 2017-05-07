@@ -5,16 +5,14 @@
 
 #include <string>
 
-using namespace std;
-
 class BinaryOperator: public SubExpression
 {
 public:
     ~BinaryOperator();
-    string getName();
+    std::string toString() override;
     void setRight(SubExpression *right);
 protected:
-    string name;
+    std::string name;
     SubExpression *left;
     SubExpression *right;
 };

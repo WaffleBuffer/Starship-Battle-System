@@ -1,19 +1,23 @@
 #ifndef ABSTRACTCOMPONENT_H
 #define ABSTRACTCOMPONENT_H
 
-#include "../iship.h"
+#include "icomponent.h"
 
-#include <string>
-
-using namespace std;
-
-class AbstractComponent
+class AbstractComponent: public IComponent
 {
 public:
-    AbstractComponent();
+    AbstractComponent(const std::string & name, const std::string & description, IShip *ship);
+    ~AbstractComponent();
+
+    std::string getName() override;
+    std::string getDescription() override;
+    IShip *getShip() override;
+    void setShip(IShip *ship) override;
+
+    std::string toString() override;
 private:
-    string name;
-    string description;
+    std::string name;
+    std::string description;
     IShip *ship;
 };
 

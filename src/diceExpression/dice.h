@@ -5,17 +5,21 @@
 
 #include <string>
 
-using namespace std;
-
 class Dice: public SubExpression
 {
 public:
-    Dice();
-    string getName();
+    Dice(const std::string & name, const int & diceValue);
+    int roll() override;
+    int getMaxValue() override;
+    std::string toString() override;
     int getLastValue();
-protected:
-    string name;
+    void setDiceNumer(const int & diceNumber);
+private:
+    std::string name;
     int lastValue;
+    int diceValue;
+    int maxValue;
+    int diceNumber;
 };
 
 #endif // DICE_H

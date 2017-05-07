@@ -27,13 +27,11 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     nbproject/private/cpp_standard_headers_indexer.cpp \
     nbproject/private/c_standard_headers_indexer.c \
-    src/ship/iship.cpp \
     src/ship/abstractship.cpp \
     src/ship/ship.cpp \
     src/ship/abstracthull.cpp \
     src/ship/armor.cpp \
     src/utils/constants.cpp \
-    src/ship/component/icomponent.cpp \
     src/ship/component/abstractcomponent.cpp \
     src/ship/component/energycomponent.cpp \
     src/ship/component/thruster.cpp \
@@ -43,11 +41,15 @@ SOURCES += main.cpp\
     src/diceExpression/subexpression.cpp \
     src/diceExpression/constexpression.cpp \
     src/diceExpression/dice.cpp \
-    src/diceExpression/d6.cpp \
-    src/diceExpression/d10.cpp \
     src/diceExpression/binaryoperator.cpp \
     src/diceExpression/sum.cpp \
-    src/utils/utils.cpp
+    src/utils/utils.cpp \
+    src/ship/component/generatorstage.cpp \
+    src/ship/component/stopedgeneratorstage.cpp \
+    src/ship/component/vepgenerator.cpp \
+    src/ship/component/electronsailgenerator.cpp \
+    src/ship/basichull.cpp \
+    src/ship/reinforcedhull.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -65,9 +67,13 @@ HEADERS  += mainwindow.h \
     src/diceExpression/subexpression.h \
     src/diceExpression/constexpression.h \
     src/diceExpression/dice.h \
-    src/diceExpression/d6.h \
-    src/diceExpression/d10.h \
     src/diceExpression/binaryoperator.h \
-    src/diceExpression/sum.h
+    src/diceExpression/sum.h \
+    src/ship/component/generatorstage.h \
+    src/ship/component/stopedgeneratorstage.h \
+    src/ship/component/vepgenerator.h \
+    src/ship/component/electronsailgenerator.h \
+    src/ship/basichull.h \
+    src/ship/reinforcedhull.h
 
 FORMS    += mainwindow.ui

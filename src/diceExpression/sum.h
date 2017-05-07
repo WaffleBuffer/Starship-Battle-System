@@ -7,8 +7,8 @@ class Sum: public BinaryOperator
 {
 public:
     Sum(SubExpression *left, SubExpression *right);
-    virtual int roll();
-    virtual int getMaxValue();
+    int roll() override;
+    int getMaxValue() override;
 };
 
 #endif // SUM_H

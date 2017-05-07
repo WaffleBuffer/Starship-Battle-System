@@ -1,10 +1,15 @@
 #ifndef SHIP_H
 #define SHIP_H
 
-class Ship
+#include "abstractship.h"
+
+class Ship: public AbstractShip
 {
 public:
-    Ship();
+    Ship(const std::string & name, const std::string & description, AbstractHull *hull, Thruster *forwardThruster, Thruster *backThruster,
+         Thruster *leftTThruster, Thruster *frontTThruster, Thruster *rightTThruster, Thruster *backTThruster, Thruster *clockWiseThruster,
+         Thruster *counterClockWiseThruster);
+
 private:
 };
 

@@ -4,9 +4,8 @@
 #include "subexpression.h"
 #include "../utils/utils.cpp"
 #include "constexpression.h"
-#include "d6.h"
-#include "d10.h"
 #include "sum.h"
+#include "dice.h"
 
 #include <string>
 #include <sstream>
@@ -20,8 +19,9 @@ class DiceExpression: public SubExpression
 public:
     DiceExpression(const string & expression) throw();
     ~DiceExpression();
-    virtual int roll();
-    virtual int getMaxValue();
+    int roll() override;
+    int getMaxValue() override;
+    std::string toString() override;
 private:
     string expression;
     SubExpression *parsedExpression;

@@ -1,12 +1,12 @@
 #ifndef ABSTRACTGENERATOR_H
 #define ABSTRACTGENERATOR_H
 
-#include "icomponent.h"
+#include "abstractcomponent.h"
 
-class AbstractGenerator: public IComponent
+class AbstractGenerator: public AbstractComponent
 {
 public:
-    AbstractGenerator();
+    AbstractGenerator(const std::string & name, const std::string & description, IShip *ship);
 private:
 };
 
