@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     src/utils/constants.cpp \
     src/ship/component/abstractcomponent.cpp \
     src/ship/component/energycomponent.cpp \
-    src/ship/component/thruster.cpp \
     src/ship/component/abstractgenerator.cpp \
     src/ship/component/stagegenerator.cpp \
     src/diceExpression/diceexpression.cpp \
@@ -45,12 +44,16 @@ SOURCES += main.cpp\
     src/diceExpression/sum.cpp \
     src/utils/utils.cpp \
     src/ship/component/generatorstage.cpp \
-    src/ship/component/stopedgeneratorstage.cpp \
     src/ship/component/vepgenerator.cpp \
     src/ship/component/electronsailgenerator.cpp \
     src/ship/basichull.cpp \
     src/ship/reinforcedhull.cpp \
-    src/ship/component/sensor.cpp
+    src/ship/component/sensor.cpp \
+    src/ship/component/energyprovidable.cpp \
+    src/ship/component/navthruster.cpp \
+    src/ship/component/translationthruster.cpp \
+    src/ship/component/stoppedgeneratorstage.cpp \
+    src/ship/component/rotationthruster.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -61,7 +64,6 @@ HEADERS  += mainwindow.h \
     src/ship/component/icomponent.h \
     src/ship/component/abstractcomponent.h \
     src/ship/component/energycomponent.h \
-    src/ship/component/thruster.h \
     src/ship/component/abstractgenerator.h \
     src/ship/component/stagegenerator.h \
     src/diceExpression/diceexpression.h \
@@ -71,11 +73,15 @@ HEADERS  += mainwindow.h \
     src/diceExpression/binaryoperator.h \
     src/diceExpression/sum.h \
     src/ship/component/generatorstage.h \
-    src/ship/component/stopedgeneratorstage.h \
     src/ship/component/vepgenerator.h \
     src/ship/component/electronsailgenerator.h \
     src/ship/basichull.h \
     src/ship/reinforcedhull.h \
-    src/ship/component/sensor.h
+    src/ship/component/sensor.h \
+    src/ship/component/energyprovidable.h \
+    src/ship/component/navthruster.h \
+    src/ship/component/translationthruster.h \
+    src/ship/component/stoppedgeneratorstage.h \
+    src/ship/component/rotationthruster.h
 
 FORMS    += mainwindow.ui

@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "../iship.h"
-
 class IShip;
 
 class IComponent

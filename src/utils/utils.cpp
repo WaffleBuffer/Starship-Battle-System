@@ -45,6 +45,66 @@ namespace utils {
             break;
         }
     }
+
+    inline constants::Direction getClockwiseDirection(constants::Direction direction) {
+        switch (direction) {
+        case constants::NORTH:
+            return constants::EAST;
+            break;
+        case constants::EAST:
+            return constants::SOUTH;
+            break;
+        case constants::SOUTH:
+            return constants::WEST;
+            break;
+        case constants::WEST:
+            return constants::NORTH;
+            break;
+        default:
+            throw std::invalid_argument( "Unknown direction" );
+            break;
+        }
+    }
+
+    inline constants::Direction getCounterClockwiseDirection(constants::Direction direction) {
+        switch (direction) {
+        case constants::NORTH:
+            return constants::WEST;
+            break;
+        case constants::EAST:
+            return constants::NORTH;
+            break;
+        case constants::SOUTH:
+            return constants::EAST;
+            break;
+        case constants::WEST:
+            return constants::SOUTH;
+            break;
+        default:
+            throw std::invalid_argument( "Unknown direction" );
+            break;
+        }
+    }
+
+    inline std::string getDirectionStr(constants::Direction direction) {
+        switch (direction) {
+        case constants::NORTH:
+            return "North";
+            break;
+        case constants::EAST:
+            return "East";
+            break;
+        case constants::SOUTH:
+            return "South";
+            break;
+        case constants::WEST:
+            return "West";
+            break;
+        default:
+            throw std::invalid_argument( "Unknown direction" );
+            break;
+        }
+    }
 }
 
 #endif

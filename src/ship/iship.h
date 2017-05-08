@@ -1,14 +1,16 @@
 #ifndef ISHIP_H
 #define ISHIP_H
 
-#include "component/abstractcomponent.h"
-#include "abstracthull.h"
+#include "../utils/constants.cpp"
 
 #include <string>
 #include <vector>
 
 class IComponent;
-class Thruster;
+class NavThruster;
+class TranslationThruster;
+class RotationThruster;
+class AbstractHull;
 class AbstractGenerator;
 class Sensor;
 
@@ -21,19 +23,19 @@ public:
     virtual std::string getDescription() = 0;
 
     // Navigation thrusters
-    virtual Thruster *getForwardThruster() = 0;
-    virtual Thruster *getBackThruster() = 0;
+    virtual NavThruster *getForwardThruster() = 0;
+    virtual NavThruster *getBackThruster() = 0;
 
     // Maneuver thrusters
     // Translation thrusters
-    virtual Thruster *getLeftTThruster() = 0;
-    virtual Thruster *getFrontTThruster() = 0;
-    virtual Thruster *getRightTThruster() = 0;
-    virtual Thruster *getBackTThruster() = 0;
+    virtual TranslationThruster *getLeftTThruster() = 0;
+    virtual TranslationThruster *getFrontTThruster() = 0;
+    virtual TranslationThruster *getRightTThruster() = 0;
+    virtual TranslationThruster *getBackTThruster() = 0;
 
     // Rotation thrusters
-    virtual Thruster *getClockWiseThruster() = 0;
-    virtual Thruster *getCounterClockWiseThruster() = 0;
+    virtual RotationThruster *getClockWiseThruster() = 0;
+    virtual RotationThruster *getCounterClockWiseThruster() = 0;
 
     // Components
     virtual std::vector<IComponent*> *getComponents() = 0;
@@ -45,11 +47,18 @@ public:
     virtual std::vector<AbstractGenerator*> *getGenerators() = 0;
     virtual void addGenerator(AbstractGenerator *generator) = 0;
 
-    virtual int getCurrentEnergy() = 0;
-
     virtual Sensor *getSensor() = 0;
 
     virtual int getInertia() = 0;
+
+    virtual int getXPos() = 0;
+    virtual int getYPos() = 0;
+
+    virtual constants::Direction getDirection() = 0;
+    virtual void addInertia(constants::Direction direction, int distance) = 0;
+    virtual void translate(constants::Direction direction, int distance) = 0;
+    virtual void move() = 0;
+    virtual void reorientate(constants::Direction newDirection) = 0;
 };
 
 #endif // ISHIP_H

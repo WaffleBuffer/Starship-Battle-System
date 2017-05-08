@@ -19,6 +19,7 @@ public:
 
 private:
     GeneratorStage* currentStage;
+    size_t currentStageIndex;
     std::vector<GeneratorStage*> *stages;
 };
 

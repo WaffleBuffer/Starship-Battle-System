@@ -1,36 +1,61 @@
 #include "abstractship.h"
 #include "component/abstractgenerator.h"
 #include "component/sensor.h"
+#include "abstracthull.h"
+#include "component/translationthruster.h"
+#include "component/navthruster.h"
+#include "component/rotationthruster.h"
+#include "../utils/utils.cpp"
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
-AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, Thruster *forwardThruster, Thruster *backThruster,
-             Thruster *leftTThruster, Thruster *frontTThruster, Thruster *rightTThruster, Thruster *backTThruster, Thruster *clockWiseThruster,
-             Thruster *counterClockWiseThruster){
+AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
+                           TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
+                           RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster){
 
     this->name = name;
     this->description = description;
-    this->currentEnergy = 0;
+    this->xPos = 0;
+    this->yPos = 0;
+    this->direction = constants::NORTH;
     this->inertia = 0;
 
     this->hull = hull;
     this->sensor = sensor;
+    sensor->setShip(this);
 
     // Navigation thrusters
     this->forwardThruster = forwardThruster;
+    forwardThruster->setShip(this);
+    forwardThruster->setFacingDirection(constants::NORTH);
     this->backThruster = backThruster;
+    backThruster->setShip(this);
+    backThruster->setFacingDirection(constants::SOUTH);
 
     // Maneuver thrusters
     // Translation thrusters
     this->leftTThruster = leftTThruster;
+    leftTThruster->setShip(this);
+    leftTThruster->setFacingDirection(constants::WEST);
     this->frontTThruster = frontTThruster;
+    frontTThruster->setShip(this);
+    frontTThruster->setFacingDirection(constants::NORTH);
     this->rightTThruster = rightTThruster;
+    rightTThruster->setShip(this);
+    rightTThruster->setFacingDirection(constants::EAST);
     this->backTThruster = backTThruster;
+    backTThruster->setShip(this);
+    backTThruster->setFacingDirection(constants::SOUTH);
 
     // Rotation thrusters
     this->clockWiseThruster = clockWiseThruster;
+    clockWiseThruster->setShip(this);
+    clockWiseThruster->setDirection(constants::CLOCKWISE);
     this->counterClockWiseThruster = counterClockWiseThruster;
+    counterClockWiseThruster->setShip(this);
+    counterClockWiseThruster->setDirection(constants::COUNTER_CLOCKWISE);
 
     // Components
     this->components = new std::vector<IComponent*>();
@@ -79,38 +104,38 @@ std::string AbstractShip::getDescription() {
 }
 
 // Navigation thrusters
-Thruster *AbstractShip::getForwardThruster() {
+NavThruster *AbstractShip::getForwardThruster() {
     return this->forwardThruster;
 }
 
-Thruster *AbstractShip::getBackThruster() {
+NavThruster *AbstractShip::getBackThruster() {
     return this->backThruster;
 }
 
 // Maneuver thrusters
 // Translation thrusters
-Thruster *AbstractShip::getLeftTThruster() {
+TranslationThruster *AbstractShip::getLeftTThruster() {
     return this->leftTThruster;
 }
 
-Thruster *AbstractShip::getFrontTThruster() {
+TranslationThruster *AbstractShip::getFrontTThruster() {
     return this->frontTThruster;
 }
 
-Thruster *AbstractShip::getRightTThruster() {
+TranslationThruster *AbstractShip::getRightTThruster() {
     return this->rightTThruster;
 }
 
-Thruster *AbstractShip::getBackTThruster() {
+TranslationThruster *AbstractShip::getBackTThruster() {
     return this->backTThruster;
 }
 
 // Rotation thrusters
-Thruster *AbstractShip::getClockWiseThruster() {
+RotationThruster *AbstractShip::getClockWiseThruster() {
     return this->clockWiseThruster;
 }
 
-Thruster *AbstractShip::getCounterClockWiseThruster() {
+RotationThruster *AbstractShip::getCounterClockWiseThruster() {
     return this->counterClockWiseThruster;
 }
 
@@ -125,12 +150,13 @@ std::string AbstractShip::toString()
     res += this->getName() + "\n";
     res += this->getDescription() + "\n";
 
+    res += "Position : {" + std::to_string(this->getXPos()) + ", " + std::to_string(this->getYPos()) + "}\n";
+    res += "Inertia : " + std::to_string(this->getInertia()) + "\n";
+    res += "Direction : " + utils::getDirectionStr(this->getDirection()) + "\n";
+
     res += "hull : " + this->hull->toString() + "\n";
 
     res += "sensor : " + this->sensor->toString() + "\n";
-
-    res += "energy : ";
-    res += std::to_string(this->currentEnergy) + "\n";
 
     res += "thrusters :\n";
     res += "F " + this->getForwardThruster()->toString() + "\n";
@@ -139,8 +165,8 @@ std::string AbstractShip::toString()
     res += "FT " + this->getFrontTThruster()->toString() + "\n";
     res += "RT " + this->getRightTThruster()->toString() + "\n";
     res += "BT " + this->getBackTThruster()->toString() + "\n";
-    res += "CT " + this->getClockWiseThruster()->toString() + "\n";
-    res += "CCT " + this->getCounterClockWiseThruster()->toString() + "\n";
+    res += "CR " + this->getClockWiseThruster()->toString() + "\n";
+    res += "CCR " + this->getCounterClockWiseThruster()->toString() + "\n";
 
     res += "generators : \n";
 
@@ -164,8 +190,7 @@ int AbstractShip::generateEnergy()
         energy += this->generators->at(i)->generateEnergy();
     }
 
-    this->currentEnergy = energy;
-    return this->currentEnergy;
+    return energy;
 }
 
 std::vector<AbstractGenerator *> *AbstractShip::getGenerators()
@@ -176,11 +201,7 @@ std::vector<AbstractGenerator *> *AbstractShip::getGenerators()
 void AbstractShip::addGenerator(AbstractGenerator *generator)
 {
     this->generators->push_back(generator);
-}
-
-int AbstractShip::getCurrentEnergy()
-{
-    return this->currentEnergy;
+    generator->setShip(this);
 }
 
 Sensor *AbstractShip::getSensor()
@@ -191,4 +212,84 @@ Sensor *AbstractShip::getSensor()
 int AbstractShip::getInertia()
 {
     return this->inertia;
+}
+
+int AbstractShip::getXPos()
+{
+    return this->xPos;
+}
+
+int AbstractShip::getYPos()
+{
+    return this->yPos;
+}
+
+constants::Direction AbstractShip::getDirection()
+{
+    return this->direction;
+}
+
+void AbstractShip::addInertia(constants::Direction direction, int distance)
+{
+    std::cout << utils::getDirectionStr(direction) << " " << std::to_string(distance) << std::endl;
+    switch (direction) {
+    case constants::NORTH:
+        this->inertia -= distance;
+        break;
+    case constants::SOUTH:
+        this->inertia += distance;
+        break;
+    default:
+        throw std::invalid_argument( "Invalid direction for inertia" );
+        break;
+    }
+
+    if(this->inertia > constants::maxSpeed) {
+        this->inertia = constants::maxSpeed;
+    }
+    else if (this->inertia < constants::maxSpeed * -1) {
+        this->inertia = constants::maxSpeed * -1;
+    }
+}
+
+void AbstractShip::translate(constants::Direction direction, int distance)
+{
+    switch (direction) {
+    case constants::NORTH:
+        this->yPos += distance;
+        break;
+    case constants::EAST:
+        this->xPos += distance;
+        break;
+    case constants::SOUTH:
+        this->yPos -= distance;
+        break;
+    case constants::WEST:
+        this->xPos -= distance;
+        break;
+    }
+
+}
+
+void AbstractShip::move()
+{
+    switch (this->direction) {
+    case constants::NORTH:
+        this->yPos += (this->inertia > 0 ? this->inertia : 0 - this->inertia);
+        break;
+    case constants::EAST:
+        this->xPos += (this->inertia > 0 ? this->inertia : 0 - this->inertia);
+        break;
+    case constants::SOUTH:
+        this->yPos -= (this->inertia > 0 ? this->inertia : 0 - this->inertia);
+        break;
+    case constants::WEST:
+        this->xPos -= (this->inertia > 0 ? this->inertia : 0 - this->inertia);
+        break;
+    }
+}
+
+void AbstractShip::reorientate(constants::Direction newDirection)
+{
+    this->direction = newDirection;
 }

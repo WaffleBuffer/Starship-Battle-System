@@ -2,35 +2,34 @@
 #define ABSTRACTSHIP_H
 
 #include "iship.h"
-#include "component/thruster.h"
 
 class Sensor;
 
 class AbstractShip : public IShip
 {
 public:
-    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, Thruster *forwardThruster, Thruster *backThruster,
-                 Thruster *leftTThruster, Thruster *frontTThruster, Thruster *rightTThruster, Thruster *backTThruster, Thruster *clockWiseThruster,
-                 Thruster *counterClockWiseThruster);
+    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
+                 TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
+                 RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster);
     virtual ~AbstractShip();
 
     std::string getName() override;
     std::string getDescription() override;
 
     // Navigation thrusters
-    Thruster *getForwardThruster() override;
-    Thruster *getBackThruster() override;
+    NavThruster *getForwardThruster() override;
+    NavThruster *getBackThruster() override;
 
     // Maneuver thrusters
     // Translation thrusters
-    Thruster *getLeftTThruster() override;
-    Thruster *getFrontTThruster() override;
-    Thruster *getRightTThruster() override;
-    Thruster *getBackTThruster() override;
+    TranslationThruster *getLeftTThruster() override;
+    TranslationThruster *getFrontTThruster() override;
+    TranslationThruster *getRightTThruster() override;
+    TranslationThruster *getBackTThruster() override;
 
     // Rotation thrusters
-    Thruster *getClockWiseThruster() override;
-    Thruster *getCounterClockWiseThruster() override;
+    RotationThruster *getClockWiseThruster() override;
+    RotationThruster *getCounterClockWiseThruster() override;
 
     // Components
     std::vector<IComponent*> *getComponents() override;
@@ -40,11 +39,19 @@ public:
     int generateEnergy() override;
     std::vector<AbstractGenerator*> *getGenerators() override;
     void addGenerator(AbstractGenerator *generator);
-    int getCurrentEnergy() override;
 
     Sensor *getSensor() override;
 
     int getInertia() override;
+
+    int getXPos() override;
+    int getYPos() override;
+
+    constants::Direction getDirection() override;
+    void addInertia(constants::Direction direction, int distance) override;
+    void translate(constants::Direction direction, int distance) override;
+    void move() override;
+    void reorientate(constants::Direction newDirection) override;
 
 private:
     std::string name;
@@ -53,19 +60,19 @@ private:
     AbstractHull *hull;
 
     // Navigation thrusters
-    Thruster *forwardThruster;
-    Thruster *backThruster;
+    NavThruster *forwardThruster;
+    NavThruster *backThruster;
 
     // Maneuver thrusters
     // Translation thrusters
-    Thruster *leftTThruster;
-    Thruster *frontTThruster;
-    Thruster *rightTThruster;
-    Thruster *backTThruster;
+    TranslationThruster *leftTThruster;
+    TranslationThruster *frontTThruster;
+    TranslationThruster *rightTThruster;
+    TranslationThruster *backTThruster;
 
     // Rotation thrusters
-    Thruster *clockWiseThruster;
-    Thruster *counterClockWiseThruster;
+    RotationThruster *clockWiseThruster;
+    RotationThruster *counterClockWiseThruster;
 
     // Components
     std::vector<IComponent*> *components;
@@ -74,8 +81,10 @@ private:
 
     Sensor *sensor;
 
-    int currentEnergy;
+    constants::Direction direction;
     int inertia;
+    int xPos;
+    int yPos;
 };
 
 #endif // ABSTRACTSHIP_H

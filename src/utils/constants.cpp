@@ -7,8 +7,9 @@
 
 namespace constants {
     enum ShipDirection {BOW, STARBOARD, STERN, PORT};
-    enum Direction {FRONT, RIGHT, BACK, LEFT};
+    enum Direction {NORTH, EAST, SOUTH, WEST};
 
+    enum ClockDirection {CLOCKWISE, COUNTER_CLOCKWISE};
     enum StageGeneratorStage {NORMAL, UNSTABLE, ALERT, CRITICAL, STOPPED};
 
     const int maxSpeed = 12;

@@ -5,6 +5,7 @@ StageGenerator::StageGenerator(const std::string & name, const std::string & des
 
     this->stages = new std::vector<GeneratorStage*>;
     this->currentStage = nullptr;
+    this->currentStageIndex = 0;
 }
 
 StageGenerator::~StageGenerator()
