@@ -5,3 +5,8 @@ ElectronSailGenerator::ElectronSailGenerator(const std::string &name, const std:
 
     this->multiplier = mutliplier;
 }
+
+int ElectronSailGenerator::generateEnergy()
+{
+    return this->getShip()->getInertia() * this->multiplier;
+}

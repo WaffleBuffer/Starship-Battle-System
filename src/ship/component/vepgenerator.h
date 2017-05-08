@@ -7,6 +7,7 @@ class VEPGenerator: public AbstractGenerator
 {
 public:
     VEPGenerator(const std::string & name, const std::string & description, IShip *ship, const int & energyDelivered);
+    int generateEnergy();
 private:
     int energyDelivered;
 };

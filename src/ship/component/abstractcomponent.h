@@ -7,14 +7,14 @@ class AbstractComponent: public IComponent
 {
 public:
     AbstractComponent(const std::string & name, const std::string & description, IShip *ship);
-    ~AbstractComponent();
+    virtual ~AbstractComponent();
 
     std::string getName() override;
     std::string getDescription() override;
     IShip *getShip() override;
     void setShip(IShip *ship) override;
 
-    std::string toString() override;
+    virtual std::string toString() override;
 private:
     std::string name;
     std::string description;

@@ -3,14 +3,20 @@
 
 #include "../../utils/constants.cpp"
 #include "../../diceExpression/diceexpression.h"
-#include "stagegenerator.h"
+
+#include <string>
+
+class StageGenerator;
 
 class GeneratorStage
 {
 public:
-    GeneratorStage(const constants::StageGeneratorStages & stage, DiceExpression *energyDelivered, StageGenerator *generator);
+    GeneratorStage(const constants::StageGeneratorStage & stage, DiceExpression *energyDelivered, StageGenerator *generator);
+    int generateEnergy();
+    constants::StageGeneratorStage getStage();
+    std::string toString();
 protected:
-    constants::StageGeneratorStages stage;
+    constants::StageGeneratorStage stage;
     DiceExpression *energyDelivered;
     StageGenerator *generator;
 };

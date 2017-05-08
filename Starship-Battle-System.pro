@@ -49,7 +49,8 @@ SOURCES += main.cpp\
     src/ship/component/vepgenerator.cpp \
     src/ship/component/electronsailgenerator.cpp \
     src/ship/basichull.cpp \
-    src/ship/reinforcedhull.cpp
+    src/ship/reinforcedhull.cpp \
+    src/ship/component/sensor.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -74,6 +75,7 @@ HEADERS  += mainwindow.h \
     src/ship/component/vepgenerator.h \
     src/ship/component/electronsailgenerator.h \
     src/ship/basichull.h \
-    src/ship/reinforcedhull.h
+    src/ship/reinforcedhull.h \
+    src/ship/component/sensor.h
 
 FORMS    += mainwindow.ui

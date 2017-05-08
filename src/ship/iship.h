@@ -9,6 +9,8 @@
 
 class IComponent;
 class Thruster;
+class AbstractGenerator;
+class Sensor;
 
 class IShip
 {
@@ -37,6 +39,17 @@ public:
     virtual std::vector<IComponent*> *getComponents() = 0;
 
     virtual std::string toString() = 0;
+
+    virtual int generateEnergy() = 0;
+
+    virtual std::vector<AbstractGenerator*> *getGenerators() = 0;
+    virtual void addGenerator(AbstractGenerator *generator) = 0;
+
+    virtual int getCurrentEnergy() = 0;
+
+    virtual Sensor *getSensor() = 0;
+
+    virtual int getInertia() = 0;
 };
 
 #endif // ISHIP_H

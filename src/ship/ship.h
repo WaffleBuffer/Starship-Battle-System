@@ -6,7 +6,7 @@
 class Ship: public AbstractShip
 {
 public:
-    Ship(const std::string & name, const std::string & description, AbstractHull *hull, Thruster *forwardThruster, Thruster *backThruster,
+    Ship(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, Thruster *forwardThruster, Thruster *backThruster,
          Thruster *leftTThruster, Thruster *frontTThruster, Thruster *rightTThruster, Thruster *backTThruster, Thruster *clockWiseThruster,
          Thruster *counterClockWiseThruster);
 

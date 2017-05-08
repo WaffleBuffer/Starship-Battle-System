@@ -2,16 +2,24 @@
 #define STAGEGENERATOR_H
 
 #include "abstractgenerator.h"
+#include "generatorstage.h"
 
 #include <vector>
-
-using namespace std;
 
 class StageGenerator: public AbstractGenerator
 {
 public:
-    StageGenerator(const string &name, const string &description, IShip *ship);
+    StageGenerator(const std::string &name, const std::string &description, IShip *ship);
+    ~StageGenerator();
 
+    int generateEnergy() override;
+    std::string toString() override;
+
+    void addStage(GeneratorStage *stage);
+
+private:
+    GeneratorStage* currentStage;
+    std::vector<GeneratorStage*> *stages;
 };
 
 #endif // STAGEGENERATOR_H

@@ -4,3 +4,8 @@ AbstractGenerator::AbstractGenerator(const std::string &name, const std::string 
     :AbstractComponent(name, description, ship){
 
 }
+
+AbstractGenerator::~AbstractGenerator()
+{
+
+}

@@ -5,10 +5,10 @@
 #include "stagegenerator.h"
 #include "../../diceExpression/diceexpression.h"
 
-class StopedGeneratorStage: public GeneratorStage
+class StoppedGeneratorStage: public GeneratorStage
 {
 public:
-    StopedGeneratorStage(StageGenerator *generator, DiceExpression *reactivationRoll, int scoreToReactivate);
+    StoppedGeneratorStage(StageGenerator *generator, DiceExpression *reactivationRoll, int scoreToReactivate);
 private:
     DiceExpression *reactivationRoll;
     int scoreToReactivate;

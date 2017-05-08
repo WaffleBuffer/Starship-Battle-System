@@ -4,13 +4,15 @@
 #include "iship.h"
 #include "component/thruster.h"
 
+class Sensor;
+
 class AbstractShip : public IShip
 {
 public:
-    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Thruster *forwardThruster, Thruster *backThruster,
+    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, Thruster *forwardThruster, Thruster *backThruster,
                  Thruster *leftTThruster, Thruster *frontTThruster, Thruster *rightTThruster, Thruster *backTThruster, Thruster *clockWiseThruster,
                  Thruster *counterClockWiseThruster);
-    ~AbstractShip();
+    virtual ~AbstractShip();
 
     std::string getName() override;
     std::string getDescription() override;
@@ -35,6 +37,15 @@ public:
 
     std::string toString() override;
 
+    int generateEnergy() override;
+    std::vector<AbstractGenerator*> *getGenerators() override;
+    void addGenerator(AbstractGenerator *generator);
+    int getCurrentEnergy() override;
+
+    Sensor *getSensor() override;
+
+    int getInertia() override;
+
 private:
     std::string name;
     std::string description;
@@ -58,6 +69,13 @@ private:
 
     // Components
     std::vector<IComponent*> *components;
+
+    std::vector<AbstractGenerator*> *generators;
+
+    Sensor *sensor;
+
+    int currentEnergy;
+    int inertia;
 };
 
 #endif // ABSTRACTSHIP_H

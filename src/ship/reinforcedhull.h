@@ -6,7 +6,7 @@
 class ReinforcedHull: public AbstractHull
 {
 public:
-    ReinforcedHull();
+    ReinforcedHull(const int & maxPoints);
 };
 
 #endif // REINFORCEDHULL_H

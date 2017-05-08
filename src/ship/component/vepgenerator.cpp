@@ -4,3 +4,8 @@ VEPGenerator::VEPGenerator(const std::string &name, const std::string &descripti
     :AbstractGenerator(name, description, ship){
     this->energyDelivered = energyDelivered;
 }
+
+int VEPGenerator::generateEnergy()
+{
+    return this->energyDelivered;
+}

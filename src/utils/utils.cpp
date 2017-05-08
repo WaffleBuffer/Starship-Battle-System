@@ -1,6 +1,8 @@
 #ifndef UTILS
 #define UTILS
 
+#include "constants.cpp"
+
 #include <string>
 #include <stdexcept>
 
@@ -22,6 +24,26 @@ namespace utils {
             throw std::out_of_range("unsigned too long");
         }
         return result;
+    }
+
+    inline std::string StageGeneratorStagesToStr(const constants::StageGeneratorStage & stage) {
+        switch (stage) {
+        case constants::NORMAL:
+            return "Normale";
+            break;
+        case constants::UNSTABLE:
+            return "Unstable";
+            break;
+        case constants::ALERT:
+            return "Alert";
+            break;
+        case constants::STOPPED:
+            return "Stopped";
+            break;
+        default:
+            throw std::invalid_argument( "Unknown StageGeneratorStage" );
+            break;
+        }
     }
 }
 

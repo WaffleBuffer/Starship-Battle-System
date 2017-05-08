@@ -1,16 +1,21 @@
 #include "abstractship.h"
+#include "component/abstractgenerator.h"
+#include "component/sensor.h"
 
 #include <iostream>
 #include <string>
 
-AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Thruster *forwardThruster, Thruster *backThruster,
+AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, Thruster *forwardThruster, Thruster *backThruster,
              Thruster *leftTThruster, Thruster *frontTThruster, Thruster *rightTThruster, Thruster *backTThruster, Thruster *clockWiseThruster,
              Thruster *counterClockWiseThruster){
 
     this->name = name;
     this->description = description;
+    this->currentEnergy = 0;
+    this->inertia = 0;
 
     this->hull = hull;
+    this->sensor = sensor;
 
     // Navigation thrusters
     this->forwardThruster = forwardThruster;
@@ -29,10 +34,13 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
 
     // Components
     this->components = new std::vector<IComponent*>();
+
+    this->generators = new std::vector<AbstractGenerator*>();
 }
 
 AbstractShip::~AbstractShip() {
     delete(this->hull);
+    delete(this->sensor);
 
     // Navigation thrusters
     delete(this->forwardThruster);
@@ -48,6 +56,12 @@ AbstractShip::~AbstractShip() {
     // Rotation thrusters
     delete(this->clockWiseThruster);
     delete(this->counterClockWiseThruster);
+
+    for(size_t i = 0; i < this->generators->size(); ++i) {
+        delete(this->generators->at(i));
+    }
+
+    delete(this->generators);
 
     for(size_t i = 0; i < this->components->size(); ++i) {
         delete(this->components->at(i));
@@ -110,15 +124,29 @@ std::string AbstractShip::toString()
     std::string res = "";
     res += this->getName() + "\n";
     res += this->getDescription() + "\n";
+
+    res += "hull : " + this->hull->toString() + "\n";
+
+    res += "sensor : " + this->sensor->toString() + "\n";
+
+    res += "energy : ";
+    res += std::to_string(this->currentEnergy) + "\n";
+
     res += "thrusters :\n";
-    res += this->getForwardThruster()->toString() + "\n";
-    res += this->getBackThruster()->toString() + "\n";
-    res += this->getLeftTThruster()->toString() + "\n";
-    res += this->getFrontTThruster()->toString() + "\n";
-    res += this->getRightTThruster()->toString() + "\n";
-    res += this->getBackTThruster()->toString() + "\n";
-    res += this->getClockWiseThruster()->toString() + "\n";
-    res += this->getCounterClockWiseThruster()->toString() + "\n";
+    res += "F " + this->getForwardThruster()->toString() + "\n";
+    res += "B " + this->getBackThruster()->toString() + "\n";
+    res += "LT " + this->getLeftTThruster()->toString() + "\n";
+    res += "FT " + this->getFrontTThruster()->toString() + "\n";
+    res += "RT " + this->getRightTThruster()->toString() + "\n";
+    res += "BT " + this->getBackTThruster()->toString() + "\n";
+    res += "CT " + this->getClockWiseThruster()->toString() + "\n";
+    res += "CCT " + this->getCounterClockWiseThruster()->toString() + "\n";
+
+    res += "generators : \n";
+
+    for(size_t i = 0; i < this->generators->size(); ++i) {
+        res += this->generators->at(i)->toString() + "\n";
+    }
 
     res += "components : \n";
 
@@ -127,4 +155,40 @@ std::string AbstractShip::toString()
     }
 
     return res;
+}
+
+int AbstractShip::generateEnergy()
+{
+    int energy = 0;
+    for(size_t i = 0; i < this->generators->size(); ++i) {
+        energy += this->generators->at(i)->generateEnergy();
+    }
+
+    this->currentEnergy = energy;
+    return this->currentEnergy;
+}
+
+std::vector<AbstractGenerator *> *AbstractShip::getGenerators()
+{
+    return this->generators;
+}
+
+void AbstractShip::addGenerator(AbstractGenerator *generator)
+{
+    this->generators->push_back(generator);
+}
+
+int AbstractShip::getCurrentEnergy()
+{
+    return this->currentEnergy;
+}
+
+Sensor *AbstractShip::getSensor()
+{
+    return this->sensor;
+}
+
+int AbstractShip::getInertia()
+{
+    return this->inertia;
 }

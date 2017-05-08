@@ -1,6 +1,6 @@
 #include "basichull.h"
 
-BasicHull::BasicHull()
-{
+BasicHull::BasicHull(const int &maxPoints)
+    :AbstractHull(maxPoints){
 
 }

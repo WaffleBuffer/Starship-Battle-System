@@ -8,6 +8,7 @@ class ElectronSailGenerator: public AbstractGenerator
 public:
     ElectronSailGenerator(const std::string & name, const std::string & description, IShip *ship,
                           const int & mutliplier);
+    int generateEnergy();
 private:
     int multiplier;
 };

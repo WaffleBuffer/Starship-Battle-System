@@ -1,14 +1,16 @@
 #ifndef HULL_H
 #define HULL_H
 
+#include <string>
 
 class AbstractHull
 {
 public:
-    AbstractHull();
+    AbstractHull(const int & maxPoints);
+    std::string toString();
 private:
-    int maxPoint;
-    int currentPoint;
+    int maxPoints;
+    int currentPoints;
 };
 
 #endif // HULL_H

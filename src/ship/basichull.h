@@ -6,7 +6,7 @@
 class BasicHull: public AbstractHull
 {
 public:
-    BasicHull();
+    BasicHull(const int & maxPoints);
 };
 
 #endif // BASICHULL_H
