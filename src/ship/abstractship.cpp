@@ -7,6 +7,7 @@
 #include "component/rotationthruster.h"
 #include "../utils/utils.cpp"
 #include "../utils/shipexception.h"
+#include "shipcontrol.h"
 
 #include <iostream>
 #include <string>
@@ -22,6 +23,7 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->yPos = 0;
     this->direction = constants::NORTH;
     this->inertia = 0;
+    this->control = new ShipControl(this);
 
     this->hull = hull;
     this->sensor = sensor;
@@ -67,6 +69,7 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
 AbstractShip::~AbstractShip() {
     delete(this->hull);
     delete(this->sensor);
+    delete(this->control);
 
     // Navigation thrusters
     delete(this->forwardThruster);
@@ -191,6 +194,7 @@ int AbstractShip::generateEnergy()
         energy += this->generators->at(i)->generateEnergy();
     }
 
+    this->control->setCurrentAvailableEnergy(energy);
     return energy;
 }
 
@@ -298,4 +302,9 @@ void AbstractShip::reorientate(constants::Direction newDirection)
         throw ShipException("Can\'t manover when inertia above " + constants::maxManoveurSpeed, this);
     }
     this->direction = newDirection;
+}
+
+ShipControl *AbstractShip::getControl()
+{
+    return this->control;
 }

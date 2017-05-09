@@ -54,7 +54,10 @@ SOURCES += main.cpp\
     src/ship/component/translationthruster.cpp \
     src/ship/component/stoppedgeneratorstage.cpp \
     src/ship/component/rotationthruster.cpp \
-    src/utils/shipexception.cpp
+    src/utils/shipexception.cpp \
+    src/order/shiporder.cpp \
+    src/ship/shipcontrol.cpp \
+    src/order/provideenergyorder.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -84,6 +87,9 @@ HEADERS  += mainwindow.h \
     src/ship/component/translationthruster.h \
     src/ship/component/stoppedgeneratorstage.h \
     src/ship/component/rotationthruster.h \
-    src/utils/shipexception.h
+    src/utils/shipexception.h \
+    src/order/shiporder.h \
+    src/ship/shipcontrol.h \
+    src/order/provideenergyorder.h
 
 FORMS    += mainwindow.ui

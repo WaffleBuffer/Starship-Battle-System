@@ -14,6 +14,7 @@ namespace constants {
 
     const int maxSpeed = 12;
     const int maxManoveurSpeed = 3;
+    const int criticalDamageThreshold = 8;
 }
 
 #endif

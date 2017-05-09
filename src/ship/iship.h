@@ -13,6 +13,7 @@ class RotationThruster;
 class AbstractHull;
 class AbstractGenerator;
 class Sensor;
+class ShipControl;
 
 class IShip
 {
@@ -59,6 +60,8 @@ public:
     virtual void translate(constants::Direction direction, int distance) = 0;
     virtual void move() = 0;
     virtual void reorientate(constants::Direction newDirection) = 0;
+
+    virtual ShipControl *getControl() = 0;
 };
 
 #endif // ISHIP_H

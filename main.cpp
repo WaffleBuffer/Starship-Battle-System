@@ -11,6 +11,9 @@
 #include "src/ship/component/stoppedgeneratorstage.h"
 #include "src/ship/component/sensor.h"
 #include "src/ship/ship.h"
+#include "src/order/provideenergyorder.h"
+#include "src/ship/shipcontrol.h"
+#include "src/utils/shipexception.h"
 
 #include <string>
 #include <iostream>
@@ -70,7 +73,7 @@ int main(int argc, char *argv[])
     ship->addGenerator(generator);
 
     cout << "powering ship..." << endl;
-    int currentEnergy = ship->generateEnergy();
+    //ship->generateEnergy();
 
     string shipString = ship->toString();
     cout << "ship : " << endl << shipString << endl;
@@ -78,13 +81,14 @@ int main(int argc, char *argv[])
     cout << "- \"Ship ready capitain!\"" << endl
          << "- \"Then let's move out!\"" << endl;
 
-    if(currentEnergy > 1) {
-        bThruster->provideEnergy(1);
-        currentEnergy -= 1;
+    try {
+        ship->getControl()->addOrder(new ProvideEnergyOrder(ship, bThruster, 1));
+        ship->getControl()->applyOrders();
+
         cout << "Powering rear thruster" << endl;
     }
-    else {
-        cout << "Not enough power!" << endl;
+    catch(ShipException *e) {
+        cout << "error : " << std::string(e->what()) << endl;
     }
 
     ship->move();

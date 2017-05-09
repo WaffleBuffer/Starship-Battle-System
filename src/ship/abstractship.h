@@ -53,6 +53,8 @@ public:
     void move() override;
     void reorientate(constants::Direction newDirection) override;
 
+    ShipControl *getControl() override;
+
 private:
     std::string name;
     std::string description;
@@ -85,6 +87,8 @@ private:
     int inertia;
     int xPos;
     int yPos;
+
+    ShipControl *control;
 };
 
 #endif // ABSTRACTSHIP_H

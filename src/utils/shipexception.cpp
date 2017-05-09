@@ -17,11 +17,11 @@ ShipException::ShipException(const char* msg, IShip *ship)
 
 const char *ShipException::what() const throw()
 {
-    std::string msg = std::string();
+    std::string msgToSend = "";
     if (this->ship != nullptr) {
-        msg += this->ship->toString() + "\n";
+        msgToSend += "Ship status : \n" + this->ship->toString() + "\n";
     }
 
-    msg += this->msg;
-    return msg.c_str();
+    msgToSend += this->msg;
+    return msgToSend.c_str();
 }
