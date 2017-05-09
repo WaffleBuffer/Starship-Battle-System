@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     src/ship/component/navthruster.cpp \
     src/ship/component/translationthruster.cpp \
     src/ship/component/stoppedgeneratorstage.cpp \
-    src/ship/component/rotationthruster.cpp
+    src/ship/component/rotationthruster.cpp \
+    src/utils/shipexception.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -82,6 +83,7 @@ HEADERS  += mainwindow.h \
     src/ship/component/navthruster.h \
     src/ship/component/translationthruster.h \
     src/ship/component/stoppedgeneratorstage.h \
-    src/ship/component/rotationthruster.h
+    src/ship/component/rotationthruster.h \
+    src/utils/shipexception.h
 
 FORMS    += mainwindow.ui

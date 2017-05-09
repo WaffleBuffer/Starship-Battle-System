@@ -6,6 +6,7 @@
 #include "component/navthruster.h"
 #include "component/rotationthruster.h"
 #include "../utils/utils.cpp"
+#include "../utils/shipexception.h"
 
 #include <iostream>
 #include <string>
@@ -231,7 +232,6 @@ constants::Direction AbstractShip::getDirection()
 
 void AbstractShip::addInertia(constants::Direction direction, int distance)
 {
-    std::cout << utils::getDirectionStr(direction) << " " << std::to_string(distance) << std::endl;
     switch (direction) {
     case constants::NORTH:
         this->inertia -= distance;
@@ -245,15 +245,18 @@ void AbstractShip::addInertia(constants::Direction direction, int distance)
     }
 
     if(this->inertia > constants::maxSpeed) {
-        this->inertia = constants::maxSpeed;
+        throw ShipException("Ship speed above limit but not implemented yer", this);
     }
     else if (this->inertia < constants::maxSpeed * -1) {
-        this->inertia = constants::maxSpeed * -1;
+        throw ShipException("Ship speed above limit but not implemented yer", this);
     }
 }
 
 void AbstractShip::translate(constants::Direction direction, int distance)
 {
+    if (this->inertia > constants::maxManoveurSpeed) {
+        throw ShipException("Can\'t manover when inertia above " + constants::maxManoveurSpeed, this);
+    }
     switch (direction) {
     case constants::NORTH:
         this->yPos += distance;
@@ -291,5 +294,8 @@ void AbstractShip::move()
 
 void AbstractShip::reorientate(constants::Direction newDirection)
 {
+    if (this->inertia > constants::maxManoveurSpeed) {
+        throw ShipException("Can\'t manover when inertia above " + constants::maxManoveurSpeed, this);
+    }
     this->direction = newDirection;
 }

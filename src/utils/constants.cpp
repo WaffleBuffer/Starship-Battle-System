@@ -13,6 +13,7 @@ namespace constants {
     enum StageGeneratorStage {NORMAL, UNSTABLE, ALERT, CRITICAL, STOPPED};
 
     const int maxSpeed = 12;
+    const int maxManoveurSpeed = 3;
 }
 
 #endif
