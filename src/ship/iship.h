@@ -2,6 +2,8 @@
 #define ISHIP_H
 
 #include "../utils/constants.cpp"
+#include "../utils/observable.h"
+#include "damageable.h"
 
 #include <string>
 #include <vector>
@@ -14,8 +16,10 @@ class AbstractHull;
 class AbstractGenerator;
 class Sensor;
 class ShipControl;
+class Observer;
+class Damage;
 
-class IShip
+class IShip: public Observable, public Damageable
 {
 public:
     virtual ~IShip() {}
@@ -62,6 +66,13 @@ public:
     virtual void reorientate(constants::Direction newDirection) = 0;
 
     virtual ShipControl *getControl() = 0;
+
+    virtual void addDamageObserver(Observer *observer) = 0;
+
+
+    virtual void addAfterDamageObserver(Observer *observer) = 0;
+
+    virtual void destroy() = 0;
 };
 
 #endif // ISHIP_H

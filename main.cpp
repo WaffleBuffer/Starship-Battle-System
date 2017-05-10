@@ -14,6 +14,8 @@
 #include "src/order/provideenergyorder.h"
 #include "src/ship/shipcontrol.h"
 #include "src/utils/shipexception.h"
+#include "src/ship/armor.h"
+#include "src/ship/damage.h"
 
 #include <string>
 #include <iostream>
@@ -45,7 +47,10 @@ int main(int argc, char *argv[])
     cout << "Building ship..." << endl;
 
     cout << "Building hull..." << endl;
-    AbstractHull *hull = new BasicHull(40);
+    AbstractHull *hull = new BasicHull(40, ship);
+
+    cout << "Building armor..." << endl;
+    Armor *armor = new Armor(2,2,2,2);
 
     cout << "Building thrusters..." << endl;
     NavThruster *fThruster = new NavThruster(thrusterMK1);
@@ -63,7 +68,8 @@ int main(int argc, char *argv[])
     cout << "Building sensors..." << endl;
     Sensor *sensor = new Sensor("Sensor Mk1", "Simple array of sensors", ship, 5);
 
-    ship = new Ship("UES Test", "First Union of Earth prototype of Starship", hull, sensor, fThruster, bThruster, lTThruster, fTThruster, rTThruster, bTThruster,
+    cout << "Assembling ship..." << endl;
+    ship = new Ship("UES Test", "First Union of Earth prototype of Starship", hull, armor, sensor, fThruster, bThruster, lTThruster, fTThruster, rTThruster, bTThruster,
                     cTThruster, cCTThruster);
 
     cout << "Building energy generator..." << endl;
@@ -95,6 +101,16 @@ int main(int argc, char *argv[])
     cout << "We are moving!" << endl;
 
     cout << "ship : " << endl << ship->toString() << endl;
+
+    cout << "Watch out an asteroid !" << endl << "Too late! Brace for impact!" << endl;
+
+    Damage *impact = new Damage(5, constants::BOW);
+    impact->setCurrentValue(5);
+    ship->getDamaged(impact);
+
+    cout << "Report !" << endl << ship->toString() << endl;
+
+    delete(ship);
 
     return 0;
 

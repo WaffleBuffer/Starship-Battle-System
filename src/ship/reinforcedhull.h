@@ -6,7 +6,7 @@
 class ReinforcedHull: public AbstractHull
 {
 public:
-    ReinforcedHull(const int & maxPoints);
+    ReinforcedHull(const int & maxPoints, IShip *ship);
 };
 
 #endif // REINFORCEDHULL_H

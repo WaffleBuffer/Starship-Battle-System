@@ -4,7 +4,7 @@
 #include "../order/shiporder.h"
 
 ShipControl::ShipControl(IShip *ship)
-    :ship(ship), orders(new std::vector<ShipOrder*>()), currentAvailableEnergy(0){
+    :ship(ship), currentAvailableEnergy(0), orders(new std::vector<ShipOrder*>()){
 }
 
 ShipControl::~ShipControl()

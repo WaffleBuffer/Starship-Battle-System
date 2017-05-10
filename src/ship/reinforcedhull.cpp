@@ -1,6 +1,6 @@
 #include "reinforcedhull.h"
 
-ReinforcedHull::ReinforcedHull(const int &maxPoints)
-    :AbstractHull(maxPoints){
+ReinforcedHull::ReinforcedHull(const int &maxPoints, IShip *ship)
+    :AbstractHull(maxPoints, ship){
 
 }

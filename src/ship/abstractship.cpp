@@ -8,14 +8,18 @@
 #include "../utils/utils.cpp"
 #include "../utils/shipexception.h"
 #include "shipcontrol.h"
+#include "../utils/observer.h"
+#include "../ship/damage.h"
+#include "armor.h"
 
 #include <iostream>
 #include <string>
 #include <stdexcept>
 
-AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
+AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
                            TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
-                           RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster){
+                           RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster)
+    :armor(armor), damageObservers(new std::vector<Observer *>()), afterDamageObservers(new std::vector<Observer *>()){
 
     this->name = name;
     this->description = description;
@@ -26,6 +30,7 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->control = new ShipControl(this);
 
     this->hull = hull;
+    this->addAfterDamageObserver(this->hull);
     this->sensor = sensor;
     sensor->setShip(this);
 
@@ -70,6 +75,7 @@ AbstractShip::~AbstractShip() {
     delete(this->hull);
     delete(this->sensor);
     delete(this->control);
+    delete(this->armor);
 
     // Navigation thrusters
     delete(this->forwardThruster);
@@ -97,6 +103,9 @@ AbstractShip::~AbstractShip() {
     }
 
     delete(this->components);
+
+    delete(this->damageObservers);
+    delete(this->afterDamageObservers);
 }
 
 std::string AbstractShip::getName(){
@@ -158,6 +167,7 @@ std::string AbstractShip::toString()
     res += "Inertia : " + std::to_string(this->getInertia()) + "\n";
     res += "Direction : " + utils::getDirectionStr(this->getDirection()) + "\n";
 
+    res += "armor : " + this->armor->toString() + "\n";
     res += "hull : " + this->hull->toString() + "\n";
 
     res += "sensor : " + this->sensor->toString() + "\n";
@@ -307,4 +317,34 @@ void AbstractShip::reorientate(constants::Direction newDirection)
 ShipControl *AbstractShip::getControl()
 {
     return this->control;
+}
+
+void AbstractShip::addDamageObserver(Observer *observer)
+{
+    this->damageObservers->push_back(observer);
+}
+
+void AbstractShip::getDamaged(Damage *damage)
+{
+    for (size_t i = 0; i < this->damageObservers->size(); ++i) {
+        this->damageObservers->at(i)->notify(this, damage);
+    }
+
+    this->armor->notify(this, damage);
+
+    if(damage->getCurrentValue() > 0) {
+        for (size_t i = 0; i < this->afterDamageObservers->size(); ++i) {
+            this->afterDamageObservers->at(i)->notify(this, damage);
+        }
+    }
+}
+
+void AbstractShip::addAfterDamageObserver(Observer *observer)
+{
+    this->afterDamageObservers->push_back(observer);
+}
+
+void AbstractShip::destroy()
+{
+    std::cout << "Oh no, " << this->getName() << " is dead (not yet implemented)" << std::endl;
 }

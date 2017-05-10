@@ -6,7 +6,9 @@
 class BasicHull: public AbstractHull
 {
 public:
-    BasicHull(const int & maxPoints);
+    BasicHull(const int & maxPoints, IShip *ship);
+
+    void notify(Observable *origin, MyObject *arg) override;
 };
 
 #endif // BASICHULL_H

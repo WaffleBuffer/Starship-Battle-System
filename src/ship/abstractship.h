@@ -4,11 +4,12 @@
 #include "iship.h"
 
 class Sensor;
+class Armor;
 
 class AbstractShip : public IShip
 {
 public:
-    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
+    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
                  TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
                  RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster);
     virtual ~AbstractShip();
@@ -55,11 +56,18 @@ public:
 
     ShipControl *getControl() override;
 
+    void addDamageObserver(Observer *observer) override;
+    void getDamaged(Damage *damage) override;
+    void addAfterDamageObserver(Observer *observer) override;
+
+    void destroy() override;
+
 private:
     std::string name;
     std::string description;
 
     AbstractHull *hull;
+    Armor *armor;
 
     // Navigation thrusters
     NavThruster *forwardThruster;
@@ -89,6 +97,9 @@ private:
     int yPos;
 
     ShipControl *control;
+
+    std::vector<Observer *> *damageObservers;
+    std::vector<Observer *> *afterDamageObservers;
 };
 
 #endif // ABSTRACTSHIP_H

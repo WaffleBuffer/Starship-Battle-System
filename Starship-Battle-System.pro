@@ -57,7 +57,15 @@ SOURCES += main.cpp\
     src/utils/shipexception.cpp \
     src/order/shiporder.cpp \
     src/ship/shipcontrol.cpp \
-    src/order/provideenergyorder.cpp
+    src/order/provideenergyorder.cpp \
+    src/utils/observable.cpp \
+    src/utils/observer.cpp \
+    src/ship/damage.cpp \
+    src/ship/component/weapons/iweapon.cpp \
+    src/utils/weaponattack.cpp \
+    src/utils/myobject.cpp \
+    src/ship/damageable.cpp \
+    src/ship/component/shield.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -90,6 +98,14 @@ HEADERS  += mainwindow.h \
     src/utils/shipexception.h \
     src/order/shiporder.h \
     src/ship/shipcontrol.h \
-    src/order/provideenergyorder.h
+    src/order/provideenergyorder.h \
+    src/utils/observable.h \
+    src/utils/observer.h \
+    src/ship/damage.h \
+    src/ship/component/weapons/iweapon.h \
+    src/utils/weaponattack.h \
+    src/utils/myobject.h \
+    src/ship/damageable.h \
+    src/ship/component/shield.h
 
 FORMS    += mainwindow.ui
