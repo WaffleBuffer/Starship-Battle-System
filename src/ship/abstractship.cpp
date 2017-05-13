@@ -11,6 +11,7 @@
 #include "../utils/observer.h"
 #include "../ship/damage.h"
 #include "armor.h"
+#include "component/stagegenerator.h"
 
 #include <iostream>
 #include <string>
@@ -19,7 +20,7 @@
 AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
                            TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
                            RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster)
-    :armor(armor), damageObservers(new std::vector<Observer *>()), afterDamageObservers(new std::vector<Observer *>()){
+    :armor(armor), stageGenerators(new std::vector<StageGenerator*>()), damageObservers(new std::vector<Observer *>()), afterDamageObservers(new std::vector<Observer *>()){
 
     this->name = name;
     this->description = description;
@@ -95,8 +96,8 @@ AbstractShip::~AbstractShip() {
     for(size_t i = 0; i < this->generators->size(); ++i) {
         delete(this->generators->at(i));
     }
-
     delete(this->generators);
+    delete(this->stageGenerators);
 
     for(size_t i = 0; i < this->components->size(); ++i) {
         delete(this->components->at(i));
@@ -217,6 +218,10 @@ void AbstractShip::addGenerator(AbstractGenerator *generator)
 {
     this->generators->push_back(generator);
     generator->setShip(this);
+    StageGenerator *stageGenerator = dynamic_cast<StageGenerator*>(generator);
+    if(stageGenerator != NULL) {
+        this->stageGenerators->push_back(stageGenerator);
+    }
 }
 
 Sensor *AbstractShip::getSensor()
@@ -331,6 +336,10 @@ void AbstractShip::getDamaged(Damage *damage)
     }
 
     this->armor->notify(this, damage);
+
+    //Stage generators degradation
+    int genIndex = rand() % this->stageGenerators->size();
+    this->stageGenerators->at(genIndex)->getDamaged(damage);
 
     if(damage->getCurrentValue() > 0) {
         for (size_t i = 0; i < this->afterDamageObservers->size(); ++i) {

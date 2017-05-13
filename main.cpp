@@ -78,6 +78,9 @@ int main(int argc, char *argv[])
     generator->addStage(new StoppedGeneratorStage(generator, new DiceExpression("D6 + 2"), 4));
     ship->addGenerator(generator);
 
+    StageGenerator *generator2 = new StageGenerator(generator);
+    ship->addGenerator(generator2);
+
     cout << "powering ship..." << endl;
     //ship->generateEnergy();
 
@@ -92,13 +95,13 @@ int main(int argc, char *argv[])
         ship->getControl()->applyOrders();
 
         cout << "Powering rear thruster" << endl;
+        cout << "We are moving!" << endl;
     }
     catch(ShipException *e) {
         cout << "error : " << std::string(e->what()) << endl;
     }
 
     ship->move();
-    cout << "We are moving!" << endl;
 
     cout << "ship : " << endl << ship->toString() << endl;
 

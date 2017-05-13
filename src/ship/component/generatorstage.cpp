@@ -9,6 +9,11 @@ GeneratorStage::GeneratorStage(const constants::StageGeneratorStage & stage, Dic
     this->generator = generator;
 }
 
+GeneratorStage::GeneratorStage(GeneratorStage *model, StageGenerator *generator)
+    :stage(model->getStage()), energyDelivered(model->energyDelivered), generator(generator){
+
+}
+
 int GeneratorStage::generateEnergy()
 {
     int energy = this->energyDelivered->roll();

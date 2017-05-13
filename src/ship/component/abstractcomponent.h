@@ -12,7 +12,7 @@ public:
     std::string getName() override;
     std::string getDescription() override;
     IShip *getShip() override;
-    void setShip(IShip *ship) override;
+    virtual void setShip(IShip *ship) override;
 
     virtual std::string toString() override;
 private:

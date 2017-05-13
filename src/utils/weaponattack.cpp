@@ -1,11 +1,11 @@
 #include "weaponattack.h"
 
-WeaponAttack::WeaponAttack(IWeapon *weapon, const int &distance)
+WeaponAttack::WeaponAttack(AbstractWeapon *weapon, const int &distance)
     :weapon(weapon), distance(distance){
 
 }
 
-IWeapon *WeaponAttack::getWeapon()
+AbstractWeapon *WeaponAttack::getWeapon()
 {
     return this->weapon;
 }

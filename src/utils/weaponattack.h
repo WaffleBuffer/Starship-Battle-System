@@ -1,16 +1,16 @@
 #ifndef WEAPONATTACK_H
 #define WEAPONATTACK_H
 
-class IWeapon;
+class AbstractWeapon;
 
 class WeaponAttack
 {
 public:
-    WeaponAttack(IWeapon *weapon, const int & distance);
-    IWeapon *getWeapon();
+    WeaponAttack(AbstractWeapon *weapon, const int & distance);
+    AbstractWeapon *getWeapon();
     int getDistance();
 private:
-    IWeapon *weapon;
+    AbstractWeapon *weapon;
     int distance;
 };
 

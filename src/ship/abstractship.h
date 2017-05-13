@@ -5,6 +5,7 @@
 
 class Sensor;
 class Armor;
+class StageGenerator;
 
 class AbstractShip : public IShip
 {
@@ -88,6 +89,7 @@ private:
     std::vector<IComponent*> *components;
 
     std::vector<AbstractGenerator*> *generators;
+    std::vector<StageGenerator*> *stageGenerators;
 
     Sensor *sensor;
 

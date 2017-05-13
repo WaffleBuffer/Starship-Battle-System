@@ -61,11 +61,12 @@ SOURCES += main.cpp\
     src/utils/observable.cpp \
     src/utils/observer.cpp \
     src/ship/damage.cpp \
-    src/ship/component/weapons/iweapon.cpp \
     src/utils/weaponattack.cpp \
     src/utils/myobject.cpp \
     src/ship/damageable.cpp \
-    src/ship/component/shield.cpp
+    src/ship/component/shield.cpp \
+    src/ship/component/weapons/torpedo.cpp \
+    src/ship/component/weapons/abstractweapon.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -102,10 +103,11 @@ HEADERS  += mainwindow.h \
     src/utils/observable.h \
     src/utils/observer.h \
     src/ship/damage.h \
-    src/ship/component/weapons/iweapon.h \
     src/utils/weaponattack.h \
     src/utils/myobject.h \
     src/ship/damageable.h \
-    src/ship/component/shield.h
+    src/ship/component/shield.h \
+    src/ship/component/weapons/torpedo.h \
+    src/ship/component/weapons/abstractweapon.h
 
 FORMS    += mainwindow.ui

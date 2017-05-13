@@ -12,6 +12,7 @@ class GeneratorStage
 {
 public:
     GeneratorStage(const constants::StageGeneratorStage & stage, DiceExpression *energyDelivered, StageGenerator *generator);
+    GeneratorStage(GeneratorStage *model, StageGenerator *generator);
     int generateEnergy();
     constants::StageGeneratorStage getStage();
     std::string toString();
