@@ -1,13 +1,12 @@
 #ifndef NAVTHRUSTER_H
 #define NAVTHRUSTER_H
 
-#include "abstractcomponent.h"
 #include "energyprovidable.h"
 #include "../../utils/constants.cpp"
 
 class IShip;
 
-class NavThruster: public AbstractComponent, public EnergyProvidable {
+class NavThruster: public EnergyProvidable {
 public:
     NavThruster(const std::string & name, const std::string & description, IShip *ship, const int & maxEnergy);
     NavThruster(NavThruster *model);

@@ -6,16 +6,18 @@
 #include "src/ship/component/translationthruster.h"
 #include "src/ship/component/rotationthruster.h"
 #include "src/ship/basichull.h"
-#include "src/ship/component/generatorstage.h"
-#include "src/ship/component/stagegenerator.h"
-#include "src/ship/component/stoppedgeneratorstage.h"
+#include "src/ship/component/energyComponents/generatorstage.h"
+#include "src/ship/component/energyComponents/stagegenerator.h"
+#include "src/ship/component/energyComponents/stoppedgeneratorstage.h"
 #include "src/ship/component/sensor.h"
 #include "src/ship/ship.h"
 #include "src/order/provideenergyorder.h"
 #include "src/ship/shipcontrol.h"
 #include "src/utils/shipexception.h"
+#include "src/utils/orderexception.h"
 #include "src/ship/armor.h"
 #include "src/ship/damage.h"
+#include "src/ship/component/energyComponents/stabilizator.h"
 
 #include <string>
 #include <iostream>
@@ -81,6 +83,9 @@ int main(int argc, char *argv[])
     StageGenerator *generator2 = new StageGenerator(generator);
     ship->addGenerator(generator2);
 
+    Stabilizator *stab1 = new Stabilizator("Basic stabilizator", "basic stabilizator", nullptr, 8, nullptr);
+    generator->addStabilizator(stab1);
+
     cout << "powering ship..." << endl;
     //ship->generateEnergy();
 
@@ -91,14 +96,23 @@ int main(int argc, char *argv[])
          << "- \"Then let's move out!\"" << endl;
 
     try {
-        ship->getControl()->addOrder(new ProvideEnergyOrder(ship, bThruster, 1));
+        ShipOrder *order = new ProvideEnergyOrder(ship, bThruster, 1);
+        std::cout << order->toString() << std::endl;
+        ship->getControl()->addOrder(order);
+        std::cout << "patate" << std::endl;
         ship->getControl()->applyOrders();
 
         cout << "Powering rear thruster" << endl;
         cout << "We are moving!" << endl;
     }
+    catch(OrderException *e) {
+        cout << "Order Exception : " << std::string(e->what()) << endl;
+    }
     catch(ShipException *e) {
-        cout << "error : " << std::string(e->what()) << endl;
+        cout << "Ship Exception : " << std::string(e->what()) << endl;
+    }
+    catch(std::exception *e) {
+        cout << "Unknown exception : " << std::string(e->what()) << endl;
     }
 
     ship->move();
@@ -112,6 +126,12 @@ int main(int argc, char *argv[])
     ship->getDamaged(impact);
 
     cout << "Report !" << endl << ship->toString() << endl;
+
+    cout << "Stabilize generator 1!" << endl;
+
+    generator->stabilize();
+
+    cout << ship->toString() << endl;
 
     delete(ship);
 

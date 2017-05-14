@@ -17,3 +17,8 @@ ShipControl *ShipOrder::getControl()
 {
     return this->control;
 }
+
+IShip *ShipOrder::getShip()
+{
+    return this->ship;
+}

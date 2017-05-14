@@ -16,6 +16,7 @@ public:
     int getCurrentAvailableEnergy();
     void setCurrentAvailableEnergy(const int & energy);
     void applyOrders();
+    void endTurn();
 private:
     IShip *ship;
     int currentAvailableEnergy;

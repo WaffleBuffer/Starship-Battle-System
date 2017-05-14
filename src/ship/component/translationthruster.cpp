@@ -4,11 +4,11 @@
 #include "../iship.h"
 
 TranslationThruster::TranslationThruster(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy)
-    :AbstractComponent(name, description, ship), EnergyProvidable(maxEnergy){
+    :EnergyProvidable(name, description, ship, maxEnergy){
 }
 
 TranslationThruster::TranslationThruster(TranslationThruster *model)
-    :AbstractComponent(model->getName(), model->getDescription(), model->getShip()), EnergyProvidable(model->getMaxEnergy()){
+    :EnergyProvidable(model->getName(), model->getDescription(), model->getShip(), model->getMaxEnergy()){
 }
 
 void TranslationThruster::provideEnergy(const int &energy)

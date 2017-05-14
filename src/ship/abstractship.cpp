@@ -1,5 +1,5 @@
 #include "abstractship.h"
-#include "component/abstractgenerator.h"
+#include "component/energyComponents/abstractgenerator.h"
 #include "component/sensor.h"
 #include "abstracthull.h"
 #include "component/translationthruster.h"
@@ -11,7 +11,7 @@
 #include "../utils/observer.h"
 #include "../ship/damage.h"
 #include "armor.h"
-#include "component/stagegenerator.h"
+#include "component/energyComponents/stagegenerator.h"
 
 #include <iostream>
 #include <string>

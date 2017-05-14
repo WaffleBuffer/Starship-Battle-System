@@ -1,6 +1,6 @@
 #include "electronsailgenerator.h"
 
-#include "../iship.h"
+#include "../../iship.h"
 
 ElectronSailGenerator::ElectronSailGenerator(const std::string &name, const std::string &description, IShip *ship, const int &mutliplier)
     :AbstractGenerator(name, description, ship){

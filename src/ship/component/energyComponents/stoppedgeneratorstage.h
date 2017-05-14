@@ -3,12 +3,13 @@
 
 #include "generatorstage.h"
 #include "stagegenerator.h"
-#include "../../diceExpression/diceexpression.h"
+#include "../../../diceExpression/diceexpression.h"
 
 class StoppedGeneratorStage: public GeneratorStage
 {
 public:
     StoppedGeneratorStage(StageGenerator *generator, DiceExpression *reactivationRoll, int scoreToReactivate);
+    void stabilize() override;
 private:
     DiceExpression *reactivationRoll;
     int scoreToReactivate;

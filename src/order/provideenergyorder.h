@@ -10,6 +10,7 @@ class ProvideEnergyOrder: public ShipOrder
 public:
     ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentProvided, const int & energy);
     void applyOrder() override;
+    std::string toString() override;
 private:
     int energy;
     EnergyProvidable *componentProvided;

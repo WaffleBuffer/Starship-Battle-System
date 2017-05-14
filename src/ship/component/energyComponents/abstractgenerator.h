@@ -1,7 +1,7 @@
 #ifndef ABSTRACTGENERATOR_H
 #define ABSTRACTGENERATOR_H
 
-#include "abstractcomponent.h"
+#include "../abstractcomponent.h"
 
 class AbstractGenerator: public AbstractComponent
 {

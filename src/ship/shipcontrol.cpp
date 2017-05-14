@@ -40,4 +40,14 @@ void ShipControl::applyOrders()
     for(size_t i = 0; i < this->orders->size(); ++i) {
         this->orders->at(i)->applyOrder();
     }
+    for(size_t i = 0; i < this->orders->size(); ++i) {
+        delete(this->orders->at(i));
+    }
+    delete(this->orders);
+    this->orders = new std::vector<ShipOrder*>();
+}
+
+void ShipControl::endTurn()
+{
+    this->currentAvailableEnergy = 0;
 }

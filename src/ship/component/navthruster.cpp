@@ -3,11 +3,11 @@
 #include "../iship.h"
 
 NavThruster::NavThruster(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy)
-    :AbstractComponent(name, description, ship), EnergyProvidable(maxEnergy){
+    :EnergyProvidable(name, description, ship, maxEnergy){
 }
 
 NavThruster::NavThruster(NavThruster *model)
-    :AbstractComponent(model->getName(), model->getDescription(), model->getShip()), EnergyProvidable(model->getMaxEnergy()){
+    :EnergyProvidable(model->getName(), model->getDescription(), model->getShip(), model->getMaxEnergy()){
 }
 
 void NavThruster::provideEnergy(const int &energy)

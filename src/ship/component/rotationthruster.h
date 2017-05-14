@@ -1,13 +1,12 @@
 #ifndef ROTATIONTHRUSTER_H
 #define ROTATIONTHRUSTER_H
 
-#include "abstractcomponent.h"
 #include "energyprovidable.h"
 #include "../../utils/constants.cpp"
 
 class IShip;
 
-class RotationThruster: public AbstractComponent, public EnergyProvidable
+class RotationThruster: public EnergyProvidable
 {
 public:
     RotationThruster(const std::string & name, const std::string & description, IShip *ship, const int & maxEnergy);

@@ -3,12 +3,12 @@
 #include "../../utils/utils.cpp"
 
 RotationThruster::RotationThruster(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy)
-    :AbstractComponent(name, description, ship), EnergyProvidable(maxEnergy){
+    :EnergyProvidable(name, description, ship, maxEnergy){
 
 }
 
 RotationThruster::RotationThruster(RotationThruster *model)
-    :AbstractComponent(model->getName(), model->getDescription(), nullptr), EnergyProvidable(model->getMaxEnergy()){
+    :EnergyProvidable(model->getName(), model->getDescription(), model->getShip(), model->getMaxEnergy()){
 
 }
 
