@@ -37,11 +37,14 @@ namespace utils {
         case constants::ALERT:
             return "Alert";
             break;
+        case constants::CRITICAL:
+            return "Critical";
+            break;
         case constants::STOPPED:
             return "Stopped";
             break;
         default:
-            throw std::invalid_argument( "Unknown StageGeneratorStage" );
+            throw std::invalid_argument( "Unknown StageGeneratorStage in string" );
             break;
         }
     }

@@ -77,17 +77,15 @@ int main(int argc, char *argv[])
     cout << "Building energy generator..." << endl;
     StageGenerator *generator = new StageGenerator("Stage Generator MK1", "First generation of stage generators", ship);
     generator->addStage(new GeneratorStage(constants::NORMAL, new DiceExpression("D10"), generator));
+    //generator->addStage(new GeneratorStage(constants::CRITICAL, new DiceExpression("1D6"), generator));
     generator->addStage(new StoppedGeneratorStage(generator, new DiceExpression("D6 + 2"), 4));
     ship->addGenerator(generator);
-
-    StageGenerator *generator2 = new StageGenerator(generator);
-    ship->addGenerator(generator2);
 
     Stabilizator *stab1 = new Stabilizator("Basic stabilizator", "basic stabilizator", nullptr, 8, nullptr);
     generator->addStabilizator(stab1);
 
     cout << "powering ship..." << endl;
-    //ship->generateEnergy();
+    ship->generateEnergy();
 
     string shipString = ship->toString();
     cout << "ship : " << endl << shipString << endl;
@@ -97,9 +95,7 @@ int main(int argc, char *argv[])
 
     try {
         ShipOrder *order = new ProvideEnergyOrder(ship, bThruster, 1);
-        std::cout << order->toString() << std::endl;
         ship->getControl()->addOrder(order);
-        std::cout << "patate" << std::endl;
         ship->getControl()->applyOrders();
 
         cout << "Powering rear thruster" << endl;

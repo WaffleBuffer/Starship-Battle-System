@@ -8,7 +8,6 @@ class AbstractGenerator: public AbstractComponent
 public:
     AbstractGenerator(const std::string & name, const std::string & description, IShip *ship);
     virtual ~AbstractGenerator();
-
     virtual int generateEnergy() = 0;
 private:
 };

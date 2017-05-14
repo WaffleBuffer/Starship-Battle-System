@@ -185,6 +185,7 @@ std::string AbstractShip::toString()
 
     res += "generators : \n";
 
+
     for(size_t i = 0; i < this->generators->size(); ++i) {
         res += this->generators->at(i)->toString() + "\n";
     }

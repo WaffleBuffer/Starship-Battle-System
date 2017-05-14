@@ -4,7 +4,6 @@
 #include "../ship/shipcontrol.h"
 #include "../utils/orderexception.h"
 #include "../utils/shipexception.h"
-#include <iostream>
 
 ProvideEnergyOrder::ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentProvided, const int & energy)
     :ShipOrder(ship), energy(energy), componentProvided(componentProvided){
@@ -14,7 +13,7 @@ ProvideEnergyOrder::ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentP
     }
     if(this->energy > this->getControl()->getCurrentAvailableEnergy()) {
 
-        throw new OrderException("Not enough energy to create this order", this);
+        throw new OrderException("Not enough energy to create this order", nullptr);
     }
 
 }
@@ -27,7 +26,6 @@ void ProvideEnergyOrder::applyOrder()
 
 std::string ProvideEnergyOrder::toString()
 {
-    std::cout << "potatoe" << std::endl;
     std::string msg = "Provide ";
 
     //msg += energy + " to " + componentProvided->getName();

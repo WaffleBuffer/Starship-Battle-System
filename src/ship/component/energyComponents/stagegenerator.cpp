@@ -92,9 +92,11 @@ void StageGenerator::getDamaged(Damage *damage)
     // Destabilization
     if(currentStageIndex + nbDestabilizationLvl > this->stages->size() - 1) {
         this->currentStage = this->stages->at(this->stages->size() - 1);
+        this->currentStageIndex = this->stages->size() - 1;
     }
     else {
         this->currentStage = this->stages->at(currentStageIndex + nbDestabilizationLvl);
+        this->currentStageIndex = currentStageIndex + nbDestabilizationLvl;
     }
 }
 
