@@ -1,6 +1,7 @@
 #include "electronsailgenerator.h"
 
 #include "../../iship.h"
+#include "../../../utils/vectorialmovement.h"
 
 ElectronSailGenerator::ElectronSailGenerator(const std::string &name, const std::string &description, IShip *ship, const int &mutliplier)
     :AbstractGenerator(name, description, ship){
@@ -10,5 +11,5 @@ ElectronSailGenerator::ElectronSailGenerator(const std::string &name, const std:
 
 int ElectronSailGenerator::generateEnergy()
 {
-    return this->getShip()->getInertia() * this->multiplier;
+    return this->getShip()->getMovement()->getDistance() * this->multiplier;
 }

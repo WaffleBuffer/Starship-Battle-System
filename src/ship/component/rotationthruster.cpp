@@ -14,29 +14,17 @@ RotationThruster::RotationThruster(RotationThruster *model)
 
 void RotationThruster::provideEnergy(const int &energy)
 {
-    int currentEnergy = (energy > this->getMaxEnergy() ? this->getMaxEnergy() : energy);
+    //int currentEnergy = (energy > this->getMaxEnergy() ? this->getMaxEnergy() : energy);
 
-    constants::Direction newDirection;
-    for(int i = 0; i < currentEnergy; ++i) {
-        switch (this->getDirection()) {
-        case constants::CLOCKWISE:
-            newDirection = utils::getClockwiseDirection(this->getShip()->getDirection());
-            break;
-        case constants::COUNTER_CLOCKWISE:
-            newDirection = utils::getCounterClockwiseDirection(this->getShip()->getDirection());
-            break;
-        }
-
-        this->getShip()->reorientate(newDirection);
-    }
+    this->getShip()->rotate(this->getDirection());
 }
 
-constants::ClockDirection RotationThruster::getDirection()
+int RotationThruster::getDirection()
 {
     return this->direction;
 }
 
-void RotationThruster::setDirection(constants::ClockDirection direction)
+void RotationThruster::setDirection(const int &direction)
 {
     this->direction = direction;
 }

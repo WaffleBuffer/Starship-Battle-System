@@ -12,22 +12,20 @@
 #include "../ship/damage.h"
 #include "armor.h"
 #include "component/energyComponents/stagegenerator.h"
+#include "../utils/vectorialmovement.h"
 
 #include <iostream>
 #include <string>
 #include <stdexcept>
 
-AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
-                           TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
-                           RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster)
-    :armor(armor), stageGenerators(new std::vector<StageGenerator*>()), damageObservers(new std::vector<Observer *>()), afterDamageObservers(new std::vector<Observer *>()){
+AbstractShip::AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster,
+                           NavThruster *backThruster, TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster,
+                           TranslationThruster *backTThruster, RotationThruster *rotationThruster, VectorialMovement *movement)
+    :IShip(movement), armor(armor), stageGenerators(new std::vector<StageGenerator*>()), damageObservers(new std::vector<Observer *>()),
+      afterDamageObservers(new std::vector<Observer *>()){
 
     this->name = name;
     this->description = description;
-    this->xPos = 0;
-    this->yPos = 0;
-    this->direction = constants::NORTH;
-    this->inertia = 0;
     this->control = new ShipControl(this);
 
     this->hull = hull;
@@ -59,12 +57,8 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     backTThruster->setFacingDirection(constants::SOUTH);
 
     // Rotation thrusters
-    this->clockWiseThruster = clockWiseThruster;
-    clockWiseThruster->setShip(this);
-    clockWiseThruster->setDirection(constants::CLOCKWISE);
-    this->counterClockWiseThruster = counterClockWiseThruster;
-    counterClockWiseThruster->setShip(this);
-    counterClockWiseThruster->setDirection(constants::COUNTER_CLOCKWISE);
+    this->rotationThruster = rotationThruster;
+    rotationThruster->setShip(this);
 
     // Components
     this->components = new std::vector<IComponent*>();
@@ -90,7 +84,7 @@ AbstractShip::~AbstractShip() {
     delete(this->backTThruster);
 
     // Rotation thrusters
-    delete(this->clockWiseThruster);
+    delete(this->rotationThruster);
     delete(this->counterClockWiseThruster);
 
     for(size_t i = 0; i < this->generators->size(); ++i) {
@@ -107,6 +101,7 @@ AbstractShip::~AbstractShip() {
 
     delete(this->damageObservers);
     delete(this->afterDamageObservers);
+
 }
 
 std::string AbstractShip::getName(){
@@ -145,12 +140,8 @@ TranslationThruster *AbstractShip::getBackTThruster() {
 }
 
 // Rotation thrusters
-RotationThruster *AbstractShip::getClockWiseThruster() {
-    return this->clockWiseThruster;
-}
-
-RotationThruster *AbstractShip::getCounterClockWiseThruster() {
-    return this->counterClockWiseThruster;
+RotationThruster *AbstractShip::getRotationThruster() {
+    return this->rotationThruster;
 }
 
 // Components
@@ -164,9 +155,7 @@ std::string AbstractShip::toString()
     res += this->getName() + "\n";
     res += this->getDescription() + "\n";
 
-    res += "Position : {" + std::to_string(this->getXPos()) + ", " + std::to_string(this->getYPos()) + "}\n";
-    res += "Inertia : " + std::to_string(this->getInertia()) + "\n";
-    res += "Direction : " + utils::getDirectionStr(this->getDirection()) + "\n";
+    res += Moveable::toString();
 
     res += "armor : " + this->armor->toString() + "\n";
     res += "hull : " + this->hull->toString() + "\n";
@@ -180,8 +169,7 @@ std::string AbstractShip::toString()
     res += "FT " + this->getFrontTThruster()->toString() + "\n";
     res += "RT " + this->getRightTThruster()->toString() + "\n";
     res += "BT " + this->getBackTThruster()->toString() + "\n";
-    res += "CR " + this->getClockWiseThruster()->toString() + "\n";
-    res += "CCR " + this->getCounterClockWiseThruster()->toString() + "\n";
+    res += "CR " + this->getRotationThruster()->toString() + "\n";
 
     res += "generators : \n";
 
@@ -230,95 +218,7 @@ Sensor *AbstractShip::getSensor()
     return this->sensor;
 }
 
-int AbstractShip::getInertia()
-{
-    return this->inertia;
-}
 
-int AbstractShip::getXPos()
-{
-    return this->xPos;
-}
-
-int AbstractShip::getYPos()
-{
-    return this->yPos;
-}
-
-constants::Direction AbstractShip::getDirection()
-{
-    return this->direction;
-}
-
-void AbstractShip::addInertia(constants::Direction direction, int distance)
-{
-    switch (direction) {
-    case constants::NORTH:
-        this->inertia -= distance;
-        break;
-    case constants::SOUTH:
-        this->inertia += distance;
-        break;
-    default:
-        throw std::invalid_argument( "Invalid direction for inertia" );
-        break;
-    }
-
-    if(this->inertia > constants::maxSpeed) {
-        throw ShipException("Ship speed above limit but not implemented yer", this);
-    }
-    else if (this->inertia < constants::maxSpeed * -1) {
-        throw ShipException("Ship speed above limit but not implemented yer", this);
-    }
-}
-
-void AbstractShip::translate(constants::Direction direction, int distance)
-{
-    if (this->inertia > constants::maxManoveurSpeed) {
-        throw ShipException("Can\'t manover when inertia above " + constants::maxManoveurSpeed, this);
-    }
-    switch (direction) {
-    case constants::NORTH:
-        this->yPos += distance;
-        break;
-    case constants::EAST:
-        this->xPos += distance;
-        break;
-    case constants::SOUTH:
-        this->yPos -= distance;
-        break;
-    case constants::WEST:
-        this->xPos -= distance;
-        break;
-    }
-
-}
-
-void AbstractShip::move()
-{
-    switch (this->direction) {
-    case constants::NORTH:
-        this->yPos += (this->inertia > 0 ? this->inertia : 0 - this->inertia);
-        break;
-    case constants::EAST:
-        this->xPos += (this->inertia > 0 ? this->inertia : 0 - this->inertia);
-        break;
-    case constants::SOUTH:
-        this->yPos -= (this->inertia > 0 ? this->inertia : 0 - this->inertia);
-        break;
-    case constants::WEST:
-        this->xPos -= (this->inertia > 0 ? this->inertia : 0 - this->inertia);
-        break;
-    }
-}
-
-void AbstractShip::reorientate(constants::Direction newDirection)
-{
-    if (this->inertia > constants::maxManoveurSpeed) {
-        throw ShipException("Can\'t manover when inertia above " + constants::maxManoveurSpeed, this);
-    }
-    this->direction = newDirection;
-}
 
 ShipControl *AbstractShip::getControl()
 {

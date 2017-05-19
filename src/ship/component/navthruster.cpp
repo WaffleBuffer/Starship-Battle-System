@@ -1,6 +1,7 @@
 #include "navthruster.h"
 #include "abstractcomponent.h"
 #include "../iship.h"
+#include "../../utils/utils.cpp"
 
 NavThruster::NavThruster(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy)
     :EnergyProvidable(name, description, ship, maxEnergy){
@@ -14,7 +15,7 @@ void NavThruster::provideEnergy(const int &energy)
 {
     int currentEnergy = (energy > this->getMaxEnergy() ? this->getMaxEnergy() : energy);
 
-    this->getShip()->addInertia(this->facingDirection, currentEnergy);
+    this->getShip()->addInertia(utils::getInvertDir(this->facingDirection), currentEnergy);
 }
 
 constants::Direction NavThruster::getFacingDirection()

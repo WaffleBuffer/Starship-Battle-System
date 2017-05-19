@@ -12,7 +12,7 @@ class AbstractShip : public IShip
 public:
     AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
                  TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
-                 RotationThruster *clockWiseThruster, RotationThruster *counterClockWiseThruster);
+                 RotationThruster *rotationThruster,  VectorialMovement *movement);
     virtual ~AbstractShip();
 
     std::string getName() override;
@@ -30,8 +30,7 @@ public:
     TranslationThruster *getBackTThruster() override;
 
     // Rotation thrusters
-    RotationThruster *getClockWiseThruster() override;
-    RotationThruster *getCounterClockWiseThruster() override;
+    RotationThruster *getRotationThruster() override;
 
     // Components
     std::vector<IComponent*> *getComponents() override;
@@ -43,17 +42,6 @@ public:
     void addGenerator(AbstractGenerator *generator);
 
     Sensor *getSensor() override;
-
-    int getInertia() override;
-
-    int getXPos() override;
-    int getYPos() override;
-
-    constants::Direction getDirection() override;
-    void addInertia(constants::Direction direction, int distance) override;
-    void translate(constants::Direction direction, int distance) override;
-    void move() override;
-    void reorientate(constants::Direction newDirection) override;
 
     ShipControl *getControl() override;
 
@@ -82,7 +70,7 @@ private:
     TranslationThruster *backTThruster;
 
     // Rotation thrusters
-    RotationThruster *clockWiseThruster;
+    RotationThruster *rotationThruster;
     RotationThruster *counterClockWiseThruster;
 
     // Components
@@ -92,11 +80,6 @@ private:
     std::vector<StageGenerator*> *stageGenerators;
 
     Sensor *sensor;
-
-    constants::Direction direction;
-    int inertia;
-    int xPos;
-    int yPos;
 
     ShipControl *control;
 

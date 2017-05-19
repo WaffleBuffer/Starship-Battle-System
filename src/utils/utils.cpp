@@ -108,6 +108,26 @@ namespace utils {
             break;
         }
     }
+
+    inline constants::Direction getInvertDir(constants::Direction dir) {
+        switch (dir) {
+        case constants::NORTH:
+            return constants::SOUTH;
+            break;
+        case constants::EAST:
+            return constants::WEST;
+            break;
+        case constants::SOUTH:
+            return constants::NORTH;
+            break;
+        case constants::WEST:
+            return constants::EAST;
+            break;
+        default:
+            throw std::invalid_argument( "Unknown direction" );
+            break;
+        }
+    }
 }
 
 #endif

@@ -68,7 +68,11 @@ SOURCES += main.cpp\
     src/ship/component/weapons/abstractweapon.cpp \
     src/ship/component/energyComponents/accumulator.cpp \
     src/ship/component/energyComponents/stabilizator.cpp \
-    src/utils/orderexception.cpp
+    src/utils/orderexception.cpp \
+    src/utils/moveable.cpp \
+    src/utils/movement.cpp \
+    src/utils/vectorialmovement.cpp \
+    src/ship/iship.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -112,6 +116,9 @@ HEADERS  += mainwindow.h \
     src/ship/component/weapons/abstractweapon.h \
     src/ship/component/energyComponents/accumulator.h \
     src/ship/component/energyComponents/stabilizator.h \
-    src/utils/orderexception.h
+    src/utils/orderexception.h \
+    src/utils/moveable.h \
+    src/utils/movement.h \
+    src/utils/vectorialmovement.h
 
 FORMS    += mainwindow.ui

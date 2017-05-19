@@ -12,7 +12,6 @@ ProvideEnergyOrder::ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentP
         throw new ShipException("No ship control", this->getShip());
     }
     if(this->energy > this->getControl()->getCurrentAvailableEnergy()) {
-
         throw new OrderException("Not enough energy to create this order", nullptr);
     }
 

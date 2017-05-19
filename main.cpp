@@ -64,15 +64,13 @@ int main(int argc, char *argv[])
     TranslationThruster *lTThruster = new TranslationThruster(tThrusterMK1);
 
     RotationThruster *cTThruster = new RotationThruster(rThrusterMK1);
-    RotationThruster *cCTThruster = new RotationThruster(rThrusterMK1);
-
 
     cout << "Building sensors..." << endl;
     Sensor *sensor = new Sensor("Sensor Mk1", "Simple array of sensors", ship, 5);
 
     cout << "Assembling ship..." << endl;
     ship = new Ship("UES Test", "First Union of Earth prototype of Starship", hull, armor, sensor, fThruster, bThruster, lTThruster, fTThruster, rTThruster, bTThruster,
-                    cTThruster, cCTThruster);
+                    cTThruster, 0);
 
     cout << "Building energy generator..." << endl;
     StageGenerator *generator = new StageGenerator("Stage Generator MK1", "First generation of stage generators", ship);
@@ -118,7 +116,7 @@ int main(int argc, char *argv[])
     cout << "Watch out an asteroid !" << endl << "Too late! Brace for impact!" << endl;
 
     Damage *impact = new Damage(5, constants::BOW);
-    impact->setCurrentValue(5);
+
     ship->getDamaged(impact);
 
     cout << "Report !" << endl << ship->toString() << endl;
@@ -128,6 +126,26 @@ int main(int argc, char *argv[])
     generator->stabilize();
 
     cout << ship->toString() << endl;
+
+    cout << "Ok, now try rotation" << endl;
+
+    try {
+        cTThruster->setDirection(45);
+        ShipOrder *order = new ProvideEnergyOrder(ship, cTThruster, 1);
+        ship->getControl()->addOrder(order);
+        ship->getControl()->applyOrders();
+    }
+    catch(OrderException *e) {
+        cout << "Order Exception : " << std::string(e->what()) << endl;
+    }
+    catch(ShipException *e) {
+        cout << "Ship Exception : " << std::string(e->what()) << endl;
+    }
+    catch(std::exception *e) {
+        cout << "Unknown exception : " << std::string(e->what()) << endl;
+    }
+
+    cout << "ship : " << endl << ship->toString() << endl;
 
     delete(ship);
 

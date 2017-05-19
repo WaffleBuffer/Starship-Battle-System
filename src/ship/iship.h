@@ -4,6 +4,7 @@
 #include "../utils/constants.cpp"
 #include "../utils/observable.h"
 #include "damageable.h"
+#include "../utils/moveable.h"
 
 #include <string>
 #include <vector>
@@ -18,10 +19,12 @@ class Sensor;
 class ShipControl;
 class Observer;
 class Damage;
+class VectorialMovement;
 
-class IShip: public Observable, public Damageable
+class IShip: public Observable, public Damageable, public Moveable
 {
 public:
+    IShip(VectorialMovement *movement);
     virtual ~IShip() {}
 
     virtual std::string getName() = 0;
@@ -39,8 +42,7 @@ public:
     virtual TranslationThruster *getBackTThruster() = 0;
 
     // Rotation thrusters
-    virtual RotationThruster *getClockWiseThruster() = 0;
-    virtual RotationThruster *getCounterClockWiseThruster() = 0;
+    virtual RotationThruster *getRotationThruster() = 0;
 
     // Components
     virtual std::vector<IComponent*> *getComponents() = 0;
@@ -53,17 +55,6 @@ public:
     virtual void addGenerator(AbstractGenerator *generator) = 0;
 
     virtual Sensor *getSensor() = 0;
-
-    virtual int getInertia() = 0;
-
-    virtual int getXPos() = 0;
-    virtual int getYPos() = 0;
-
-    virtual constants::Direction getDirection() = 0;
-    virtual void addInertia(constants::Direction direction, int distance) = 0;
-    virtual void translate(constants::Direction direction, int distance) = 0;
-    virtual void move() = 0;
-    virtual void reorientate(constants::Direction newDirection) = 0;
 
     virtual ShipControl *getControl() = 0;
 

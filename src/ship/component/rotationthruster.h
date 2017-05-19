@@ -9,14 +9,14 @@ class IShip;
 class RotationThruster: public EnergyProvidable
 {
 public:
-    RotationThruster(const std::string & name, const std::string & description, IShip *ship, const int & maxEnergy);
+    RotationThruster(const std::string & name, const std::string &description, IShip *ship, const int & maxEnergy);
     RotationThruster(RotationThruster *model);
 
     void provideEnergy(const int & energy) override;
-    constants::ClockDirection getDirection();
-    void setDirection(constants::ClockDirection direction);
+    int getDirection();
+    void setDirection(const int &direction);
 private:
-    constants::ClockDirection direction;
+    int direction;
 };
 
 #endif // ROTATIONTHRUSTER_H
