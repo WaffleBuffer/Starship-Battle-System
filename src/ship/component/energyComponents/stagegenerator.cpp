@@ -53,7 +53,7 @@ int StageGenerator::generateEnergy()
     return energy;
 }
 
-string StageGenerator::toString()
+std::string StageGenerator::toString()
 {
     std::string res = "";
     res += this->getName() + " : " + this->currentStage->toString() + "\n";

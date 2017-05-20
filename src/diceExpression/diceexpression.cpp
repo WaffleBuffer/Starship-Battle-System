@@ -1,10 +1,10 @@
 #include "diceexpression.h"
 
-SubExpression *parseWord(const string & word, istringstream & iss, SubExpression *left) {
+SubExpression *parseWord(const std::string & word, std::istringstream & iss, SubExpression *left) {
     size_t dPos = word.find('D');
     if (dPos != std::string::npos){
 
-        string diceNumberStr = word.substr(0, dPos);
+        std::string diceNumberStr = word.substr(0, dPos);
         unsigned diceNumber = 0;
 
         if(!diceNumberStr.empty()) {
@@ -16,7 +16,7 @@ SubExpression *parseWord(const string & word, istringstream & iss, SubExpression
             }
         }
 
-        string diceMaxValue = word.substr(dPos + 1, word.length() - dPos);
+        std::string diceMaxValue = word.substr(dPos + 1, word.length() - dPos);
         unsigned maxValue = 0;
 
         if(utils::isUnsigned(diceMaxValue)) {
@@ -38,7 +38,7 @@ SubExpression *parseWord(const string & word, istringstream & iss, SubExpression
         return new ConstExpression(value, word);
     }
     else if (word == "+") {
-        string right;
+        std::string right;
         if(!(iss >> right) || left == nullptr) {
             throw std::invalid_argument( "Missing right operand on " + word);
         }
@@ -53,12 +53,12 @@ SubExpression *parseWord(const string & word, istringstream & iss, SubExpression
     }
 }
 
-DiceExpression::DiceExpression(const string & expression) throw()
+DiceExpression::DiceExpression(const std::string & expression) throw()
 {
     this->expression = expression;
 
-    istringstream iss(expression);
-    string word;
+    std::istringstream iss(expression);
+    std::string word;
     SubExpression *parsed = nullptr;
     while(iss >> word) {
         parsed = parseWord(word, iss, parsed);
@@ -78,7 +78,7 @@ int DiceExpression::getMaxValue() {
     return this->parsedExpression->getMaxValue();
 }
 
-string DiceExpression::toString()
+std::string DiceExpression::toString()
 {
     return this->parsedExpression->toString();
 }

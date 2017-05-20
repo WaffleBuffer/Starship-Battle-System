@@ -31,7 +31,7 @@ constants::StageGeneratorStage GeneratorStage::getStage()
     return this->stage;
 }
 
-string GeneratorStage::toString()
+std::string GeneratorStage::toString()
 {
     std::string res = "";
     res += utils::StageGeneratorStagesToStr(this->stage) + " " + this->energyDelivered->toString();
