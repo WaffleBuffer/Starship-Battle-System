@@ -4,7 +4,7 @@
 
 VectorialMovement::VectorialMovement(Moveable *movingObject, const int &baseAngle)
     :Movement(movingObject), xPos(0), yPos(0), xOffset(0), yOffset(0), angle(baseAngle),
-    goingUp(false){
+    goingForward(false){
 
 }
 
@@ -55,7 +55,7 @@ double VectorialMovement::getDistance()
 
     double res = sqrt(pow(x, 2) + pow(y, 2));
 
-    if(this->goingUp){
+    if(this->goingForward){
         res *= -1;
     }
 
@@ -98,12 +98,12 @@ std::string VectorialMovement::toString()
     return str;
 }
 
-bool VectorialMovement::getGoingUp() const
+bool VectorialMovement::getGoingForward() const
 {
-    return goingUp;
+    return goingForward;
 }
 
-void VectorialMovement::setGoingUp(bool value)
+void VectorialMovement::setgoingForward(bool value)
 {
-    goingUp = value;
+    goingForward = value;
 }

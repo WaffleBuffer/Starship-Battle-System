@@ -49,10 +49,10 @@ void Moveable::addInertia(constants::Direction direction, double distance)
     this->movement->setArrivingCoords(xb, yb);
 
     if(newDistance < 0) {
-        this->movement->setGoingUp(true);
+        this->movement->setgoingForward(true);
     }
     else {
-        this->movement->setGoingUp(false);
+        this->movement->setgoingForward(false);
     }
 
     // Checked in Order

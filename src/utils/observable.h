@@ -11,6 +11,9 @@
 class Observable
 {
 public:
+    /**
+     * @brief Observable The constructor.
+     */
     Observable();
     virtual ~Observable();
 };
