@@ -77,15 +77,19 @@ void Moveable::translate(constants::Direction direction, double distance)
     switch (direction) {
     case constants::NORTH:
         this->movement->setYPos(this->movement->getYPos() + distance);
+        this->movement->setYOffset(this->movement->getYOffset() + distance);
         break;
     case constants::EAST:
         this->movement->setXPos(this->movement->getYPos() + distance);
+        this->movement->setXOffset(this->movement->getXOffset() + distance);
         break;
     case constants::SOUTH:
         this->movement->setYPos(this->movement->getYPos() - distance);
+        this->movement->setYOffset(this->movement->getYOffset() - distance);
         break;
     case constants::WEST:
         this->movement->setXPos(this->movement->getYPos() - distance);
+        this->movement->setXOffset(this->movement->getXOffset() + distance);
         break;
     }
 

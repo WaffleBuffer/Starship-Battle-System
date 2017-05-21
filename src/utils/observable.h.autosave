@@ -5,6 +5,9 @@
  * @file observable.h
  */
 
+/**
+ * @brief The Observable class.
+ */
 class Observable
 {
 public:
