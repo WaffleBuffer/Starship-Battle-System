@@ -1,4 +1,5 @@
 #include "abstracthull.h"
+#include <stdexcept>
 
 AbstractHull::AbstractHull(const int &maxPoints, IShip *ship)
     :ship(ship){
@@ -15,7 +16,13 @@ std::string AbstractHull::toString()
 
 void AbstractHull::setCurrentPoints(const int &points)
 {
-    this->currentPoints = points;
+    if (points > this->maxPoints) {
+        this->currentPoints = this->maxPoints;
+        throw new std::invalid_argument("Number of point to set on the hull > to max point");
+    }
+    else {
+        this->currentPoints = points;
+    }
 }
 
 int AbstractHull::getCurrentPoints()
