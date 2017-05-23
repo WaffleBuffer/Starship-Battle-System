@@ -85,7 +85,7 @@ AbstractShip::~AbstractShip() {
 
     // Rotation thrusters
     delete(this->rotationThruster);
-    delete(this->counterClockWiseThruster);
+    delete(this->rotationThruster);
 
     for(size_t i = 0; i < this->generators->size(); ++i) {
         delete(this->generators->at(i));
