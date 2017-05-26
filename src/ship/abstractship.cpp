@@ -36,25 +36,25 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     // Navigation thrusters
     this->forwardThruster = forwardThruster;
     forwardThruster->setShip(this);
-    forwardThruster->setFacingDirection(constants::NORTH);
+    forwardThruster->setFacingDirection(constants::BOW);
     this->backThruster = backThruster;
     backThruster->setShip(this);
-    backThruster->setFacingDirection(constants::SOUTH);
+    backThruster->setFacingDirection(constants::STERN);
 
     // Maneuver thrusters
     // Translation thrusters
     this->leftTThruster = leftTThruster;
     leftTThruster->setShip(this);
-    leftTThruster->setFacingDirection(constants::WEST);
+    leftTThruster->setFacingDirection(constants::PORT);
     this->frontTThruster = frontTThruster;
     frontTThruster->setShip(this);
-    frontTThruster->setFacingDirection(constants::NORTH);
+    frontTThruster->setFacingDirection(constants::BOW);
     this->rightTThruster = rightTThruster;
     rightTThruster->setShip(this);
-    rightTThruster->setFacingDirection(constants::EAST);
+    rightTThruster->setFacingDirection(constants::STARBOARD);
     this->backTThruster = backTThruster;
     backTThruster->setShip(this);
-    backTThruster->setFacingDirection(constants::SOUTH);
+    backTThruster->setFacingDirection(constants::STERN);
 
     // Rotation thrusters
     this->rotationThruster = rotationThruster;
@@ -84,7 +84,6 @@ AbstractShip::~AbstractShip() {
     delete(this->backTThruster);
 
     // Rotation thrusters
-    delete(this->rotationThruster);
     delete(this->rotationThruster);
 
     for(size_t i = 0; i < this->generators->size(); ++i) {

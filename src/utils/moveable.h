@@ -30,13 +30,13 @@ public:
      * @param direction The direction of the inertia. Only NORTH or SOUTH (forward or backward).
      * @param distance The value of the inertia to add.
      */
-    virtual void addInertia(constants::Direction direction, double distance);
+    virtual void addInertia(constants::ShipDirection direction, double distance);
     /**
      * @brief translate Make a translation move without inertia effect.
      * @param direction The direction of the translation.
      * @param distance The distance of the translation.
      */
-    virtual void translate(constants::Direction direction, double distance);
+    virtual void translate(constants::ShipDirection direction, double distance);
     /**
      * @brief move Go to the current destination. An idea is to add an int parameter to choose if you want to go all the way,
      *             or if you want to partially move (usefull for maneuvers). This parameter should be 0 < distance < movement->getDistance()

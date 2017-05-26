@@ -12,10 +12,10 @@ public:
     NavThruster(NavThruster *model);
 
     void provideEnergy(const int & energy) override;
-    constants::Direction getFacingDirection();
-    void setFacingDirection(constants::Direction facingDirection);
+    constants::ShipDirection getFacingDirection();
+    void setFacingDirection(constants::ShipDirection facingDirection);
 private:
-    constants::Direction facingDirection;
+    constants::ShipDirection facingDirection;
 };
 
 #endif // NAVTHRUSTER_H

@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     cout << "Building energy generator..." << endl;
     StageGenerator *generator = new StageGenerator("Stage Generator MK1", "First generation of stage generators", ship);
     generator->addStage(new GeneratorStage(constants::NORMAL, new DiceExpression("D10"), generator));
-    //generator->addStage(new GeneratorStage(constants::CRITICAL, new DiceExpression("1D6"), generator));
+    //generator->addStage(new GeneratorStage(constants::CRITICAL, new DiceExpression("1D6 + 3"), generator));
     generator->addStage(new StoppedGeneratorStage(generator, new DiceExpression("D6 + 2"), 4));
     ship->addGenerator(generator);
 
@@ -112,6 +112,18 @@ int main(int argc, char *argv[])
     ship->move();
 
     cout << "ship : " << endl << ship->toString() << endl;
+    cout << "Now try a translation to the left" << endl;
+
+    try {
+        ShipOrder *order = new ProvideEnergyOrder(ship, lTThruster, 1);
+        ship->getControl()->addOrder(order);
+        ship->getControl()->applyOrders();
+    }
+    catch(std::exception *e) {
+        cout << "Unknown exception : " << std::string(e->what()) << endl;
+    }
+
+    cout << "ship : " << endl << ship->toString() << endl;
 
     cout << "Watch out an asteroid !" << endl << "Too late! Brace for impact!" << endl;
 
@@ -127,7 +139,7 @@ int main(int argc, char *argv[])
 
     cout << ship->toString() << endl;
 
-    cout << "Ok, now try rotation" << endl;
+    cout << "Ok, now try rotation of 45°" << endl;
 
     try {
         cTThruster->setDirection(45);

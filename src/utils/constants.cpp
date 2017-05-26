@@ -8,6 +8,7 @@
 class DiceExpression;
 
 namespace constants {
+    // In order: front, right, rear, left
     enum ShipDirection {BOW = 0, STARBOARD = 1, STERN = 2, PORT = 3};
     enum Direction {NORTH, EAST, SOUTH, WEST};
 

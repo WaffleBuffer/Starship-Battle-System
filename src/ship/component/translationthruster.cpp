@@ -18,12 +18,12 @@ void TranslationThruster::provideEnergy(const int &energy)
     this->getShip()->translate(this->facingDirection, currentEnergy);
 }
 
-constants::Direction TranslationThruster::getFacingDirection()
+constants::ShipDirection TranslationThruster::getFacingDirection()
 {
     return this->facingDirection;
 }
 
-void TranslationThruster::setFacingDirection(constants::Direction facingDirection)
+void TranslationThruster::setFacingDirection(constants::ShipDirection facingDirection)
 {
     this->facingDirection = facingDirection;
 }

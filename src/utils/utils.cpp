@@ -128,6 +128,26 @@ namespace utils {
             break;
         }
     }
+
+    inline constants::ShipDirection getInvertShipDir(constants::ShipDirection dir) {
+        switch (dir) {
+        case constants::BOW:
+            return constants::STERN;
+            break;
+        case constants::STARBOARD:
+            return constants::PORT;
+            break;
+        case constants::STERN:
+            return constants::BOW;
+            break;
+        case constants::PORT:
+            return constants::STARBOARD;
+            break;
+        default:
+            throw std::invalid_argument( "Unknown direction" );
+            break;
+        }
+    }
 }
 
 #endif

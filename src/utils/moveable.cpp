@@ -25,17 +25,17 @@ std::string Moveable::toString()
     return movement->toString();
 }
 
-void Moveable::addInertia(constants::Direction direction, double distance)
+void Moveable::addInertia(constants::ShipDirection direction, double distance)
 {
     if(distance < 0) {
          throw std::invalid_argument("Invalid distance (< 0) when adding inertia");
     }
     // (0,0) is in upper left corner
     switch (direction) {
-    case constants::NORTH:
-        distance *= -1;
+    case constants::BOW:
         break;
-    case constants::SOUTH:
+    case constants::STERN:
+        distance *= -1;
         break;
     default:
         throw std::invalid_argument( "Invalid direction for adding inertia" );
@@ -49,10 +49,10 @@ void Moveable::addInertia(constants::Direction direction, double distance)
     this->movement->setArrivingCoords(xb, yb);
 
     if(newDistance < 0) {
-        this->movement->setgoingForward(true);
+        this->movement->setgoingForward(false);
     }
     else {
-        this->movement->setgoingForward(false);
+        this->movement->setgoingForward(true);
     }
 
     // Checked in Order
@@ -64,7 +64,7 @@ void Moveable::addInertia(constants::Direction direction, double distance)
     }*/
 }
 
-void Moveable::translate(constants::Direction direction, double distance)
+void Moveable::translate(constants::ShipDirection direction, double distance)
 {
     // Checked in order
     /*if (this->movementHandler->getDistance() > constants::maxManoveurSpeed) {
@@ -74,24 +74,41 @@ void Moveable::translate(constants::Direction direction, double distance)
         throw std::invalid_argument("Invalid distance (< 0) when translating");
     }
 
+    double xb, yb;
+
+    double x = this->movement->getXPos();
+    double y = this->movement->getYPos();
+
+    double xAngleOffset = 0;
+    double yAngleOffset = 0;
+
     switch (direction) {
-    case constants::NORTH:
-        this->movement->setYPos(this->movement->getYPos() + distance);
-        this->movement->setYOffset(this->movement->getYOffset() + distance);
+    // If we put relative angle, we use trigonometric circle to offset the angle
+    case constants::BOW:
+        xAngleOffset = 0;
+        x = this->movement->getXPos() + distance * cos(this->movement->getAngle() + xAngleOffset);
         break;
-    case constants::EAST:
-        this->movement->setXPos(this->movement->getYPos() + distance);
-        this->movement->setXOffset(this->movement->getXOffset() + distance);
+    case constants::STARBOARD:
+        yAngleOffset = M_PI / 2;
+        y = this->movement->getYPos() + distance * sin(this->movement->getAngle() + yAngleOffset);
         break;
-    case constants::SOUTH:
-        this->movement->setYPos(this->movement->getYPos() - distance);
-        this->movement->setYOffset(this->movement->getYOffset() - distance);
+    case constants::STERN:
+        xAngleOffset = M_PI;
+        x = this->movement->getXPos() + distance * cos(this->movement->getAngle() + xAngleOffset);
         break;
-    case constants::WEST:
-        this->movement->setXPos(this->movement->getYPos() - distance);
-        this->movement->setXOffset(this->movement->getXOffset() + distance);
+    case constants::PORT:
+        yAngleOffset = 3 * M_PI / 2;
+        y = this->movement->getYPos() + distance * sin(this->movement->getAngle() + yAngleOffset);
         break;
     }
+
+    this->movement->setXPos(x);
+    this->movement->setYPos(y);
+
+    xb = this->movement->getXPos() + this->getMovement()->getDistance() * cos(this->movement->getAngle());
+    yb = this->movement->getYPos() + this->getMovement()->getDistance() * sin(this->movement->getAngle());
+
+    this->movement->setArrivingCoords(xb, yb);
 
 }
 

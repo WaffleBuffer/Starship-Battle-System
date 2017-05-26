@@ -15,15 +15,15 @@ void NavThruster::provideEnergy(const int &energy)
 {
     int currentEnergy = (energy > this->getMaxEnergy() ? this->getMaxEnergy() : energy);
 
-    this->getShip()->addInertia(utils::getInvertDir(this->facingDirection), currentEnergy);
+    this->getShip()->addInertia(utils::getInvertShipDir(this->facingDirection), currentEnergy);
 }
 
-constants::Direction NavThruster::getFacingDirection()
+constants::ShipDirection NavThruster::getFacingDirection()
 {
     return this->facingDirection;
 }
 
-void NavThruster::setFacingDirection(constants::Direction facingDirection)
+void NavThruster::setFacingDirection(constants::ShipDirection facingDirection)
 {
     this->facingDirection = facingDirection;
 }

@@ -55,10 +55,6 @@ double VectorialMovement::getDistance()
 
     double res = sqrt(pow(x, 2) + pow(y, 2));
 
-    if(this->goingForward){
-        res *= -1;
-    }
-
     return res;
 }
 
@@ -93,7 +89,8 @@ std::string VectorialMovement::toString()
     std::string str = "";
     str += "(" + std::to_string(this->xPos) + ", " + std::to_string(this->yPos) +
            ") -> (" + std::to_string(this->getXB()) + ", " +
-           std::to_string(this->getYB()) + ") : " + std::to_string(this->getDistance()) + "\n";
+           std::to_string(this->getYB()) + ") : " + std::to_string(this->getDistance()) +
+           " : " + std::to_string(this->getAngle()) + "° (" + (this->goingForward ? "forward)" : "backward") + "\n";
 
     return str;
 }
