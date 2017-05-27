@@ -1,12 +1,21 @@
 #ifndef UTILS
 #define UTILS
 
+/**
+ * @file utils.cpp
+ */
+
 #include "constants.cpp"
 
 #include <string>
 #include <stdexcept>
 
 namespace utils {
+    /**
+     * @brief isUnsigned. Can a string be converted to unsigned.
+     * @param s The string to test.
+     * @return true if can be converted to unsigned, false otherwise.
+     */
     inline bool isUnsigned(const std::string & s) {
         if(s.empty()) return false;
 
@@ -16,7 +25,11 @@ namespace utils {
         return (*p == 0);
     }
 
-
+    /**
+     * @brief stoui Convert a string to unsigned.
+     * @param s The string to convert.
+     * @return The converted unsigned.
+     */
     inline unsigned int stoui(const std::string& s) {
         unsigned long lresult = stoul(s, 0, 10);
         unsigned int result = lresult;
@@ -26,6 +39,11 @@ namespace utils {
         return result;
     }
 
+    /**
+     * @brief StageGeneratorStagesToStr Get the string representation of a generator stage.
+     * @param stage The stage to represent.
+     * @return The string representation of the generator stage
+     */
     inline std::string StageGeneratorStagesToStr(const constants::StageGeneratorStage & stage) {
         switch (stage) {
         case constants::NORMAL:
@@ -49,6 +67,11 @@ namespace utils {
         }
     }
 
+    /**
+     * @brief getClockwiseDirection Get the next direction clockwise.
+     * @param direction The base direction
+     * @return The next direction clockwise.
+     */
     inline constants::Direction getClockwiseDirection(constants::Direction direction) {
         switch (direction) {
         case constants::NORTH:
@@ -69,6 +92,11 @@ namespace utils {
         }
     }
 
+    /**
+     * @brief getClockwiseDirection Get the next direction counter clockwise.
+     * @param direction The base direction
+     * @return The next direction counter clockwise.
+     */
     inline constants::Direction getCounterClockwiseDirection(constants::Direction direction) {
         switch (direction) {
         case constants::NORTH:
@@ -89,6 +117,11 @@ namespace utils {
         }
     }
 
+    /**
+     * @brief getDirectionStr get the string representation of a direction.
+     * @param direction The direction.
+     * @return The string representation of direction.
+     */
     inline std::string getDirectionStr(constants::Direction direction) {
         switch (direction) {
         case constants::NORTH:
@@ -109,6 +142,11 @@ namespace utils {
         }
     }
 
+    /**
+     * @brief getInvertDir Get the invert direction.
+     * @param dir The base direction.
+     * @return The invert direction of dir.
+     */
     inline constants::Direction getInvertDir(constants::Direction dir) {
         switch (dir) {
         case constants::NORTH:
@@ -129,6 +167,11 @@ namespace utils {
         }
     }
 
+    /**
+     * @brief getInvertShipDir Get the invert ship direction.
+     * @param dir The base ship direction.
+     * @return The invert ship direction of dir.
+     */
     inline constants::ShipDirection getInvertShipDir(constants::ShipDirection dir) {
         switch (dir) {
         case constants::BOW:
