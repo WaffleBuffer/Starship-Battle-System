@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     nbproject/private/c_standard_headers_indexer.c \
     src/ship/abstractship.cpp \
     src/ship/ship.cpp \
-    src/ship/abstracthull.cpp \
     src/ship/armor.cpp \
     src/utils/constants.cpp \
     src/ship/component/abstractcomponent.cpp \
@@ -45,8 +44,6 @@ SOURCES += main.cpp\
     src/ship/component/energyComponents/generatorstage.cpp \
     src/ship/component/energyComponents/vepgenerator.cpp \
     src/ship/component/energyComponents/electronsailgenerator.cpp \
-    src/ship/basichull.cpp \
-    src/ship/reinforcedhull.cpp \
     src/ship/component/sensor.cpp \
     src/ship/component/energyprovidable.cpp \
     src/ship/component/navthruster.cpp \
@@ -72,13 +69,14 @@ SOURCES += main.cpp\
     src/utils/moveable.cpp \
     src/utils/movement.cpp \
     src/utils/vectorialmovement.cpp \
-    src/ship/iship.cpp
+    src/ship/iship.cpp \
+    src/ship/hulllevel.cpp \
+    src/ship/hull.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
     src/ship/abstractship.h \
     src/ship/ship.h \
-    src/ship/abstracthull.h \
     src/ship/armor.h \
     src/ship/component/icomponent.h \
     src/ship/component/abstractcomponent.h \
@@ -93,8 +91,6 @@ HEADERS  += mainwindow.h \
     src/ship/component/energyComponents/generatorstage.h \
     src/ship/component/energyComponents/vepgenerator.h \
     src/ship/component/energyComponents/electronsailgenerator.h \
-    src/ship/basichull.h \
-    src/ship/reinforcedhull.h \
     src/ship/component/sensor.h \
     src/ship/component/energyprovidable.h \
     src/ship/component/navthruster.h \
@@ -119,6 +115,8 @@ HEADERS  += mainwindow.h \
     src/utils/orderexception.h \
     src/utils/moveable.h \
     src/utils/movement.h \
-    src/utils/vectorialmovement.h
+    src/utils/vectorialmovement.h \
+    src/ship/hulllevel.h \
+    src/ship/hull.h
 
 FORMS    += mainwindow.ui

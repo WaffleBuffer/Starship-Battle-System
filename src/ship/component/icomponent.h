@@ -5,6 +5,7 @@
  * @file icomponent.h
  */
 
+#include "../../utils/constants.cpp"
 #include <string>
 
 class IShip;
@@ -42,6 +43,12 @@ public:
      * @return The string representation.
      */
     virtual std::string toString() = 0;
+
+    /**
+     * @brief setPart Set the part of the ship where this component is located.
+     * @param value The part to set.
+     */
+    virtual void setPart(const constants::shipParts &value) = 0;
 };
 
 #endif // ICOMPONENT_H

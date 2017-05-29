@@ -33,7 +33,7 @@ public:
      * @param rotationThruster RT.
      * @param movement The movement handler.
      */
-    AbstractShip(const std::string & name, const std::string & description, AbstractHull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
+    AbstractShip(const std::string & name, const std::string & description, Hull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
                  TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
                  RotationThruster *rotationThruster,  VectorialMovement *movement);
     virtual ~AbstractShip();
@@ -91,13 +91,6 @@ public:
      */
     RotationThruster *getRotationThruster() override;
 
-    // Components
-    /**
-     * @brief getComponents Get ship's other components.
-     * @return Ship's other components.
-     */
-    std::vector<IComponent*> *getComponents() override;
-
     /**
      * @brief toString Get the string representation.
      * @return The string representation.
@@ -118,7 +111,7 @@ public:
      * @brief addGenerator Add a generator.
      * @param generator The generator to add.
      */
-    void addGenerator(AbstractGenerator *generator);
+    void addGenerator(AbstractGenerator *generator, constants::shipParts shipPart);
 
     /**
      * @brief getSensor Get the ship's basic sensors.
@@ -166,7 +159,7 @@ private:
     /**
      * @brief hull The ship's hull.
      */
-    AbstractHull *hull;
+    Hull *hull;
     /**
      * @brief armor The ship's armor.
      */
@@ -207,12 +200,6 @@ private:
      */
     RotationThruster *rotationThruster;
 
-    // Components
-    /**
-     * @brief components The ship's other components.
-     */
-    std::vector<IComponent*> *components;
-
     /**
      * @brief generators The ship's generators.
      */
@@ -241,6 +228,29 @@ private:
      * @brief afterDamageObservers The ship's after damage observers.
      */
     std::vector<Observer *> *afterDamageObservers;
+
+    /**
+     * @brief coreComponents The components in the core part.
+     */
+    std::vector<IComponent*> *coreComponents;
+    /**
+     * @brief bowComponents The components in the bow part.
+     */
+    std::vector<IComponent*> *bowComponents;
+    /**
+     * @brief starboardComponents The components in the starboard part.
+     */
+    std::vector<IComponent*> *starboardComponents;
+    /**
+     * @brief sternComponents The components in the stern part.
+     */
+    std::vector<IComponent*> *sternComponents;
+    /**
+     * @brief portComponents The components in the port part.
+     */
+    std::vector<IComponent*> *portComponents;
+
+    void addComponentToPart(IComponent *component, constants::shipParts shipPart);
 };
 
 #endif // ABSTRACTSHIP_H

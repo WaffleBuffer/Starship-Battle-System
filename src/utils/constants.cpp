@@ -12,6 +12,11 @@
 class DiceExpression;
 
 namespace constants {
+
+    /**
+     * @brief The shipParts enum. All parts of a ship that can contain component.
+     */
+    enum shipParts {BOW_PART, STARBOARD_PART, STERN_PART, PORT_PART, CORE};
     /**
      * @brief The ShipDirection enum. In order: front, right, rear, left.
      */
@@ -39,9 +44,9 @@ namespace constants {
      */
     const int maxManoveurSpeed = 3;
     /**
-     * @brief criticalDamageThreshold. The threshold of damage amount to reach to be considered critical.
+     * @brief criticalDamageThreshold The number of critical damage roll needed for the damage to be considered critical.
      */
-    const int criticalDamageThreshold = 8;
+    const int criticalDamageThreshold = 2;
     /**
      * @brief aimingDamageThreshold. The damage amoount threshold to reach to be able to aim.
      */
@@ -50,6 +55,11 @@ namespace constants {
      * @brief aimRoll The roll used to aim.
      */
     const std::string aimRoll = "1D10";
+
+    /**
+     * @brief criticalDamageRoll The value on a damage roll that count as critical.
+     */
+    const int criticalDamageRoll = 1;
 }
 
 #endif

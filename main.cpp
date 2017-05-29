@@ -5,7 +5,6 @@
 #include "src/ship/component/navthruster.h"
 #include "src/ship/component/translationthruster.h"
 #include "src/ship/component/rotationthruster.h"
-#include "src/ship/basichull.h"
 #include "src/ship/component/energyComponents/generatorstage.h"
 #include "src/ship/component/energyComponents/stagegenerator.h"
 #include "src/ship/component/energyComponents/stoppedgeneratorstage.h"
@@ -18,6 +17,8 @@
 #include "src/ship/armor.h"
 #include "src/ship/damage.h"
 #include "src/ship/component/energyComponents/stabilizator.h"
+#include "src/ship/hull.h"
+#include "src/ship/hulllevel.h"
 
 #include <string>
 #include <iostream>
@@ -49,7 +50,16 @@ int main(int argc, char *argv[])
     cout << "Building ship..." << endl;
 
     cout << "Building hull..." << endl;
-    AbstractHull *hull = new BasicHull(40, ship);
+    std::vector<HullLevel*> *hullLevels = new vector<HullLevel*>();
+    for(size_t i = 0; i < 4; ++i) {
+        if(i < 3) {
+            hullLevels->push_back(new HullLevel(5));
+        }
+        else {
+            hullLevels->push_back(new HullLevel(4));
+        }
+    }
+    Hull *hull = new Hull(ship, hullLevels);
 
     cout << "Building armor..." << endl;
     Armor *armor = new Armor(2,2,2,2);
@@ -77,7 +87,7 @@ int main(int argc, char *argv[])
     generator->addStage(new GeneratorStage(constants::NORMAL, new DiceExpression("D10"), generator));
     //generator->addStage(new GeneratorStage(constants::CRITICAL, new DiceExpression("1D6 + 3"), generator));
     generator->addStage(new StoppedGeneratorStage(generator, new DiceExpression("D6 + 2"), 4));
-    ship->addGenerator(generator);
+    ship->addGenerator(generator, constants::CORE);
 
     Stabilizator *stab1 = new Stabilizator("Basic stabilizator", "basic stabilizator", nullptr, 8, nullptr);
     generator->addStabilizator(stab1);
@@ -127,9 +137,9 @@ int main(int argc, char *argv[])
 
     cout << "Watch out an asteroid !" << endl << "Too late! Brace for impact!" << endl;
 
-    Damage *impact = new Damage(5, constants::BOW);
+    Damage impact(5, constants::BOW);
 
-    ship->getDamaged(impact);
+    ship->getDamaged(&impact);
 
     cout << "Report !" << endl << ship->toString() << endl;
 

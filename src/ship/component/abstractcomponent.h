@@ -6,6 +6,7 @@
  */
 
 #include "icomponent.h"
+#include "../../utils/constants.cpp"
 
 /**
  * @brief The AbstractComponent class. An abstract component.
@@ -48,6 +49,13 @@ public:
      * @return The string representation.
      */
     virtual std::string toString() override;
+
+    /**
+     * @brief setPart Set the part of the ship where this component is located.
+     * @param value The part to set.
+     */
+    void setPart(const constants::shipParts &value) override;
+
 private:
     /**
      * @brief name The component's name.
@@ -61,6 +69,11 @@ private:
      * @brief ship The component's ship.
      */
     IShip *ship;
+
+    /**
+     * @brief part The part of the ship where this component is located.
+     */
+    constants::shipParts part;
 };
 
 #endif // ABSTRACTCOMPONENT_H

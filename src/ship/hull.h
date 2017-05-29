@@ -2,19 +2,22 @@
 #define HULL_H
 
 /**
- * @file abstracthull.h
+ * @file hull.h
  */
 
 #include "../utils/observer.h"
+#include "component/abstractcomponent.h"
 
 #include <string>
+#include <vector>
 
 class IShip;
+class HullLevel;
 
 /**
  * @brief The AbstractHull class. Abstract class.
  */
-class AbstractHull: public Observer
+class Hull: public Observer, public AbstractComponent
 {
 public:
     /**
@@ -22,7 +25,8 @@ public:
      * @param maxPoints The maximum number of hull points.
      * @param ship The ship of this hull.
      */
-    AbstractHull(const int & maxPoints, IShip *ship);
+    Hull(IShip *ship, std::vector<HullLevel*> *hullLevels);
+    ~Hull();
     /**
      * @brief toString Get the string representaton.
      * @return The string representation.
@@ -38,24 +42,32 @@ public:
      * @return The current number of hull points.
      */
     int getCurrentPoints();
+
     /**
-     * @brief getShip Get the ship of the hull.
-     * @return The ship of the hull.
+     * @brief notify Notify this. Used to know when damage are taken.
+     * @param origin The origin (the ship).
+     * @param arg The argument (The damage object).
      */
-    IShip *getShip();
+    void notify(Observable *origin, MyObject *arg) override;
+
+    /**
+     * @brief deteriorateHull Destroy one level of hull.
+     */
+    void deteriorateHull();
 private:
     /**
-     * @brief maxPoints The maximum number of hull points.
+     * @brief hullLevels All the levels of the hull.
      */
-    int maxPoints;
+    std::vector<HullLevel*> *hullLevels;
+
     /**
-     * @brief currentPoints The current number of hull points
+     * @brief currentLevel The current hull level.
      */
-    int currentPoints;
+    HullLevel *currentLevel;
     /**
-     * @brief ship The ship of the hull.
+     * @brief currentLevelIndex The index of the current hull level.
      */
-    IShip *ship;
+    size_t currentLevelIndex;
 };
 
 #endif // HULL_H

@@ -33,3 +33,8 @@ std::string AbstractComponent::toString()
     std::string res = this->getName() + " " + this->getDescription();
     return res;
 }
+
+void AbstractComponent::setPart(const constants::shipParts &value)
+{
+    part = value;
+}

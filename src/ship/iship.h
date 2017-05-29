@@ -17,7 +17,7 @@ class IComponent;
 class NavThruster;
 class TranslationThruster;
 class RotationThruster;
-class AbstractHull;
+class Hull;
 class AbstractGenerator;
 class Sensor;
 class ShipControl;
@@ -91,13 +91,6 @@ public:
      */
     virtual RotationThruster *getRotationThruster() = 0;
 
-    // Components
-    /**
-     * @brief getComponents Get ship's other components.
-     * @return Ship's other components.
-     */
-    virtual std::vector<IComponent*> *getComponents() = 0;
-
     /**
      * @brief toString Get the string representation.
      * @return The string representation.
@@ -119,7 +112,7 @@ public:
      * @brief addGenerator Add a generator.
      * @param generator The generator to add.
      */
-    virtual void addGenerator(AbstractGenerator *generator) = 0;
+    virtual void addGenerator(AbstractGenerator *generator, constants::shipParts shipPart) = 0;
 
     /**
      * @brief getSensor Get the ship's basic sensors.

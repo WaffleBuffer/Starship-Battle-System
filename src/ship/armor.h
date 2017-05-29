@@ -6,13 +6,14 @@
  */
 
 #include "../utils/observer.h"
+#include "component/abstractcomponent.h"
 
 #include <string>
 
 /**
  * @brief The Armor class. The armor value of a ship on each side.
  */
-class Armor: public Observer
+class Armor: public Observer, public AbstractComponent
 {
 public:
     /**
