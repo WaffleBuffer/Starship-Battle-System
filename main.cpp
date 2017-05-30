@@ -19,12 +19,15 @@
 #include "src/ship/component/energyComponents/stabilizator.h"
 #include "src/ship/hull.h"
 #include "src/ship/hulllevel.h"
-
-#include <string>
+#include "src/thirdParty/pugixml-1.8/src/pugixml.hpp"
+#include "src/utils/vectorialmovement.h"
 #include <iostream>
 #include <time.h>
 
 using namespace std;
+using namespace pugi;
+
+class VectorialMovement;
 
 int main(int argc, char *argv[])
 {
@@ -168,6 +171,18 @@ int main(int argc, char *argv[])
     }
 
     cout << "ship : " << endl << ship->toString() << endl;
+
+    cout << "**********************************" << endl
+         << "*            XML Tests           *" << endl
+         << "**********************************" << endl;
+
+    xml_document doc;
+    doc.load_string("");
+    xml_node node = doc.append_child("ship");
+    ship->getMovement()->saveXML(node);
+
+    cout << "Saving ship's file : " << endl;
+    doc.save(std::cout);
 
     delete(ship);
 

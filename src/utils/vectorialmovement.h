@@ -115,6 +115,11 @@ public:
      */
     void setgoingForward(bool value);
 
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
 
 private:
 

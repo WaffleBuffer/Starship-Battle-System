@@ -104,3 +104,33 @@ void VectorialMovement::setgoingForward(bool value)
 {
     goingForward = value;
 }
+
+void VectorialMovement::saveXML(pugi::xml_node &root)
+{
+    pugi::xml_node thisRoot = root.append_child("vectorial_movement");
+
+    // Pos
+    pugi::xml_node node = thisRoot.append_child("pos");
+
+    pugi::xml_attribute attr = node.append_attribute("xPos");
+    attr.set_value(this->xPos);
+    attr = node.append_attribute("yPos");
+    attr.set_value(this->yPos);
+
+    // Offset
+    node = thisRoot.append_child("offset");
+    attr = node.append_attribute("xOffset");
+    attr.set_value(this->xOffset);
+    attr = node.append_attribute("yOffset");
+    attr.set_value(this->yOffset);
+
+    // Angle
+    node = thisRoot.append_child("angle");
+    attr = node.append_attribute("angle");
+    attr.set_value(this->angle);
+
+    // GoingForward
+    node = thisRoot.append_child("goingForward");
+    attr = node.append_attribute("goingForward");
+    attr.set_value(this->goingForward);
+}

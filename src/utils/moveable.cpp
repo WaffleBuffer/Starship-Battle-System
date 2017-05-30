@@ -1,5 +1,5 @@
-#include "vectorialmovement.h"
 #include "constants.cpp"
+#include "vectorialmovement.h"
 
 #include <cmath>
 #include <stdexcept>

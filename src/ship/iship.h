@@ -23,7 +23,6 @@ class Sensor;
 class ShipControl;
 class Observer;
 class Damage;
-class VectorialMovement;
 
 /**
  * @brief The IShip class. The interface. Not very usefull at the moment but who knows.

@@ -6,11 +6,12 @@
  */
 
 #include "moveable.h"
+#include "../fileManager/saveHandler/xmlsavable.h"
 
 /**
  * @brief The Movement class A type of movement on a plan. Abstract class
  */
-class Movement
+class Movement: public XMLSavable
 {
 public:
     /**

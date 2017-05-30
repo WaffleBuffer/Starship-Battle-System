@@ -72,7 +72,8 @@ SOURCES += main.cpp\
     src/ship/iship.cpp \
     src/ship/hulllevel.cpp \
     src/ship/hull.cpp \
-    src/thirdParty/pugixml-1.8/src/pugixml.cpp
+    src/thirdParty/pugixml-1.8/src/pugixml.cpp \
+    src/fileManager/saveHandler/xmlsavable.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -120,6 +121,7 @@ HEADERS  += mainwindow.h \
     src/ship/hulllevel.h \
     src/ship/hull.h \
     src/thirdParty/pugixml-1.8/src/pugixml.hpp \
-    src/thirdParty/pugixml-1.8/src/pugiconfig.hpp
+    src/thirdParty/pugixml-1.8/src/pugiconfig.hpp \
+    src/fileManager/saveHandler/xmlsavable.h
 
 FORMS    += mainwindow.ui
