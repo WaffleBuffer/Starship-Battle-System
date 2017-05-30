@@ -115,12 +115,6 @@ public:
     virtual void addGenerator(AbstractGenerator *generator, constants::shipParts shipPart) = 0;
 
     /**
-     * @brief getSensor Get the ship's basic sensors.
-     * @return The ship's basic sensors.
-     */
-    virtual Sensor *getSensor() = 0;
-
-    /**
      * @brief getControl Get the ship's control.
      * @return The ship's control.
      */
@@ -141,6 +135,13 @@ public:
      * @brief destroy Destroy this ship (not delete).
      */
     virtual void destroy() = 0;
+
+    /**
+     * @brief addSensors Add some sensors.
+     * @param sensor The sensor to add.
+     * @param shipPart The ship part where you want to add the sensors.
+     */
+    virtual void addSensors(Sensor *sensor, constants::shipParts shipPart) = 0;
 };
 
 #endif // ISHIP_H

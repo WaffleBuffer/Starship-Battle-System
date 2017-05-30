@@ -7,7 +7,7 @@ Sensor::Sensor(const std::string &name, const std::string &description, IShip *s
 
 std::string Sensor::toString()
 {
-    std::string res = "";
+    std::string res = "sensor : ";
     res += std::to_string(this->currentLevel) + " / " + std::to_string(this->maxLevel);
     return res;
 }

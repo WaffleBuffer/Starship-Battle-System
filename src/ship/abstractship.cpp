@@ -24,7 +24,7 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     :IShip(movement), armor(armor), stageGenerators(new std::vector<StageGenerator*>()), damageObservers(new std::vector<Observer *>()),
       afterDamageObservers(new std::vector<Observer *>()),
       coreComponents(new std::vector<IComponent*>()), bowComponents(new std::vector<IComponent*>()), starboardComponents(new std::vector<IComponent*>()),
-      sternComponents(new std::vector<IComponent*>()), portComponents(new std::vector<IComponent*>())
+      sternComponents(new std::vector<IComponent*>()), portComponents(new std::vector<IComponent*>()), sensors(new std::vector<Sensor*>())
       {
 
     this->name = name;
@@ -34,43 +34,34 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->hull = hull;
     this->addAfterDamageObserver(this->hull);
     this->addComponentToPart(hull, constants::CORE);
-    this->sensor = baseSensor;
+    this->addSensors(baseSensor, constants::CORE);
     this->addComponentToPart(armor, constants::CORE);
-    baseSensor->setShip(this);
-    this->addComponentToPart(sensor, constants::CORE);
 
     // Navigation thrusters
     this->forwardThruster = forwardThruster;
-    forwardThruster->setShip(this);
     forwardThruster->setFacingDirection(constants::BOW);
     this->addComponentToPart(forwardThruster, constants::CORE);
     this->backThruster = backThruster;
-    backThruster->setShip(this);
     backThruster->setFacingDirection(constants::STERN);
     this->addComponentToPart(backThruster, constants::CORE);
 
     // Maneuver thrusters
     // Translation thrusters
     this->leftTThruster = leftTThruster;
-    leftTThruster->setShip(this);
     leftTThruster->setFacingDirection(constants::PORT);
     this->addComponentToPart(leftTThruster, constants::CORE);
     this->frontTThruster = frontTThruster;
-    frontTThruster->setShip(this);
     frontTThruster->setFacingDirection(constants::BOW);
     this->addComponentToPart(frontTThruster, constants::CORE);
     this->rightTThruster = rightTThruster;
-    rightTThruster->setShip(this);
     rightTThruster->setFacingDirection(constants::STARBOARD);
     this->addComponentToPart(rightTThruster, constants::CORE);
     this->backTThruster = backTThruster;
-    backTThruster->setShip(this);
     backTThruster->setFacingDirection(constants::STERN);
     this->addComponentToPart(backTThruster, constants::CORE);
 
     // Rotation thrusters
     this->rotationThruster = rotationThruster;
-    rotationThruster->setShip(this);
     this->addComponentToPart(rotationThruster, constants::CORE);
 
     this->generators = new std::vector<AbstractGenerator*>();
@@ -99,8 +90,6 @@ AbstractShip::~AbstractShip() {
     for(size_t i = 0; i < this->generators->size(); ++i) {
         delete(this->generators->at(i));
     }*/
-    delete(this->generators);
-    delete(this->stageGenerators);
 
     for(size_t i = 0; i < this->coreComponents->size(); ++i) {
         delete(this->coreComponents->at(i));
@@ -127,8 +116,11 @@ AbstractShip::~AbstractShip() {
     }
     delete(this->portComponents);
 
+    delete(this->generators);
+    delete(this->stageGenerators);
     delete(this->damageObservers);
     delete(this->afterDamageObservers);
+    delete(this->sensors);
 
 }
 
@@ -173,6 +165,7 @@ RotationThruster *AbstractShip::getRotationThruster() {
 }
 
 void AbstractShip::addComponentToPart(IComponent *component, constants::shipParts shipPart) {
+    component->setShip(this);
     switch (shipPart) {
     case constants::CORE:
         this->coreComponents->push_back(component);
@@ -299,13 +292,6 @@ void AbstractShip::addGenerator(AbstractGenerator *generator, constants::shipPar
     this->addComponentToPart(generator, shipPart);
 }
 
-Sensor *AbstractShip::getSensor()
-{
-    return this->sensor;
-}
-
-
-
 ShipControl *AbstractShip::getControl()
 {
     return this->control;
@@ -355,4 +341,10 @@ void AbstractShip::addAfterDamageObserver(Observer *observer)
 void AbstractShip::destroy()
 {
     std::cout << "Oh no, " << this->getName() << " is dead (not yet implemented)" << std::endl;
+}
+
+void AbstractShip::addSensors(Sensor *sensor, constants::shipParts shipPart)
+{
+    this->sensors->push_back(sensor);
+    this->addComponentToPart(sensor, shipPart);
 }

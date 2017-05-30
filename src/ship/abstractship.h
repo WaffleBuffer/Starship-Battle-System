@@ -114,12 +114,6 @@ public:
     void addGenerator(AbstractGenerator *generator, constants::shipParts shipPart);
 
     /**
-     * @brief getSensor Get the ship's basic sensors.
-     * @return The ship's basic sensors.
-     */
-    Sensor *getSensor() override;
-
-    /**
      * @brief getControl Get the ship's control.
      * @return The ship's control.
      */
@@ -145,6 +139,13 @@ public:
      * @brief destroy Destroy this ship (not delete).
      */
     void destroy() override;
+
+    /**
+     * @brief addSensors Add some sensors.
+     * @param sensor The sensor to add.
+     * @param shipPart The ship part where you want to add the sensors.
+     */
+    void addSensors(Sensor *sensor, constants::shipParts shipPart) override;
 
 private:
     /**
@@ -211,11 +212,6 @@ private:
     std::vector<StageGenerator*> *stageGenerators;
 
     /**
-     * @brief sensor The ship's sensor.
-     */
-    Sensor *sensor;
-
-    /**
      * @brief control The ship's control.
      */
     ShipControl *control;
@@ -250,7 +246,17 @@ private:
      */
     std::vector<IComponent*> *portComponents;
 
+    /**
+     * @brief addComponentToPart Add a component to a part.
+     * @param component The component to add.
+     * @param shipPart The part where you want to add the component.
+     */
     void addComponentToPart(IComponent *component, constants::shipParts shipPart);
+
+    /**
+     * @brief sensors the ship's sensors.
+     */
+    std::vector<Sensor*> *sensors;
 };
 
 #endif // ABSTRACTSHIP_H
