@@ -7,6 +7,7 @@
 
 #include "moveable.h"
 #include "../fileManager/saveHandler/xmlsavable.h"
+#include <string>
 
 /**
  * @brief The Movement class A type of movement on a plan. Abstract class
@@ -18,7 +19,7 @@ public:
      * @brief Movement The constructor
      * @param movingObject The moving object (just a link, nothing should be done on it).
      */
-    Movement(Moveable *movingObject);
+    Movement(Moveable *movingObject, const char*rootName);
     virtual ~Movement() {}
 
     /**

@@ -7,6 +7,7 @@
 
 #include "../utils/observer.h"
 #include "component/abstractcomponent.h"
+#include "../fileManager/saveHandler/xmlsavable.h"
 
 #include <string>
 #include <vector>
@@ -17,7 +18,7 @@ class HullLevel;
 /**
  * @brief The AbstractHull class. Abstract class.
  */
-class Hull: public Observer, public AbstractComponent
+class Hull: public Observer, public AbstractComponent, public XMLSavable
 {
 public:
     /**
@@ -32,16 +33,6 @@ public:
      * @return The string representation.
      */
     std::string toString();
-    /**
-     * @brief setCurrentPoints Set the current number of hull points.
-     * @param points The number of current points to set.
-     */
-    void setCurrentPoints(const int & points);
-    /**
-     * @brief getCurrentPoints Get the current number of hull points.
-     * @return The current number of hull points.
-     */
-    int getCurrentPoints();
 
     /**
      * @brief notify Notify this. Used to know when damage are taken.
@@ -54,6 +45,27 @@ public:
      * @brief deteriorateHull Destroy one level of hull.
      */
     void deteriorateHull();
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a Hull from an XML node
+     * @param root The xml node that should contain the Hull informations.
+     * @param ship The ship that will use this hull.
+     * @return The created Hull.
+     */
+    static Hull*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the hull XML root name.
+     * @return The hull XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief hullLevels All the levels of the hull.
@@ -68,6 +80,11 @@ private:
      * @brief currentLevelIndex The index of the current hull level.
      */
     size_t currentLevelIndex;
+
+    /**
+     * @brief rootName The name of the XML root for a Hull
+     */
+    static const char* rootName;
 };
 
 #endif // HULL_H

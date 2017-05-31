@@ -6,7 +6,7 @@
 #include "component/navthruster.h"
 #include "component/rotationthruster.h"
 #include "../utils/utils.cpp"
-#include "../utils/shipexception.h"
+#include "../exception/shipexception.h"
 #include "shipcontrol.h"
 #include "../utils/observer.h"
 #include "../ship/damage.h"

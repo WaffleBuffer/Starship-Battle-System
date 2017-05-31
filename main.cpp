@@ -12,8 +12,8 @@
 #include "src/ship/ship.h"
 #include "src/order/provideenergyorder.h"
 #include "src/ship/shipcontrol.h"
-#include "src/utils/shipexception.h"
-#include "src/utils/orderexception.h"
+#include "src/exception/shipexception.h"
+#include "src/exception/orderexception.h"
 #include "src/ship/armor.h"
 #include "src/ship/damage.h"
 #include "src/ship/component/energyComponents/stabilizator.h"
@@ -21,6 +21,7 @@
 #include "src/ship/hulllevel.h"
 #include "src/thirdParty/pugixml-1.8/src/pugixml.hpp"
 #include "src/utils/vectorialmovement.h"
+
 #include <iostream>
 #include <time.h>
 
@@ -180,9 +181,25 @@ int main(int argc, char *argv[])
     doc.load_string("");
     xml_node node = doc.append_child("ship");
     ship->getMovement()->saveXML(node);
+    hull->saveXML(node);
 
     cout << "Saving ship's file : " << endl;
     doc.save(std::cout);
+    doc.save_file("test.xml");
+
+    xml_document fileDoc;
+    if (fileDoc.load_file("test.xml")) {
+        VectorialMovement *xmlMovement = VectorialMovement::loadFromXML(ship, fileDoc.child("ship").child("vectorial_movement"));
+        cout << xmlMovement->toString() << endl;
+        delete(xmlMovement);
+
+        Hull *xmlHull = Hull::loadFromXML(ship, fileDoc.child("ship").child("hull"));
+        cout << xmlHull->toString() << endl;
+        delete(xmlHull);
+    }
+    else {
+        cout << "no test.xml" << endl;
+    }
 
     delete(ship);
 

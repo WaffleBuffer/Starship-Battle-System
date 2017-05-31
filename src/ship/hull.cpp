@@ -3,9 +3,14 @@
 #include "hulllevel.h"
 #include "iship.h"
 #include "damage.h"
+#include "../exception/xmlexception.h"
+#include "../thirdParty/pugixml-1.8/src/pugixml.hpp"
+#include <string.h>
+
+const char* Hull::rootName = "hull";
 
 Hull::Hull(IShip *ship, std::vector<HullLevel *> *hullLevels)
-    :AbstractComponent("", "", ship), hullLevels(hullLevels), currentLevel(hullLevels->at(0)), currentLevelIndex(0){
+    :AbstractComponent("", "", ship), XMLSavable(Hull::getRootName()), hullLevels(hullLevels), currentLevel(hullLevels->at(0)), currentLevelIndex(0){
 }
 
 Hull::~Hull()
@@ -56,4 +61,36 @@ void Hull::deteriorateHull()
         this->currentLevelIndex++;
         this->currentLevel = this->hullLevels->at(this->currentLevelIndex);
     }
+}
+
+void Hull::saveXML(pugi::xml_node &root)
+{
+    pugi::xml_node thisRoot = root.append_child(Hull::getRootName());
+    thisRoot.append_attribute("currentLevelIndex").set_value(this->currentLevelIndex);
+
+    for(size_t i = 0; i < this->hullLevels->size(); ++i) {
+        this->hullLevels->at(i)->saveXML(thisRoot);
+    }
+}
+
+Hull *Hull::loadFromXML(IShip *ship, const pugi::xml_node &root)
+{
+    if(strcmp(root.name(), Hull::getRootName()) != 0)
+        throw XMLException("Wrong node to load for Hull : " + std::string(root.name()));
+
+    std::vector<HullLevel *> *hullLevels = new std::vector<HullLevel *>();
+    for(pugi::xml_node node = root.child(HullLevel::getRootName()); node; node = node.next_sibling()) {
+        hullLevels->push_back(HullLevel::loadFromXML(node));
+    }
+
+    Hull *hull = new Hull(ship, hullLevels);
+    hull->currentLevelIndex = root.attribute("currentLevelIndex").as_uint();
+    hull->currentLevel = hull->hullLevels->at(hull->currentLevelIndex);
+
+    return hull;
+}
+
+const char *Hull::getRootName()
+{
+    return rootName;
 }

@@ -1,9 +1,14 @@
 #include "vectorialmovement.h"
 
+#include "../exception/xmlexception.h"
+#include "../thirdParty/pugixml-1.8/src/pugixml.hpp"
 #include <cmath>
+#include <string.h>
+
+const char* VectorialMovement::rootName = "vectorial_movement";
 
 VectorialMovement::VectorialMovement(Moveable *movingObject, const int &baseAngle)
-    :Movement(movingObject), xPos(0), yPos(0), xOffset(0), yOffset(0), angle(baseAngle),
+    :Movement(movingObject, VectorialMovement::getRootName()), xPos(0), yPos(0), xOffset(0), yOffset(0), angle(baseAngle),
     goingForward(false){
 
 }
@@ -107,7 +112,7 @@ void VectorialMovement::setgoingForward(bool value)
 
 void VectorialMovement::saveXML(pugi::xml_node &root)
 {
-    pugi::xml_node thisRoot = root.append_child("vectorial_movement");
+    pugi::xml_node thisRoot = root.append_child(VectorialMovement::getRootName());
 
     // Pos
     pugi::xml_node node = thisRoot.append_child("pos");
@@ -125,12 +130,35 @@ void VectorialMovement::saveXML(pugi::xml_node &root)
     attr.set_value(this->yOffset);
 
     // Angle
-    node = thisRoot.append_child("angle");
-    attr = node.append_attribute("angle");
+    attr = thisRoot.append_attribute("angle");
     attr.set_value(this->angle);
 
     // GoingForward
-    node = thisRoot.append_child("goingForward");
-    attr = node.append_attribute("goingForward");
+    attr = thisRoot.append_attribute("goingForward");
     attr.set_value(this->goingForward);
+}
+
+VectorialMovement *VectorialMovement::loadFromXML(Moveable *movingObject, const pugi::xml_node &root)
+{
+    if(strcmp(root.name(), VectorialMovement::getRootName()) != 0)
+        throw XMLException("Wrong node to load for Vectorial Movement : " + std::string(root.name()));
+
+    VectorialMovement *movement = new VectorialMovement(movingObject, root.attribute("angle").as_double());
+
+    pugi::xml_node node = root.child("pos");
+    movement->setXPos(node.attribute("xPos").as_double());
+    movement->setYPos(node.attribute("yPos").as_double());
+
+    node = root.child("offset");
+    movement->setXOffset(node.attribute("xOffset").as_double());
+    movement->setYOffset(node.attribute("yOffset").as_double());
+
+    movement->setgoingForward(root.attribute("goingForward").as_bool());
+
+    return movement;
+}
+
+const char*VectorialMovement::getRootName()
+{
+    return VectorialMovement::rootName;
 }

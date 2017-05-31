@@ -50,7 +50,7 @@ SOURCES += main.cpp\
     src/ship/component/translationthruster.cpp \
     src/ship/component/energyComponents/stoppedgeneratorstage.cpp \
     src/ship/component/rotationthruster.cpp \
-    src/utils/shipexception.cpp \
+    src/exception/shipexception.cpp \
     src/order/shiporder.cpp \
     src/ship/shipcontrol.cpp \
     src/order/provideenergyorder.cpp \
@@ -65,7 +65,7 @@ SOURCES += main.cpp\
     src/ship/component/weapons/abstractweapon.cpp \
     src/ship/component/energyComponents/accumulator.cpp \
     src/ship/component/energyComponents/stabilizator.cpp \
-    src/utils/orderexception.cpp \
+    src/exception/orderexception.cpp \
     src/utils/moveable.cpp \
     src/utils/movement.cpp \
     src/utils/vectorialmovement.cpp \
@@ -73,7 +73,8 @@ SOURCES += main.cpp\
     src/ship/hulllevel.cpp \
     src/ship/hull.cpp \
     src/thirdParty/pugixml-1.8/src/pugixml.cpp \
-    src/fileManager/saveHandler/xmlsavable.cpp
+    src/fileManager/saveHandler/xmlsavable.cpp \
+    src/exception/xmlexception.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -99,7 +100,7 @@ HEADERS  += mainwindow.h \
     src/ship/component/translationthruster.h \
     src/ship/component/energyComponents/stoppedgeneratorstage.h \
     src/ship/component/rotationthruster.h \
-    src/utils/shipexception.h \
+    src/exception/shipexception.h \
     src/order/shiporder.h \
     src/ship/shipcontrol.h \
     src/order/provideenergyorder.h \
@@ -114,7 +115,7 @@ HEADERS  += mainwindow.h \
     src/ship/component/weapons/abstractweapon.h \
     src/ship/component/energyComponents/accumulator.h \
     src/ship/component/energyComponents/stabilizator.h \
-    src/utils/orderexception.h \
+    src/exception/orderexception.h \
     src/utils/moveable.h \
     src/utils/movement.h \
     src/utils/vectorialmovement.h \
@@ -122,6 +123,7 @@ HEADERS  += mainwindow.h \
     src/ship/hull.h \
     src/thirdParty/pugixml-1.8/src/pugixml.hpp \
     src/thirdParty/pugixml-1.8/src/pugiconfig.hpp \
-    src/fileManager/saveHandler/xmlsavable.h
+    src/fileManager/saveHandler/xmlsavable.h \
+    src/exception/xmlexception.h
 
 FORMS    += mainwindow.ui

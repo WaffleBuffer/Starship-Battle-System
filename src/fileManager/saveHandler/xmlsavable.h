@@ -6,7 +6,6 @@
  */
 
 #include "../../thirdParty/pugixml-1.8/src/pugixml.hpp"
-
 /**
  * @brief The XMLSavable class. An object that can be saved in an XML format.
  */
@@ -16,12 +15,16 @@ public:
     /**
      * @brief XMLSavable The constructor (not used).
      */
-    XMLSavable();
+    XMLSavable(const char*rootName);
     /**
      * @brief saveXML Save this object in an XML format.
      * @param root The root xml tag that should contain this object.
      */
     virtual void saveXML(pugi::xml_node &root) = 0;
+    const char*getRootName() const;
+
+private:
+    const char*rootName;
 };
 
 #endif // XMLSAVABLE_H

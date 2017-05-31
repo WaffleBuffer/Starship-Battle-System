@@ -6,6 +6,7 @@
  */
 
 #include "movement.h"
+#include <string>
 
 /**
  * @brief The VectorialMovement class. A vector on a cartesian plan.
@@ -121,6 +122,19 @@ public:
      */
     void saveXML(pugi::xml_node &root) override;
 
+    /**
+     * @brief loadFromXML Create a VectorialMovement from an XML node
+     * @param root The xml node that should contain the vectorial movement information.
+     * @return The created vectorial movement.
+     */
+    static VectorialMovement *loadFromXML(Moveable *movingObject, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the XML root name for a vectorial movement.
+     * @return "vectorial_movement"
+     */
+    static const char *getRootName();
+
 private:
 
     /**
@@ -150,6 +164,11 @@ private:
      * @brief goingForward Is the ship going forward. TODO: move this in IShip.
      */
     bool goingForward;
+
+    /**
+     * @brief rootName The name of the XML root for a vectorial movement : "vectorial_movement"
+     */
+    static const char* rootName;
 };
 
 #endif // VECTORIALMOVEMENT_H

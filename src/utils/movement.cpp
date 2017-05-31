@@ -1,7 +1,7 @@
 #include "movement.h"
 
-Movement::Movement(Moveable *movingObject)
-    :movingObject(movingObject){
+Movement::Movement(Moveable *movingObject, const char *rootName)
+    :XMLSavable(rootName), movingObject(movingObject){
 
 }
 
