@@ -27,6 +27,27 @@ public:
      * @return The string representation.
      */
     std::string toString() override;
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a Sensor from an XML node
+     * @param root The xml node that should contain the Sensor informations.
+     * @param ship The ship that will use this sensor.
+     * @return The created Sensor.
+     */
+    static Sensor*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the sensor XML root name.
+     * @return The hull XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief currentLevel The current detection level.
@@ -36,6 +57,11 @@ private:
      * @brief maxLevel The maximum detection level.
      */
     const int maxLevel;
+
+    /**
+     * @brief rootName The name of the XML root for a Sensor
+     */
+    static const char* rootName;
 };
 
 #endif // SENSOR_H

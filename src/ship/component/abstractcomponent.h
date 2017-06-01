@@ -56,6 +56,21 @@ public:
      */
     void setPart(const constants::shipParts &value) override;
 
+    /**
+     * @brief saveXML Save the AbstractComponent infos of an AbstractComponent.
+     * @param root The root xml tag that should contain this object.
+     * @param componentToLoad The AbstractComponent from which you want to save infos.
+     */
+    static void saveAbstractXML(pugi::xml_node &root, AbstractComponent *componentToLoad);
+
+    /**
+     * @brief loadFromXML Load AbstractComponent infos into an AbstractComponent.
+     * @param root The xml node that should contain the AbstractComponent informations.
+     * @param ship The ship that will use this AbstractComponent.
+     * @param componentToLoad The AbstractComponent into which you want to save infos.
+     */
+    static void loadAbstractFromXML(IShip *ship, const pugi::xml_node &root, AbstractComponent *componentToLoad);
+
 private:
     /**
      * @brief name The component's name.

@@ -18,7 +18,7 @@ class HullLevel;
 /**
  * @brief The AbstractHull class. Abstract class.
  */
-class Hull: public Observer, public AbstractComponent, public XMLSavable
+class Hull: public Observer, public AbstractComponent
 {
 public:
     /**

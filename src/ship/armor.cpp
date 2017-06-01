@@ -2,6 +2,10 @@
 
 #include "../ship/damage.h"
 #include "iship.h"
+#include "../exception/xmlexception.h"
+#include <string.h>
+
+const char* Armor::rootName = "armor";
 
 Armor::Armor(const int &bowMax, const int &starMax, const int &sternMax, const int &portMax)
     :AbstractComponent("", "", nullptr), bowMax(bowMax), bowCurrentValue(bowMax), starBoardMax(starMax), starBoardCurrentValue(starMax),
@@ -52,4 +56,52 @@ std::string Armor::toString()
     res += "{" + std::to_string(this->bowCurrentValue) + ", " + std::to_string(this->starBoardCurrentValue) +
            ", " + std::to_string(this->sternCurrentValue) + ", " + std::to_string(this->portCurrentValue) + "}";
     return res;
+}
+
+void Armor::saveXML(pugi::xml_node &root)
+{
+    pugi::xml_node thisRoot = root.append_child(Armor::getRootName());
+    AbstractComponent::saveAbstractXML(thisRoot, this);
+
+    pugi::xml_node node = thisRoot.append_child("bow");
+    node.append_attribute("max").set_value(this->bowMax);
+    node.append_attribute("current").set_value(this->bowCurrentValue);
+    node = thisRoot.append_child("starboard");
+    node.append_attribute("max").set_value(this->starBoardMax);
+    node.append_attribute("current").set_value(this->starBoardCurrentValue);
+    node = thisRoot.append_child("stern");
+    node.append_attribute("max").set_value(this->sternMax);
+    node.append_attribute("current").set_value(this->sternCurrentValue);
+    node = thisRoot.append_child("port");
+    node.append_attribute("max").set_value(this->portMax);
+    node.append_attribute("current").set_value(this->portCurrentValue);
+}
+
+Armor *Armor::loadFromXML(IShip *ship, const pugi::xml_node &root)
+{
+    if(strcmp(root.name(), Armor::getRootName()) != 0)
+        throw XMLException("Wrong node to load for Hull : " + std::string(root.name()));
+
+    Armor *armor = new Armor(0,0,0,0);
+    pugi::xml_node node;
+
+    node = root.child("bow");
+    armor->bowMax = node.attribute("max").as_int();
+    armor->bowCurrentValue = node.attribute("current").as_int();
+    node = root.child("starboard");
+    armor->starBoardMax = node.attribute("max").as_int();
+    armor->starBoardCurrentValue = node.attribute("current").as_int();
+    node = root.child("stern");
+    armor->sternMax = node.attribute("max").as_int();
+    armor->sternCurrentValue = node.attribute("current").as_int();
+    node = root.child("port");
+    armor->portMax = node.attribute("max").as_int();
+    armor->portCurrentValue = node.attribute("current").as_int();
+
+    return armor;
+}
+
+const char *Armor::getRootName()
+{
+    return rootName;
 }

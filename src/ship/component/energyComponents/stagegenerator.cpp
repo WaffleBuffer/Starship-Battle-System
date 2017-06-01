@@ -6,7 +6,7 @@
 #include "../../../utils/weaponattack.h"
 #include "../weapons/torpedo.h"
 #include "stabilizator.h"
-#include "../../../utils/shipexception.h"
+#include "../../../exception/shipexception.h"
 
 StageGenerator::StageGenerator(const std::string & name, const std::string & description, IShip *ship)
     :AbstractGenerator(name, description, ship), stabilizators(new std::vector<Stabilizator*>()){

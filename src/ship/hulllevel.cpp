@@ -7,7 +7,7 @@
 const char* HullLevel::rootName = "hull_level";
 
 HullLevel::HullLevel(const int &hullQuality)
-    :XMLSavable(HullLevel::getRootName()), hullQuality(hullQuality){
+    :hullQuality(hullQuality){
 
 }
 

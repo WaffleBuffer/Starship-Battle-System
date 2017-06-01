@@ -45,11 +45,37 @@ public:
      * @param direction The angle to set.
      */
     void setDirection(const int &direction);
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a RotationThruster from an XML node
+     * @param root The xml node that should contain the RotationThruster informations.
+     * @param ship The ship that will use this RotationThruster.
+     * @return The created RotationThruster.
+     */
+    static RotationThruster*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the RotationThruster XML root name.
+     * @return The RotationThruster XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief direction The angle offset for the next rotation. Use positive value to rotate to the right and negative to rotate to the left.
      */
     int direction;
+
+    /**
+     * @brief rootName The name of the XML root for a RotationThruster
+     */
+    static const char* rootName;
 };
 
 #endif // ROTATIONTHRUSTER_H

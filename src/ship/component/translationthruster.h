@@ -44,11 +44,37 @@ public:
      * @param facingDirection The facing ship direction to set.
      */
     void setFacingDirection(constants::ShipDirection facingDirection);
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a TranslationThruster from an XML node
+     * @param root The xml node that should contain the TranslationThruster informations.
+     * @param ship The ship that will use this TranslationThruster.
+     * @return The created TranslationThruster.
+     */
+    static TranslationThruster*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the TranslationThruster XML root name.
+     * @return The TranslationThruster XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief facingDirection The the facing ship direction of this thruster (so the invert of the thrust direction).
      */
     constants::ShipDirection facingDirection;
+
+    /**
+     * @brief rootName The name of the XML root for a TranslationThruster
+     */
+    static const char* rootName;
 };
 
 #endif // TRANSLATIONTHRUSTER_H

@@ -187,8 +187,110 @@ namespace utils {
             return constants::STARBOARD;
             break;
         default:
-            throw std::invalid_argument( "Unknown direction" );
+            throw std::invalid_argument( "Unknown direction to invert" );
             break;
+        }
+    }
+
+    /**
+     * @brief partToStr Get the string representation of a ship part.
+     * @param part The ship part.
+     * @return The string representation.
+     */
+    inline std::string partToStr(constants::shipParts part) {
+        switch (part) {
+        case constants::CORE:
+            return "Core";
+            break;
+        case constants::STARBOARD_PART:
+            return "Starboard";
+            break;
+        case constants::STERN_PART:
+            return "Stern";
+            break;
+        case constants::PORT_PART:
+            return "Port";
+            break;
+        case constants::BOW_PART:
+            return "Bow";
+            break;
+        default:
+            throw std::invalid_argument( "Unknown ship part to str" );
+            break;
+        }
+    }
+
+    /**
+     * @brief strToPart Get the ship part from a string
+     * @param str The string to try to convert.
+     * @return The corresponding ship part.
+     */
+    inline constants::shipParts strToPart(std::string str) {
+        if(str == "Core") {
+            return constants::CORE;
+        }
+        else if (str == "Starboard") {
+            return constants::STARBOARD_PART;
+        }
+        else if (str == "Stern") {
+            return constants::STERN_PART;
+        }
+        else if (str == "Bow") {
+            return constants::BOW_PART;
+        }
+        else if (str == "Port") {
+            return constants::PORT_PART;
+        }
+        else {
+            throw std::invalid_argument( "Unknown str to ship part" );
+        }
+    }
+
+    /**
+     * @brief shipDirectionToStr Get string representation of a ship direction
+     * @param dir The ship direction.
+     * @return The string representation.
+     */
+    inline std::string shipDirectionToStr(constants::ShipDirection dir) {
+        switch (dir) {
+        case constants::BOW:
+            return "Bow";
+            break;
+        case constants::STARBOARD:
+            return "Starboard";
+            break;
+        case constants::STERN:
+            return "Stern";
+            break;
+        case constants::PORT:
+            return "Port";
+            break;
+        default:
+            throw std::invalid_argument( "Unknown ship direction to str" );
+            break;
+        }
+    }
+
+    /**
+     * @brief strToShipDir Get the ship direction from a string
+     * @param str The string to try to convert.
+     * @return The corresponding ship direction.
+     */
+    inline constants::ShipDirection strToShipDir(std::string str) {
+        if (str == "Starboard") {
+            return constants::STARBOARD;
+        }
+        else if (str == "Stern") {
+            return constants::STERN;
+        }
+        else if (str == "Bow") {
+            return constants::BOW;
+        }
+        else if (str == "Port") {
+            return constants::PORT;
+        }
+        else {
+            throw std::invalid_argument( "Unknown str to ship part" );
         }
     }
 }

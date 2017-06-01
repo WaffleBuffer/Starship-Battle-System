@@ -8,7 +8,7 @@
 const char* VectorialMovement::rootName = "vectorial_movement";
 
 VectorialMovement::VectorialMovement(Moveable *movingObject, const int &baseAngle)
-    :Movement(movingObject, VectorialMovement::getRootName()), xPos(0), yPos(0), xOffset(0), yOffset(0), angle(baseAngle),
+    :Movement(movingObject), xPos(0), yPos(0), xOffset(0), yOffset(0), angle(baseAngle),
     goingForward(false){
 
 }

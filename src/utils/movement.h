@@ -19,7 +19,7 @@ public:
      * @brief Movement The constructor
      * @param movingObject The moving object (just a link, nothing should be done on it).
      */
-    Movement(Moveable *movingObject, const char*rootName);
+    Movement(Moveable *movingObject);
     virtual ~Movement() {}
 
     /**

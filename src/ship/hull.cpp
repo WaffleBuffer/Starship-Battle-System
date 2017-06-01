@@ -10,7 +10,7 @@
 const char* Hull::rootName = "hull";
 
 Hull::Hull(IShip *ship, std::vector<HullLevel *> *hullLevels)
-    :AbstractComponent("", "", ship), XMLSavable(Hull::getRootName()), hullLevels(hullLevels), currentLevel(hullLevels->at(0)), currentLevelIndex(0){
+    :AbstractComponent("", "", ship), hullLevels(hullLevels), currentLevel(hullLevels->at(0)), currentLevelIndex(0){
 }
 
 Hull::~Hull()
@@ -66,7 +66,8 @@ void Hull::deteriorateHull()
 void Hull::saveXML(pugi::xml_node &root)
 {
     pugi::xml_node thisRoot = root.append_child(Hull::getRootName());
-    thisRoot.append_attribute("currentLevelIndex").set_value(this->currentLevelIndex);
+    AbstractComponent::saveAbstractXML(thisRoot, this);
+    thisRoot.append_attribute("currentlevelindex").set_value(this->currentLevelIndex);
 
     for(size_t i = 0; i < this->hullLevels->size(); ++i) {
         this->hullLevels->at(i)->saveXML(thisRoot);
@@ -84,7 +85,7 @@ Hull *Hull::loadFromXML(IShip *ship, const pugi::xml_node &root)
     }
 
     Hull *hull = new Hull(ship, hullLevels);
-    hull->currentLevelIndex = root.attribute("currentLevelIndex").as_uint();
+    hull->currentLevelIndex = root.attribute("currentlevelindex").as_uint();
     hull->currentLevel = hull->hullLevels->at(hull->currentLevelIndex);
 
     return hull;

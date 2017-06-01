@@ -1,7 +1,7 @@
 #include "stabilizator.h"
 
 #include "stagegenerator.h"
-#include "../../../utils/shipexception.h"
+#include "../../../exception/shipexception.h"
 
 Stabilizator::Stabilizator(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy, StageGenerator *generator)
     :EnergyProvidable(name, description, ship, maxEnergy), generator(generator){

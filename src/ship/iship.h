@@ -9,6 +9,7 @@
 #include "../utils/observable.h"
 #include "damageable.h"
 #include "../utils/moveable.h"
+#include "../fileManager/saveHandler/xmlsavable.h"
 
 #include <string>
 #include <vector>
@@ -27,7 +28,7 @@ class Damage;
 /**
  * @brief The IShip class. The interface. Not very usefull at the moment but who knows.
  */
-class IShip: public Observable, public Damageable, public Moveable
+class IShip: public Observable, public Damageable, public Moveable, XMLSavable
 {
 public:
     /**

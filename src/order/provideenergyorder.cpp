@@ -2,8 +2,8 @@
 
 #include "../ship/component/energyprovidable.h"
 #include "../ship/shipcontrol.h"
-#include "../utils/orderexception.h"
-#include "../utils/shipexception.h"
+#include "../exception/orderexception.h"
+#include "../exception/shipexception.h"
 
 ProvideEnergyOrder::ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentProvided, const int & energy)
     :ShipOrder(ship), energy(energy), componentProvided(componentProvided){

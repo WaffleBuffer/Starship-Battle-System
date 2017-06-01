@@ -2,6 +2,11 @@
 
 #include "abstractcomponent.h"
 #include "../iship.h"
+#include "../../utils/utils.cpp"
+#include "../../exception/xmlexception.h"
+#include <string.h>
+
+const char* TranslationThruster::rootName = "trans_thruster";
 
 TranslationThruster::TranslationThruster(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy)
     :EnergyProvidable(name, description, ship, maxEnergy){
@@ -26,4 +31,28 @@ constants::ShipDirection TranslationThruster::getFacingDirection()
 void TranslationThruster::setFacingDirection(constants::ShipDirection facingDirection)
 {
     this->facingDirection = facingDirection;
+}
+
+void TranslationThruster::saveXML(pugi::xml_node &root)
+{
+    pugi::xml_node node = root.append_child(TranslationThruster::getRootName());
+    EnergyProvidable::saveEnergyProvXML(node, this);
+    node.append_attribute("facing_direction").set_value(utils::shipDirectionToStr(this->getFacingDirection()).c_str());
+}
+
+TranslationThruster *TranslationThruster::loadFromXML(IShip *ship, const pugi::xml_node &root)
+{
+    if(strcmp(root.name(), TranslationThruster::getRootName()) != 0)
+        throw XMLException("Wrong node to load for translationThruster : " + std::string(root.name()));
+
+    TranslationThruster *thruster = new TranslationThruster("", "", ship, 0);
+    EnergyProvidable::loadEnergyProvFromXML(ship, root, thruster);
+    thruster->setFacingDirection(utils::strToShipDir(root.attribute("facing_direction").as_string()));
+
+    return thruster;
+}
+
+const char *TranslationThruster::getRootName()
+{
+    return rootName;
 }

@@ -10,7 +10,7 @@
 class NavThruster;
 
 /**
- * @brief The Ship class. The concrete class. For now AbstractShip has nothing virtual.
+ * @brief The Ship class. The concrete class. For now AbstractShip has nothing virtual except XML handling.
  */
 class Ship: public AbstractShip
 {
@@ -35,7 +35,31 @@ public:
          TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
          RotationThruster *rotationThruster, const int &baseAngle);
 
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a Ship from an XML node
+     * @param root The xml node that should contain the Ship informations.
+     * @return The created AbstractShip.
+     */
+    static Ship*loadFromXML(const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the Ship XML root name.
+     * @return The Ship XML root name.
+     */
+    static const char *getRootName();
+
 private:
+
+    /**
+     * @brief rootName The name of the XML root for an Ship
+     */
+    static const char* rootName;
 };
 
 #endif // SHIP_H

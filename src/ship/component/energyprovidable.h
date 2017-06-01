@@ -32,11 +32,26 @@ public:
      * @return The maximum amount of energy units that can be provided (it may not be a strict maximum).
      */
     int getMaxEnergy();
+
+    /**
+     * @brief saveXML Save the EnergyProvidable infos of an EnergyProvidable.
+     * @param root The root xml tag that should contain this object.
+     * @param componentToLoad The EnergyProvidable from which you want to save infos.
+     */
+    static void saveEnergyProvXML(pugi::xml_node &root, EnergyProvidable *componentToLoad);
+
+    /**
+     * @brief loadFromXML Load EnergyProvidable infos into an EnergyProvidable.
+     * @param root The xml node that should contain the EnergyProvidable informations.
+     * @param ship The ship that will use this EnergyProvidable.
+     * @param componentToLoad The EnergyProvidable into which you want to save infos.
+     */
+    static void loadEnergyProvFromXML(IShip *ship, const pugi::xml_node &root, EnergyProvidable *componentToLoad);
 private:
     /**
      * @brief maxEnergy The maximum amount of energy units that can be provided (it may not be a strict maximum).
      */
-    const int maxEnergy;
+    int maxEnergy;
 };
 
 #endif // ENERGYPROVIDABLE_H

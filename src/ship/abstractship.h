@@ -147,6 +147,21 @@ public:
      */
     void addSensors(Sensor *sensor, constants::shipParts shipPart) override;
 
+    /**
+     * @brief saveXML Save the AbstractShip infos of an AbstractShip.
+     * @param root The root xml tag that should contain this object.
+     * @param componentToLoad The AbstractShip from which you want to save infos.
+     */
+    static void saveAbstractXML(pugi::xml_node &root, AbstractShip *componentToLoad);
+
+    /**
+     * @brief loadFromXML Load AbstractShip infos into an AbstractShip.
+     * @param root The xml node that should contain the AbstractShip informations.
+     * @param componentToLoad The AbstractShip into which you want to save infos.
+     */
+    static void loadAbstractFromXML(const pugi::xml_node &root, AbstractShip *componentToLoad);
+
+
 private:
     /**
      * @brief name The ship's name.

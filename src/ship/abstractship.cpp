@@ -323,8 +323,10 @@ void AbstractShip::getDamaged(Damage *damage)
     damage->rollDamage();
 
     // Stage generators degradation
-    int genIndex = rand() % this->stageGenerators->size();
-    this->stageGenerators->at(genIndex)->getDamaged(damage);
+    if(this->stageGenerators->size() > 0) {
+        int genIndex = rand() % this->stageGenerators->size();
+        this->stageGenerators->at(genIndex)->getDamaged(damage);
+    }
 
     if(damage->getCurrentValue() > 0) {
         for (size_t i = 0; i < this->afterDamageObservers->size(); ++i) {
@@ -347,4 +349,37 @@ void AbstractShip::addSensors(Sensor *sensor, constants::shipParts shipPart)
 {
     this->sensors->push_back(sensor);
     this->addComponentToPart(sensor, shipPart);
+}
+
+void AbstractShip::saveAbstractXML(pugi::xml_node &root, AbstractShip *componentToLoad)
+{
+    root.append_attribute("name").set_value(componentToLoad->getName().c_str());
+    root.append_attribute("description").set_value(componentToLoad->getDescription().c_str());
+    this->movement->saveXML(root);
+    pugi::xml_node node;
+
+    node = root.append_child("core");
+    for(size_t i = 0; i < this->coreComponents->size(); ++i) {
+        this->coreComponents->at(i)->saveXML(node);
+    }
+
+    node = root.append_child("bow");
+    for(size_t i = 0; i < this->bowComponents->size(); ++i) {
+        this->bowComponents->at(i)->saveXML(node);
+    }
+
+    node = root.append_child("starboard");
+    for(size_t i = 0; i < this->starboardComponents->size(); ++i) {
+        this->starboardComponents->at(i)->saveXML(node);
+    }
+
+    node = root.append_child("stern");
+    for(size_t i = 0; i < this->sternComponents->size(); ++i) {
+        this->sternComponents->at(i)->saveXML(node);
+    }
+
+    node = root.append_child("port");
+    for(size_t i = 0; i < this->portComponents->size(); ++i) {
+        this->portComponents->at(i)->saveXML(node);
+    }
 }

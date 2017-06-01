@@ -35,6 +35,27 @@ public:
      * @return The string representation;
      */
     std::string toString();
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create an Armor from an XML node
+     * @param root The xml node that should contain the Armor informations.
+     * @param ship The ship that will use this Armor.
+     * @return The created Armor.
+     */
+    static Armor*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the Armor XML root name.
+     * @return The Armor XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief bowMax The bow armor.
@@ -68,6 +89,11 @@ private:
      * @brief portCurrentValue The current port armor value.
      */
     int portCurrentValue;
+
+    /**
+     * @brief rootName The name of the XML root for a Hull
+     */
+    static const char* rootName;
 };
 
 #endif // ARMOR_H
