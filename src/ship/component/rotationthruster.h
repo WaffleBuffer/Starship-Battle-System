@@ -66,6 +66,12 @@ public:
      */
     static const char *getRootName();
 
+    /**
+     * @brief toString Get the string representation.
+     * @return The string representation.
+     */
+    std::string toString() override;
+
 private:
     /**
      * @brief direction The angle offset for the next rotation. Use positive value to rotate to the right and negative to rotate to the left.

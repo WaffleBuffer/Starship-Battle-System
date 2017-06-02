@@ -56,3 +56,10 @@ const char *TranslationThruster::getRootName()
 {
     return rootName;
 }
+
+std::string TranslationThruster::toString()
+{
+    std::string res = "Trans : ";
+    res += utils::shipDirectionToStr(this->getFacingDirection()) + ", " + std::to_string(this->getMaxEnergy());
+    return res;
+}

@@ -23,6 +23,11 @@ public:
      * @param movement The type of movement that should be applied.
      */
     Moveable(VectorialMovement *movement);
+
+    /**
+     * @brief Moveable The default constructor. Be carefull using this as nothing is initialized.
+     */
+    Moveable();
     virtual ~Moveable();
 
     /**
@@ -59,6 +64,12 @@ public:
      * @return The string representation of coordonates and inertia.
      */
     std::string toString();
+
+    /**
+     * @brief setMovement Set the movement.
+     * @param value The movement to set.
+     */
+    void setMovement(VectorialMovement *value);
 
 private:
     /**

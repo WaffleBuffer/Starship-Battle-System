@@ -28,7 +28,7 @@ class Damage;
 /**
  * @brief The IShip class. The interface. Not very usefull at the moment but who knows.
  */
-class IShip: public Observable, public Damageable, public Moveable, XMLSavable
+class IShip: public Observable, public Damageable, public Moveable, public XMLSavable
 {
 public:
     /**
@@ -36,6 +36,11 @@ public:
      * @param movement The movement handler.
      */
     IShip(VectorialMovement *movement);
+
+    /**
+     * @brief IShip The default constructor. Be carefull using this as nothing is initialized.
+     */
+    IShip();
     virtual ~IShip() {}
 
     /**

@@ -44,10 +44,10 @@ namespace utils {
      * @param stage The stage to represent.
      * @return The string representation of the generator stage
      */
-    inline std::string StageGeneratorStagesToStr(const constants::StageGeneratorStage & stage) {
+    inline std::string stageGeneratorStagesToStr(const constants::StageGeneratorStage & stage) {
         switch (stage) {
         case constants::NORMAL:
-            return "Normale";
+            return "Normal";
             break;
         case constants::UNSTABLE:
             return "Unstable";
@@ -64,6 +64,32 @@ namespace utils {
         default:
             throw std::invalid_argument( "Unknown StageGeneratorStage in string" );
             break;
+        }
+    }
+
+    /**
+     * @brief StageGeneratorStagesToStr Get the generator stage from string.
+     * @param stage The string that should be the generator stage.
+     * @return The corresponding stage generator.
+     */
+    inline constants::StageGeneratorStage strToStageGeneratorStage(std::string str) {
+        if(str.compare("Normal") == 0) {
+            return constants::NORMAL;
+        }
+        else if(str.compare("Unstable") == 0) {
+            return constants::UNSTABLE;
+        }
+        else if(str.compare("Alert") == 0) {
+            return constants::ALERT;
+        }
+        else if(str.compare("Critical") == 0) {
+            return constants::CRITICAL;
+        }
+        else if(str.compare("Stopped") == 0) {
+            return constants::STOPPED;
+        }
+        else {
+            throw std::invalid_argument( "Unknown string to StageGeneratorStage : " + str );
         }
     }
 

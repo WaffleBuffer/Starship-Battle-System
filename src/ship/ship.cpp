@@ -15,12 +15,27 @@ Ship::Ship(const std::string &name, const std::string &description, Hull *hull, 
 
 }
 
+Ship::Ship(){
+
+}
+
 void Ship::saveXML(pugi::xml_node &root)
 {
-    pugi::xml_node thisRoot = root.append_child(Hull::getRootName());
+    pugi::xml_node thisRoot = root.append_child(Ship::getRootName());
+    AbstractShip::saveAbstractXML(thisRoot, this);
+}
+
+Ship *Ship::loadFromXML(const pugi::xml_node &root)
+{
+    if(strcmp(root.name(), Ship::getRootName()) != 0)
+        throw XMLException("Wrong node to load for Ship : " + std::string(root.name()));
+
+    Ship *ship = new Ship();
+    AbstractShip::loadAbstractFromXML(root, ship);
+    return ship;
 }
 
 const char *Ship::getRootName()
 {
-    return this->rootName;
+    return Ship::rootName;
 }

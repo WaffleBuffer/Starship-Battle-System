@@ -65,6 +65,12 @@ public:
      */
     static const char *getRootName();
 
+    /**
+     * @brief toString Get the string representation.
+     * @return The string representation.
+     */
+    std::string toString() override;
+
 private:
     /**
      * @brief facingDirection The facing direction of this thruster (so the opposite of the moving direction).

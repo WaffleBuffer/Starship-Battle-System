@@ -36,6 +36,12 @@ public:
     AbstractShip(const std::string & name, const std::string & description, Hull *hull, Armor *armor, Sensor *sensor, NavThruster *forwardThruster, NavThruster *backThruster,
                  TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster, TranslationThruster *backTThruster,
                  RotationThruster *rotationThruster,  VectorialMovement *movement);
+
+    /**
+     * @brief AbstractShip Default constructor. Be carefull using this as nothin is initialized.
+     */
+    AbstractShip();
+
     virtual ~AbstractShip();
 
     /**
@@ -152,14 +158,14 @@ public:
      * @param root The root xml tag that should contain this object.
      * @param componentToLoad The AbstractShip from which you want to save infos.
      */
-    static void saveAbstractXML(pugi::xml_node &root, AbstractShip *componentToLoad);
+    static void saveAbstractXML(pugi::xml_node &root, AbstractShip *shipToSave);
 
     /**
      * @brief loadFromXML Load AbstractShip infos into an AbstractShip.
      * @param root The xml node that should contain the AbstractShip informations.
-     * @param componentToLoad The AbstractShip into which you want to save infos.
+     * @param shipToLoad The AbstractShip into which you want to save infos.
      */
-    static void loadAbstractFromXML(const pugi::xml_node &root, AbstractShip *componentToLoad);
+    static void loadAbstractFromXML(const pugi::xml_node &root, AbstractShip *shipToLoad);
 
 
 private:
@@ -272,6 +278,20 @@ private:
      * @brief sensors the ship's sensors.
      */
     std::vector<Sensor*> *sensors;
+
+    /**
+     * @brief setTranslationThruster Set an existing TranslationThruster on an existing ship depending on the thruster facing direction (must be set).
+     * @param ship The existing ship.
+     * @param thruster The existing thruster with facingDirection set.
+     */
+    static void setTranslationThruster(AbstractShip *ship, TranslationThruster *thruster);
+
+    /**
+     * @brief setNavThruster Set an existing NavThruster on an existing ship depending on the thruster facing direction (must be set).
+     * @param ship The existing ship.
+     * @param thruster The existing thruster with facingDirection set.
+     */
+    static void setNavThruster(AbstractShip *ship, NavThruster *thruster);
 };
 
 #endif // ABSTRACTSHIP_H

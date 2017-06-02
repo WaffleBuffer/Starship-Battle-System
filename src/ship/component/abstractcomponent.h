@@ -71,6 +71,12 @@ public:
      */
     static void loadAbstractFromXML(IShip *ship, const pugi::xml_node &root, AbstractComponent *componentToLoad);
 
+    /**
+     * @brief getShipPart Get the ship parts where this component is located on the ship.
+     * @return The ship part.
+     */
+     constants::shipParts getShipPart() override;
+
 private:
     /**
      * @brief name The component's name.

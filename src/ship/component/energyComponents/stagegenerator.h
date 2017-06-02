@@ -88,6 +88,27 @@ public:
      * @brief stabilize Try to stabilize this generator.
      */
     void stabilize();
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a StageGenerator from an XML node
+     * @param root The xml node that should contain the StageGenerator informations.
+     * @param ship The ship that will use this StageGenerator.
+     * @return The created StageGenerator.
+     */
+    static StageGenerator*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the StageGenerator XML root name.
+     * @return The StageGenerator XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief currentStage The current stage.
@@ -105,6 +126,11 @@ private:
      * @brief stabilizators The stabilizators array.
      */
     std::vector<Stabilizator*> *stabilizators;
+
+    /**
+     * @brief rootName The name of the XML root for a StageGenerator
+     */
+    static const char* rootName;
 };
 
 #endif // STAGEGENERATOR_H

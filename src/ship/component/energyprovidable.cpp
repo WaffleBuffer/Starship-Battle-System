@@ -13,11 +13,11 @@ int EnergyProvidable::getMaxEnergy() {
 void EnergyProvidable::saveEnergyProvXML(pugi::xml_node &root, EnergyProvidable *componentToLoad)
 {
     AbstractComponent::saveAbstractXML(root, componentToLoad);
-    root.append_attribute("maxenergy").set_value(componentToLoad->getMaxEnergy());
+    root.append_attribute("energyprov_maxenergy").set_value(componentToLoad->getMaxEnergy());
 }
 
 void EnergyProvidable::loadEnergyProvFromXML(IShip *ship, const pugi::xml_node &root, EnergyProvidable *componentToLoad)
 {
     AbstractComponent::loadAbstractFromXML(ship, root, componentToLoad);
-    componentToLoad->maxEnergy = root.attribute("maxenergy").as_int();
+    componentToLoad->maxEnergy = root.attribute("energyprov_maxenergy").as_int();
 }

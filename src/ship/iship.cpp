@@ -6,3 +6,8 @@ IShip::IShip(VectorialMovement *movement)
     :Moveable(movement){
 
 }
+
+IShip::IShip()
+{
+
+}

@@ -80,9 +80,10 @@ void Armor::saveXML(pugi::xml_node &root)
 Armor *Armor::loadFromXML(IShip *ship, const pugi::xml_node &root)
 {
     if(strcmp(root.name(), Armor::getRootName()) != 0)
-        throw XMLException("Wrong node to load for Hull : " + std::string(root.name()));
+        throw XMLException("Wrong node to load for Armor : " + std::string(root.name()));
 
     Armor *armor = new Armor(0,0,0,0);
+    AbstractComponent::loadAbstractFromXML(ship, root, armor);
     pugi::xml_node node;
 
     node = root.child("bow");

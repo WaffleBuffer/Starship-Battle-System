@@ -54,4 +54,10 @@ void AbstractComponent::loadAbstractFromXML(IShip *ship, const pugi::xml_node &r
     componentToLoad->description = std::string(root.attribute("description").as_string());
     std::string partStr(root.attribute("part").as_string());
     componentToLoad->part = utils::strToPart(partStr);
+    componentToLoad->setShip(ship);
+}
+
+constants::shipParts AbstractComponent::getShipPart()
+{
+    return this->part;
 }

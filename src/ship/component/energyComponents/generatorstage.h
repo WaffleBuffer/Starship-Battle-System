@@ -7,6 +7,7 @@
 
 #include "../../../utils/constants.cpp"
 #include "../../../diceExpression/diceexpression.h"
+#include "../../../thirdParty/pugixml-1.8/src/pugixml.hpp"
 
 #include <string>
 
@@ -51,6 +52,25 @@ public:
      * @brief stabilize Try to stabilize the generator using stabilizators.
      */
     virtual void stabilize();
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    virtual void saveXML(pugi::xml_node &root);
+
+    /**
+     * @brief loadFromXML Create a GeneratorStage from an XML node
+     * @param root The xml node that should contain the GeneratorStage informations.
+     * @return The created GeneratorStage.
+     */
+    static GeneratorStage*loadFromXML(const pugi::xml_node &root, StageGenerator *generator);
+    /**
+     * @brief getRootName Get the GeneratorStage XML root name.
+     * @return The GeneratorStage XML root name.
+     */
+    static const char *getRootName();
+
 protected:
     /**
      * @brief stage The stage type.
@@ -64,6 +84,11 @@ protected:
      * @brief generator The generator using this stage.
      */
     StageGenerator *generator;
+
+    /**
+     * @brief rootName The name of the XML root for a GeneratorStage.
+     */
+    static const char* rootName;
 };
 
 #endif // GENERATORSTAGE_H

@@ -56,3 +56,10 @@ const char *NavThruster::getRootName()
 {
     return rootName;
 }
+
+std::string NavThruster::toString()
+{
+    std::string res = "Nav : ";
+    res += utils::shipDirectionToStr(this->getFacingDirection()) + ", " + std::to_string(this->getMaxEnergy());
+    return res;
+}

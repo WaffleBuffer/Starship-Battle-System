@@ -26,6 +26,14 @@ public:
      * @return The energy generated.
      */
     virtual int generateEnergy() = 0;
+
+    /**
+     * @brief createGenFromXML Create a generator from an XML node.
+     * @param node The node that descriebe the generator.
+     * @param ship The ship that will use this generator.
+     * @return The created generator
+     */
+    static AbstractGenerator *createGenFromXML(pugi::xml_node node, IShip *ship);
 private:
 };
 

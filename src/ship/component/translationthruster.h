@@ -57,7 +57,7 @@ public:
      * @param ship The ship that will use this TranslationThruster.
      * @return The created TranslationThruster.
      */
-    static TranslationThruster*loadFromXML(IShip *ship, const pugi::xml_node &root);
+     static TranslationThruster*loadFromXML(IShip *ship, const pugi::xml_node &root);
 
     /**
      * @brief getRootName Get the TranslationThruster XML root name.
@@ -65,6 +65,11 @@ public:
      */
     static const char *getRootName();
 
+    /**
+     * @brief toString Get the string representation.
+     * @return The string representation.
+     */
+    std::string toString() override;
 private:
     /**
      * @brief facingDirection The the facing ship direction of this thruster (so the invert of the thrust direction).

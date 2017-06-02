@@ -43,6 +43,27 @@ public:
      * @brief stabilize Use the energy to store the generator.
      */
     void stabilize();
+
+    /**
+     * @brief saveXML Save this object in an XML format.
+     * @param root The root xml tag that should contain this object.
+     */
+    void saveXML(pugi::xml_node &root) override;
+
+    /**
+     * @brief loadFromXML Create a Stabilizator from an XML node
+     * @param root The xml node that should contain the Stabilizator informations.
+     * @param ship The ship that will use this Stabilizator.
+     * @return The created Stabilizator.
+     */
+    static Stabilizator*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the Stabilizator XML root name.
+     * @return The Stabilizator XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief generator The generator using this stabilizator.
@@ -52,6 +73,11 @@ private:
      * @brief currentEnergy The current amount of energy stored.
      */
     int currentEnergy;
+
+    /**
+     * @brief rootName The name of the XML root for a Stabilizator
+     */
+    static const char* rootName;
 };
 
 #endif // STABILIZATOR_H

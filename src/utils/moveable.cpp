@@ -10,6 +10,11 @@ Moveable::Moveable(VectorialMovement *movement)
     this->movement->setMovingObject(this);
 }
 
+Moveable::Moveable()
+{
+
+}
+
 Moveable::~Moveable()
 {
     delete (this->movement);
@@ -23,6 +28,11 @@ VectorialMovement *Moveable::getMovement() const
 std::string Moveable::toString()
 {
     return movement->toString();
+}
+
+void Moveable::setMovement(VectorialMovement *value)
+{
+    movement = value;
 }
 
 void Moveable::addInertia(constants::ShipDirection direction, double distance)

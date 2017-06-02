@@ -36,6 +36,11 @@ public:
          RotationThruster *rotationThruster, const int &baseAngle);
 
     /**
+     * @brief Ship Default constructor. Be carefull while using this as nothing is initialized.
+     */
+    Ship();
+
+    /**
      * @brief saveXML Save this object in an XML format.
      * @param root The root xml tag that should contain this object.
      */

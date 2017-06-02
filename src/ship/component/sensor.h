@@ -44,7 +44,7 @@ public:
 
     /**
      * @brief getRootName Get the sensor XML root name.
-     * @return The hull XML root name.
+     * @return The Sensor XML root name.
      */
     static const char *getRootName();
 

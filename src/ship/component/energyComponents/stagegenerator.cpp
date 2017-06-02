@@ -7,6 +7,10 @@
 #include "../weapons/torpedo.h"
 #include "stabilizator.h"
 #include "../../../exception/shipexception.h"
+#include "../../../exception/xmlexception.h"
+#include <string.h>
+
+const char* StageGenerator::rootName = "stagegenerator";
 
 StageGenerator::StageGenerator(const std::string & name, const std::string & description, IShip *ship)
     :AbstractGenerator(name, description, ship), stabilizators(new std::vector<Stabilizator*>()){
@@ -105,6 +109,7 @@ void StageGenerator::addStabilizator(Stabilizator *stabilizator)
     this->stabilizators->push_back(stabilizator);
     stabilizator->setGenerator(this);
     stabilizator->setShip(this->getShip());
+    stabilizator->setPart(this->getShipPart());
 }
 
 GeneratorStage *StageGenerator::getCurrentStage()
@@ -141,4 +146,47 @@ void StageGenerator::setCurrentStage(const int &levelDiff)
 void StageGenerator::stabilize()
 {
     this->currentStage->stabilize();
+}
+
+void StageGenerator::saveXML(pugi::xml_node &root)
+{
+    pugi::xml_node thisRoot = root.append_child(StageGenerator::getRootName());
+    AbstractComponent::saveAbstractXML(thisRoot, this);
+    thisRoot.append_attribute("currentStageIndex").set_value(std::to_string(this->currentStageIndex).c_str());
+    for(size_t i = 0; i < this->stages->size(); ++i) {
+        this->stages->at(i)->saveXML(thisRoot);
+    }
+    for(size_t i = 0; i < this->stabilizators->size(); ++i) {
+        this->stabilizators->at(i)->saveXML(thisRoot);
+    }
+}
+
+StageGenerator *StageGenerator::loadFromXML(IShip *ship, const pugi::xml_node &root)
+{
+    if(strcmp(root.name(), StageGenerator::getRootName()) != 0)
+        throw XMLException("Wrong node to load for StageGenerator : " + std::string(root.name()));
+
+    StageGenerator *generator = new StageGenerator("", "", ship);
+    AbstractComponent::loadAbstractFromXML(ship, root, generator);
+
+    for(pugi::xml_node node = root.child(GeneratorStage::getRootName()); node && strcmp(node.name(), Stabilizator::getRootName()) != 0; node = node.next_sibling()) {
+        GeneratorStage::loadFromXML(node, generator);
+    }
+
+    for(pugi::xml_node node = root.child(Stabilizator::getRootName()); node; node = node.next_sibling(Stabilizator::getRootName())) {
+        Stabilizator *stabilizator = Stabilizator::loadFromXML(ship, node);
+        generator->addStabilizator(stabilizator);
+    }
+
+    generator->currentStageIndex = root.attribute("currentStageIndex").as_uint();
+    generator->currentStage = generator->stages->at(generator->currentStageIndex);
+
+    ship->addGenerator(generator, generator->getShipPart());
+
+    return generator;
+}
+
+const char *StageGenerator::getRootName()
+{
+    return rootName;
 }

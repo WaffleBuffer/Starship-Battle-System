@@ -85,6 +85,7 @@ Hull *Hull::loadFromXML(IShip *ship, const pugi::xml_node &root)
     }
 
     Hull *hull = new Hull(ship, hullLevels);
+    AbstractComponent::loadAbstractFromXML(ship, root, hull);
     hull->currentLevelIndex = root.attribute("currentlevelindex").as_uint();
     hull->currentLevel = hull->hullLevels->at(hull->currentLevelIndex);
 

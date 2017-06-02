@@ -1,6 +1,7 @@
 #include "sensor.h"
 
 #include "../../exception/xmlexception.h"
+#include "../iship.h"
 #include <string.h>
 
 const char* Sensor::rootName = "sensor";
@@ -36,6 +37,8 @@ Sensor *Sensor::loadFromXML(IShip *ship, const pugi::xml_node &root)
     Sensor *sensor = new Sensor("", "", ship, maxLevel);
     sensor->currentLevel = currentLevel;
     AbstractComponent::loadAbstractFromXML(ship, root, sensor);
+
+    ship->addSensors(sensor, sensor->getShipPart());
 
     return sensor;
 }

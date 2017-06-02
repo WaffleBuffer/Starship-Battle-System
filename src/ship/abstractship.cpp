@@ -34,8 +34,10 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->hull = hull;
     this->addAfterDamageObserver(this->hull);
     this->addComponentToPart(hull, constants::CORE);
-    this->addSensors(baseSensor, constants::CORE);
     this->addComponentToPart(armor, constants::CORE);
+    this->addSensors(baseSensor, constants::CORE);
+
+    this->generators = new std::vector<AbstractGenerator*>();
 
     // Navigation thrusters
     this->forwardThruster = forwardThruster;
@@ -64,32 +66,17 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->rotationThruster = rotationThruster;
     this->addComponentToPart(rotationThruster, constants::CORE);
 
-    this->generators = new std::vector<AbstractGenerator*>();
+}
+
+AbstractShip::AbstractShip()
+    :generators(new std::vector<AbstractGenerator*>()), stageGenerators(new std::vector<StageGenerator*>()),
+      damageObservers(new std::vector<Observer *>()), afterDamageObservers(new std::vector<Observer *>()),
+      coreComponents(new std::vector<IComponent*>()), bowComponents(new std::vector<IComponent*>()), starboardComponents(new std::vector<IComponent*>()),
+      sternComponents(new std::vector<IComponent*>()), portComponents(new std::vector<IComponent*>()), sensors(new std::vector<Sensor*>()){
+
 }
 
 AbstractShip::~AbstractShip() {
-    /*delete(this->hull);
-    delete(this->sensor);
-    delete(this->control);
-    delete(this->armor);
-
-    // Navigation thrusters
-    delete(this->forwardThruster);
-    delete(this->backThruster);
-
-    // Maneuver thrusters
-    // Translation thrusters
-    delete(this->leftTThruster);
-    delete(this->frontTThruster);
-    delete(this->rightTThruster);
-    delete(this->backTThruster);
-
-    // Rotation thrusters
-    delete(this->rotationThruster);
-
-    for(size_t i = 0; i < this->generators->size(); ++i) {
-        delete(this->generators->at(i));
-    }*/
 
     for(size_t i = 0; i < this->coreComponents->size(); ++i) {
         delete(this->coreComponents->at(i));
@@ -351,35 +338,128 @@ void AbstractShip::addSensors(Sensor *sensor, constants::shipParts shipPart)
     this->addComponentToPart(sensor, shipPart);
 }
 
-void AbstractShip::saveAbstractXML(pugi::xml_node &root, AbstractShip *componentToLoad)
+void AbstractShip::saveAbstractXML(pugi::xml_node &root, AbstractShip *shipToSave)
 {
-    root.append_attribute("name").set_value(componentToLoad->getName().c_str());
-    root.append_attribute("description").set_value(componentToLoad->getDescription().c_str());
-    this->movement->saveXML(root);
+    root.append_attribute("name").set_value(shipToSave->getName().c_str());
+    root.append_attribute("description").set_value(shipToSave->getDescription().c_str());
+    shipToSave->getMovement()->saveXML(root);
     pugi::xml_node node;
 
     node = root.append_child("core");
-    for(size_t i = 0; i < this->coreComponents->size(); ++i) {
-        this->coreComponents->at(i)->saveXML(node);
+    shipToSave->hull->saveXML(node);
+    shipToSave->armor->saveXML(node);
+    shipToSave->forwardThruster->saveXML(node);
+    shipToSave->backThruster->saveXML(node);
+    shipToSave->frontTThruster->saveXML(node);
+    shipToSave->rightTThruster->saveXML(node);
+    shipToSave->backTThruster->saveXML(node);
+    shipToSave->leftTThruster->saveXML(node);
+    shipToSave->rotationThruster->saveXML(node);
+    pugi::xml_node underNode = node.append_child("base_generator");
+    for(size_t i = 0; i < shipToSave->generators->size(); ++i) {
+        if(shipToSave->generators->at(i)->getShipPart() == constants::CORE) {
+            shipToSave->generators->at(i)->saveXML(underNode);
+        }
+    }
+    underNode = node.append_child("base_sensor");
+    for(size_t i = 0; i < shipToSave->sensors->size(); ++i) {
+        if(shipToSave->sensors->at(i)->getShipPart() == constants::CORE) {
+            shipToSave->sensors->at(i)->saveXML(underNode);
+        }
     }
 
     node = root.append_child("bow");
-    for(size_t i = 0; i < this->bowComponents->size(); ++i) {
-        this->bowComponents->at(i)->saveXML(node);
+    for(size_t i = 0; i < shipToSave->bowComponents->size(); ++i) {
+        shipToSave->bowComponents->at(i)->saveXML(node);
     }
 
     node = root.append_child("starboard");
-    for(size_t i = 0; i < this->starboardComponents->size(); ++i) {
-        this->starboardComponents->at(i)->saveXML(node);
+    for(size_t i = 0; i < shipToSave->starboardComponents->size(); ++i) {
+        shipToSave->starboardComponents->at(i)->saveXML(node);
     }
 
     node = root.append_child("stern");
-    for(size_t i = 0; i < this->sternComponents->size(); ++i) {
-        this->sternComponents->at(i)->saveXML(node);
+    for(size_t i = 0; i < shipToSave->sternComponents->size(); ++i) {
+        shipToSave->sternComponents->at(i)->saveXML(node);
     }
 
     node = root.append_child("port");
-    for(size_t i = 0; i < this->portComponents->size(); ++i) {
-        this->portComponents->at(i)->saveXML(node);
+    for(size_t i = 0; i < shipToSave->portComponents->size(); ++i) {
+        shipToSave->portComponents->at(i)->saveXML(node);
     }
+}
+
+/**
+ * @brief setNavThruster Set an existing NavThruster on an existing ship depending on the thruster facing direction (must be set).
+ * @param ship The existing ship.
+ * @param thruster The existing thruster with facingDirection set.
+ */
+void AbstractShip::setNavThruster(AbstractShip *ship, NavThruster *thruster) {
+
+    switch (thruster->getFacingDirection()) {
+    case constants::NORTH:
+        ship->forwardThruster = thruster;
+        break;
+    case constants::SOUTH:
+        ship->backThruster = thruster;
+        break;
+    default:
+        throw std::invalid_argument( "Unknown or invalid direction for nav thruster to set to ship" );
+        break;
+    }
+    ship->addComponentToPart(thruster, constants::CORE);
+}
+
+/**
+ * @brief setTranslationThruster Set an existing TranslationThruster on an existing ship depending on the thruster facing direction (must be set).
+ * @param ship The existing ship.
+ * @param thruster The existing thruster with facingDirection set.
+ */
+void AbstractShip::setTranslationThruster(AbstractShip *ship, TranslationThruster *thruster) {
+
+    switch (thruster->getFacingDirection()) {
+    case constants::NORTH:
+        ship->frontTThruster = thruster;
+        break;
+    case constants::EAST:
+        ship->leftTThruster = thruster;
+        break;
+    case constants::SOUTH:
+        ship->backTThruster = thruster;
+        break;
+    case constants::WEST:
+        ship->rightTThruster = thruster;
+        break;
+    default:
+        throw std::invalid_argument( "Unknown or invalid direction for translation thruster to set to ship" );
+        break;
+    }
+    ship->addComponentToPart(thruster, constants::CORE);
+}
+
+void AbstractShip::loadAbstractFromXML(const pugi::xml_node &root, AbstractShip *shipToLoad)
+{
+    shipToLoad->name = root.attribute("name").as_string();
+    shipToLoad->description = root.attribute("description").as_string();
+    shipToLoad->setMovement(VectorialMovement::loadFromXML(shipToLoad, root.child(VectorialMovement::getRootName())));
+
+    pugi::xml_node node = root.child("core");
+    shipToLoad->hull = Hull::loadFromXML(shipToLoad, node.child(Hull::getRootName()));
+    shipToLoad->addComponentToPart(shipToLoad->hull, constants::CORE);
+    shipToLoad->armor = Armor::loadFromXML(shipToLoad, node.child(Armor::getRootName()));
+    shipToLoad->addComponentToPart(shipToLoad->armor, constants::CORE);
+
+    Sensor::loadFromXML(shipToLoad, node.child("base_sensor").first_child());
+    for(pugi::xml_node currentNode = node.child(NavThruster::getRootName()); currentNode; currentNode = currentNode.next_sibling(NavThruster::getRootName())) {
+
+        setNavThruster(shipToLoad, NavThruster::loadFromXML(shipToLoad, currentNode));
+    }
+
+    for(pugi::xml_node currentNode = node.child(TranslationThruster::getRootName()); currentNode; currentNode = currentNode.next_sibling(TranslationThruster::getRootName())) {
+        setTranslationThruster(shipToLoad, TranslationThruster::loadFromXML(shipToLoad, currentNode));
+    }
+    shipToLoad->rotationThruster = RotationThruster::loadFromXML(shipToLoad, node.child(RotationThruster::getRootName()));
+    shipToLoad->addComponentToPart(shipToLoad->rotationThruster, constants::CORE);
+
+    AbstractGenerator::createGenFromXML(node.child("base_generator").first_child(), shipToLoad);
 }

@@ -21,6 +21,7 @@
 #include "src/ship/hulllevel.h"
 #include "src/thirdParty/pugixml-1.8/src/pugixml.hpp"
 #include "src/utils/vectorialmovement.h"
+#include "src/exception/xmlexception.h"
 
 #include <iostream>
 #include <time.h>
@@ -177,25 +178,30 @@ int main(int argc, char *argv[])
          << "*            XML Tests           *" << endl
          << "**********************************" << endl;
 
+    cout << "Saving ship in \"test.xml\"..." << endl;
     xml_document doc;
-    doc.load_string("");
+    ship->saveXML(doc);
+    doc.save_file("test.xml");
+    /*doc.load_string("");
     xml_node node = doc.append_child("ship");
     ship->getMovement()->saveXML(node);
     hull->saveXML(node);
 
     cout << "Saving ship's file : " << endl;
     doc.save(std::cout);
-    doc.save_file("test.xml");
+    doc.save_file("test.xml");*/
 
+    cout << "Testing loading previous saved ship from XML..." << endl;
     xml_document fileDoc;
     if (fileDoc.load_file("test.xml")) {
-        VectorialMovement *xmlMovement = VectorialMovement::loadFromXML(ship, fileDoc.child("ship").child("vectorial_movement"));
-        cout << xmlMovement->toString() << endl;
-        delete(xmlMovement);
-
-        Hull *xmlHull = Hull::loadFromXML(ship, fileDoc.child("ship").child("hull"));
-        cout << xmlHull->toString() << endl;
-        delete(xmlHull);
+        try {
+            IShip *loadedShip = Ship::loadFromXML(fileDoc.child(Ship::getRootName()));
+            cout << "Loaded ship : " << endl << loadedShip->toString() << endl;
+            delete(loadedShip);
+        }
+        catch(XMLException e) {
+            cout << "XML Exception : " << std::string(e.what()) << endl;
+        }
     }
     else {
         cout << "no test.xml" << endl;

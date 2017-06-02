@@ -43,7 +43,7 @@ void RotationThruster::saveXML(pugi::xml_node &root)
 RotationThruster *RotationThruster::loadFromXML(IShip *ship, const pugi::xml_node &root)
 {
     if(strcmp(root.name(), RotationThruster::getRootName()) != 0)
-        throw XMLException("Wrong node to load for navThruster : " + std::string(root.name()));
+        throw XMLException("Wrong node to load for RotationThruster : " + std::string(root.name()));
 
     RotationThruster *thruster = new RotationThruster("", "", ship, 0);
     EnergyProvidable::loadEnergyProvFromXML(ship, root, thruster);
@@ -55,4 +55,11 @@ RotationThruster *RotationThruster::loadFromXML(IShip *ship, const pugi::xml_nod
 const char *RotationThruster::getRootName()
 {
     return rootName;
+}
+
+std::string RotationThruster::toString()
+{
+    std::string res = "Rotation : ";
+    res += std::to_string(this->getMaxEnergy()) + ", " + std::to_string(this->getDirection());
+    return res;
 }

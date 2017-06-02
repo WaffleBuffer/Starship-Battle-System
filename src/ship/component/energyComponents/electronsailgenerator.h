@@ -27,11 +27,31 @@ public:
      * @return The energy generated. Ship's speed time multiplier.
      */
     int generateEnergy();
+
+    /**
+     * @brief loadFromXML Create a ElectronSailGenerator from an XML node
+     * @param root The xml node that should contain the ElectronSailGenerator informations.
+     * @param ship The ship that will use this ElectronSailGenerator.
+     * @return The created ElectronSailGenerator.
+     */
+    static ElectronSailGenerator*loadFromXML(IShip *ship, const pugi::xml_node &root);
+
+    /**
+     * @brief getRootName Get the ElectronSailGenerator XML root name.
+     * @return The ElectronSailGenerator XML root name.
+     */
+    static const char *getRootName();
+
 private:
     /**
      * @brief multiplier Ship's speed time multiplier.
      */
     int multiplier;
+
+    /**
+     * @brief rootName The name of the XML root for a ElectronSailGenerator
+     */
+    static const char* rootName;
 };
 
 #endif // ELECTRONSAILGENERATOR_H
