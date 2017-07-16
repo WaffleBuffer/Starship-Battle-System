@@ -36,6 +36,11 @@ namespace constants {
     enum StageGeneratorStage {NORMAL, UNSTABLE, ALERT, CRITICAL, STOPPED};
 
     /**
+     * @brief The gamePhase enum. All the game phases
+     */
+    enum gamePhase {ENERGY, COMMAND, INITIATIVE, MOVEMENT, FIRE, CREW};
+
+    /**
      * @brief maxSpeed Tha maximum speed a ship can safely get to.
      */
     const int maxSpeed = 12;

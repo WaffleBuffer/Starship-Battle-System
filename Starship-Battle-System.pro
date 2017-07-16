@@ -74,7 +74,15 @@ SOURCES += main.cpp\
     src/ship/hull.cpp \
     src/thirdParty/pugixml-1.8/src/pugixml.cpp \
     src/fileManager/saveHandler/xmlsavable.cpp \
-    src/exception/xmlexception.cpp
+    src/exception/xmlexception.cpp \
+    src/GameCore/team.cpp \
+    src/exception/basicexception.cpp \
+    src/logger/logger.cpp \
+    src/logger/logentry.cpp \
+    src/ioControler/consolemenu.cpp \
+    src/ioControler/consolemenuitem.cpp \
+    src/GameCore/gamecontroller.cpp \
+    src/ioControler/iocontroller.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -124,6 +132,14 @@ HEADERS  += mainwindow.h \
     src/thirdParty/pugixml-1.8/src/pugixml.hpp \
     src/thirdParty/pugixml-1.8/src/pugiconfig.hpp \
     src/fileManager/saveHandler/xmlsavable.h \
-    src/exception/xmlexception.h
+    src/exception/xmlexception.h \
+    src/GameCore/team.h \
+    src/exception/basicexception.h \
+    src/logger/logger.h \
+    src/logger/logentry.h \
+    src/ioControler/consolemenu.h \
+    src/ioControler/consolemenuitem.h \
+    src/GameCore/gamecontroller.h \
+    src/ioControler/iocontroller.h
 
 FORMS    += mainwindow.ui

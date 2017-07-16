@@ -5,10 +5,10 @@
  * xmlexception.h
  */
 
-#include <stdexcept>
+#include "basicexception.h"
 #include <string>
 
-class XMLException: public std::exception
+class XMLException: public BasicException
 {
 public:
     /**
@@ -33,10 +33,6 @@ public:
     virtual const char* what() const throw();
 
 private:
-    /**
-     * @brief msg The error message.
-     */
-    const std::string msg;
 };
 
 #endif // XMLEXCEPTION_H

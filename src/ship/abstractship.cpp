@@ -216,7 +216,7 @@ std::string AbstractShip::toString()
 
     res += "========================\n";
 
-    res += "=========BOW===========\n";
+    res += "==========BOW===========\n";
 
     for (size_t i = 0; i < this->bowComponents->size(); ++i) {
         res += this->bowComponents->at(i)->toString() + "\n";
@@ -224,7 +224,7 @@ std::string AbstractShip::toString()
 
     res += "========================\n";
 
-    res += "=========STARBOARD===========\n";
+    res += "=======STARBOARD========\n";
 
     for (size_t i = 0; i < this->starboardComponents->size(); ++i) {
         res += this->starboardComponents->at(i)->toString() + "\n";
@@ -232,7 +232,7 @@ std::string AbstractShip::toString()
 
     res += "========================\n";
 
-    res += "=========STERN===========\n";
+    res += "=========STERN==========\n";
 
     for (size_t i = 0; i < this->sternComponents->size(); ++i) {
         res += this->sternComponents->at(i)->toString() + "\n";

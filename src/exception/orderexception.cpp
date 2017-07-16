@@ -4,17 +4,17 @@
 #include <string>
 
 OrderException::OrderException()
-    :std::exception(), msg(std::string()), order(nullptr){
+    :BasicException(std::string()), order(nullptr){
 
 }
 
 OrderException::OrderException(const std::string &msg, ShipOrder *order)
-    :std::exception(), msg(msg), order(order){
+    :BasicException(msg), order(order){
 
 }
 
 OrderException::OrderException(const char *msg, ShipOrder *order)
-    :std::exception(), msg(msg), order(order){
+    :BasicException(std::string(msg)), order(order){
 }
 
 const char *OrderException::what() const throw()
@@ -24,6 +24,6 @@ const char *OrderException::what() const throw()
         msgToSend += "Order : \n" + this->order->toString() + "\n";
     }
 
-    msgToSend += this->msg;
+    msgToSend += this->getMsg();
     return msgToSend.c_str();
 }

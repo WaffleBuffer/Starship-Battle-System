@@ -1,19 +1,19 @@
 #include "xmlexception.h"
 
 XMLException::XMLException()
-    :std::exception(), msg(std::string()){
+    :BasicException(){
 }
 
 XMLException::XMLException(const std::string &msg)
-    :std::exception(), msg(msg){
+    :BasicException(msg){
 }
 
 XMLException::XMLException(const char* msg)
-    :std::exception(), msg(msg){
+    :BasicException(std::string(msg)){
 
 }
 
 const char *XMLException::what() const throw()
 {
-    return this->msg.c_str();
+    return this->getMsg().c_str();
 }

@@ -5,15 +5,15 @@
  * @file shipexception
  */
 
-#include <stdexcept>
+#include "basicexception.h"
 #include <string>
 
 class IShip;
 
 /**
- * @brief The ShipException class. An exception from a particular ship.
+ * @brief The ShipException class. An exception caused by a particular ship.
  */
-class ShipException: public std::exception
+class ShipException: public BasicException
 {
 public:
     /**
@@ -39,10 +39,6 @@ public:
      */
     virtual const char* what() const throw();
 private:
-    /**
-     * @brief msg The error message.
-     */
-    const std::string msg;
     /**
      * @brief ship The ship involved.
      */

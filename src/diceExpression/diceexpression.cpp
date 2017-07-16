@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "diceexpression.h"
 
 SubExpression *parseWord(const std::string & word, std::istringstream & iss, SubExpression *left) {
@@ -40,7 +42,7 @@ SubExpression *parseWord(const std::string & word, std::istringstream & iss, Sub
     else if (word == "+") {
         std::string right;
         if(!(iss >> right) || left == nullptr) {
-            throw std::invalid_argument( "Missing right operand on " + word);
+            throw std::invalid_argument( "Missing operand on " + word);
         }
         Sum *sum = new Sum(left, nullptr);
         SubExpression *rightExp = parseWord(right, iss, sum);
@@ -49,13 +51,14 @@ SubExpression *parseWord(const std::string & word, std::istringstream & iss, Sub
     }
     else {
         // Exception
-        throw std::invalid_argument( "Bad dice expression on" + word);
+        throw std::invalid_argument( "Bad dice expression on " + word);
     }
 }
 
 DiceExpression::DiceExpression(const std::string & expression) throw()
 {
     this->expression = expression;
+    std::transform(this->expression.begin(), this->expression.end(), this->expression.begin(), ::toupper);
 
     std::istringstream iss(expression);
     std::string word;

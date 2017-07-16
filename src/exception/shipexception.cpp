@@ -3,15 +3,15 @@
 #include "../ship/iship.h"
 
 ShipException::ShipException()
-    :std::exception(), msg(std::string()), ship(nullptr){
+    :BasicException(std::string()), ship(nullptr){
 }
 
 ShipException::ShipException(const std::string &msg, IShip *ship)
-    :std::exception(), msg(msg), ship(ship){
+    :BasicException(msg), ship(ship){
 }
 
 ShipException::ShipException(const char* msg, IShip *ship)
-    :std::exception(), msg(msg), ship(ship){
+    :BasicException(std::string(msg)), ship(ship){
 
 }
 
@@ -22,6 +22,6 @@ const char *ShipException::what() const throw()
         msgToSend += "Ship status : \n" + this->ship->toString() + "\n";
     }
 
-    msgToSend += this->msg;
+    msgToSend += this->getMsg();
     return msgToSend.c_str();
 }

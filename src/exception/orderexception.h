@@ -5,7 +5,7 @@
  * @file orderexception.h
  */
 
-#include <stdexcept>
+#include "basicexception.h"
 #include <string>
 
 class ShipOrder;
@@ -13,7 +13,7 @@ class ShipOrder;
 /**
  * @brief The OrderException class. An exception of an order.
  */
-class OrderException: public std::exception
+class OrderException: public BasicException
 {
 public:
     /**
@@ -38,11 +38,8 @@ public:
      * @return The error message.
      */
     virtual const char* what() const throw();
+
 private:
-    /**
-     * @brief msg The error message.
-     */
-    const std::string msg;
     /**
      * @brief order The order involved.
      */

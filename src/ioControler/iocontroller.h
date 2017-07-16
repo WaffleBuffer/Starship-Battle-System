@@ -1,11 +1,34 @@
-#ifndef INPUTCONTROLER_H
-#define INPUTCONTROLER_H
+#ifndef INPUTCONTROLLER_H
+#define INPUTCONTROLLER_H
 
+/**
+ * @file iocontroller.h
+ */
 
-class InputControler
+class GameController;
+
+/**
+ * @brief The IoController class The abstract controller of input and output. It is the interface between the user and the game controller.
+ */
+class IoController
 {
 public:
-    InputControler();
+    /**
+     * @brief IoController The constructor.
+     * @param gameController The game controller that this controller will use.
+     */
+    IoController(GameController *gameController);
+    virtual ~IoController();
+    /**
+     * @brief launchGame Launch the game. This is pure virtual because it will depend of the how you want to play (graphics or console).
+     */
+    virtual void launchGame() = 0;
+
+private:
+    /**
+     * @brief gameController The game controller that this controller will use.
+     */
+    GameController *gameController;
 };
 
-#endif // INPUTCONTROLER_H
+#endif // INPUTCONTROLLER_H
