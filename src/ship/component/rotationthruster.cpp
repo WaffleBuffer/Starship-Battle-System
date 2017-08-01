@@ -7,12 +7,13 @@
 const char* RotationThruster::rootName = "rotation_thruster";
 
 RotationThruster::RotationThruster(const std::string &name, const std::string &description, IShip *ship, const int &maxEnergy)
-    :EnergyProvidable(name, description, ship, maxEnergy){
+    :EnergyProvidable(name, description, ship, maxEnergy), direction(0){
 
 }
 
 RotationThruster::RotationThruster(RotationThruster *model)
-    :EnergyProvidable(model->getName(), model->getDescription(), model->getShip(), model->getMaxEnergy()){
+    :EnergyProvidable(model->getName(), model->getDescription(), model->getShip(), model->getMaxEnergy()),
+    direction(model->getDirection()){
 
 }
 
@@ -60,6 +61,6 @@ const char *RotationThruster::getRootName()
 std::string RotationThruster::toString()
 {
     std::string res = "Rotation : ";
-    res += std::to_string(this->getMaxEnergy()) + ", " + std::to_string(this->getDirection());
+    res += std::to_string(this->getMaxEnergy()) + ", dir : " + std::to_string(this->getDirection());
     return res;
 }

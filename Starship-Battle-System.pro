@@ -79,10 +79,12 @@ SOURCES += main.cpp\
     src/exception/basicexception.cpp \
     src/logger/logger.cpp \
     src/logger/logentry.cpp \
-    src/ioControler/consolemenu.cpp \
-    src/ioControler/consolemenuitem.cpp \
     src/GameCore/gamecontroller.cpp \
-    src/ioControler/iocontroller.cpp
+    src/ioControler/iocontroller.cpp \
+    src/ioControler/console/consolemenu.cpp \
+    src/ioControler/console/consolemenuitem.cpp \
+    src/ioControler/console/consoleiocontroller.cpp \
+    src/ship/shipfactory.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -137,9 +139,13 @@ HEADERS  += mainwindow.h \
     src/exception/basicexception.h \
     src/logger/logger.h \
     src/logger/logentry.h \
-    src/ioControler/consolemenu.h \
-    src/ioControler/consolemenuitem.h \
     src/GameCore/gamecontroller.h \
-    src/ioControler/iocontroller.h
+    src/ioControler/iocontroller.h \
+    src/ioControler/console/consolemenu.h \
+    src/ioControler/console/consolemenuitem.h \
+    src/ioControler/console/consoleiocontroller.h \
+    src/ship/shipfactory.h
 
 FORMS    += mainwindow.ui
+
+CONFIG += console

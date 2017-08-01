@@ -22,6 +22,25 @@ public:
      */
     ConsoleMenu(const std::string &title);
     ~ConsoleMenu();
+    /**
+     * @brief getMenuItems Get the menu items.
+     * @return The menu items.
+     */
+    std::vector<ConsoleMenuItem *> *getMenuItems() const;
+
+    /**
+     * @brief checkInput Check if an input is good and if so do something.
+     * @param input The input to check.
+     * @return true if the input is waited, false otherwise.
+     */
+    bool checkInput (const std::string &input);
+
+    /**
+     * @brief toString Get the displayed string representing this menu.
+     * @return The string representing this menu.
+     */
+    std::string toString();
+
 private:
     /**
      * @brief menuItems The list of menu item.

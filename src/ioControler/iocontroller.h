@@ -24,6 +24,12 @@ public:
      */
     virtual void launchGame() = 0;
 
+    /**
+     * @brief getGameController Get the game controller.
+     * @return The game controller.
+     */
+    GameController *getGameController() const;
+
 private:
     /**
      * @brief gameController The game controller that this controller will use.

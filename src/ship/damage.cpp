@@ -49,7 +49,7 @@ void Damage::rollDamage()
 {
     DiceExpression dice("D6");
     int roll;
-    int nbCritical;
+    int nbCritical = 0;
     int maxRoll = 0;
     for(size_t i = this->currentValue; i > 0; --i) {
         roll = dice.roll();

@@ -15,3 +15,8 @@ std::string ConsoleMenuItem::toString()
     std::string res = this->title + " : " + this->inputWaited;
     return res;
 }
+
+bool ConsoleMenuItem::checkInput(const std::string &input)
+{
+    return input == this->inputWaited;
+}

@@ -10,3 +10,8 @@ IoController::~IoController()
 {
     delete(this->gameController);
 }
+
+GameController *IoController::getGameController() const
+{
+    return gameController;
+}
