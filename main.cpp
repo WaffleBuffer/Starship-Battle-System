@@ -24,6 +24,7 @@
 #include "src/exception/xmlexception.h"
 #include "src/gameCore/gamecontroller.h"
 #include "src/ioControler/Console/consoleiocontroller.h"
+#include "src/gameCore/console/consolegamecontroller.h"
 
 #include <iostream>
 #include <time.h>
@@ -45,10 +46,16 @@ public:
 public slots:
     void run()
     {
-        // Do processing here
-        GameController *controller = new GameController();
-        ConsoleIOController IoController(controller);
-        IoController.launchGame();
+        ConsoleGameController *controller = new ConsoleGameController();
+        ConsoleIOController *ioController = new ConsoleIOController(controller);
+        try {
+            ioController->launchGame();
+        }
+        catch (BasicException *e){
+            std::cout << "Basic exception : " << e->what() << std::endl;
+        }
+
+        delete(ioController);
         emit finished();
     }
 

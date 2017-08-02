@@ -38,7 +38,7 @@ namespace constants {
     /**
      * @brief The gamePhase enum. All the game phases
      */
-    enum gamePhase {ENERGY, COMMAND, INITIATIVE, MOVEMENT, FIRE, CREW};
+    enum gamePhase {ENERGY, COMMAND, INITIATIVE, MOVEMENT, FIRE, CREW, NO_PHASE};
 
     /**
      * @brief maxSpeed Tha maximum speed a ship can safely get to.

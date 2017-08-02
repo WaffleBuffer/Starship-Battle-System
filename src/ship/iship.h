@@ -147,6 +147,12 @@ public:
      * @param shipPart The ship part where you want to add the sensors.
      */
     virtual void addSensors(Sensor *sensor, constants::shipParts shipPart) = 0;
+
+    /**
+     * @brief getParts Get all ship's parts (cors, port...)
+     * @return The ship's parts.
+     */
+    virtual std::vector<std::vector<IComponent*>*>* getParts() = 0;
 };
 
 #endif // ISHIP_H

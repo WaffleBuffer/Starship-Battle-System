@@ -8,7 +8,7 @@
 Logger *GameController::logger = nullptr;
 
 GameController::GameController()
-    :teams(new std::vector<Team*>()), turn(0){
+    :teams(new std::vector<Team*>()), currentPhase(constants::NO_PHASE), turn(0){
 
     if(GameController::logger == nullptr) {
         GameController::logger = new Logger();
@@ -53,6 +53,10 @@ void GameController::nextPhase()
         this->beginTurn();
         this->energyPhase();
         break;
+    case constants::NO_PHASE:
+        this->currentPhase = constants::ENERGY;
+        this->energyPhase();
+        break;
     default:
         throw new BasicException("Unknown game phase in GameControler");
         break;
@@ -94,6 +98,7 @@ void GameController::energyPhase()
             GameController::getLogger()->addEntry(new LogEntry(ship->getName() + " has generated " + std::to_string(amount) + " EU"));
         }
     }
+    this->phaseInteraction();
 }
 
 void GameController::commandPhase()
@@ -119,4 +124,22 @@ void GameController::firePhase()
 void GameController::crewPhase()
 {
 
+}
+
+std::vector<Team *> *GameController::getTeams() const
+{
+    return teams;
+}
+
+void GameController::newGame(std::vector<Team *> *teams)
+{
+    for (size_t i = 0; i < this->teams->size(); ++i) {
+        delete(this->teams->at(i));
+    }
+    delete(this->teams);
+    this->currentPhase = constants::NO_PHASE;
+    this->turn = 0;
+
+    this->teams = new std::vector<Team*>(*teams);
+    this->nextPhase();
 }

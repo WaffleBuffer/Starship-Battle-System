@@ -21,16 +21,64 @@ public:
      * @brief GameController The default constructor.
      */
     GameController();
-    ~GameController();
-    /**
-     * @brief nextPhase Call for next phase methode. In order : energy -> command -> initiative -> movement -> fire -> crew, then new turn.
-     */
-    void nextPhase();
+    virtual ~GameController();
+
     /**
      * @brief getCurrentPhase Get the current phase of the current turn.
      * @return The current phase.
      */
     constants::gamePhase getCurrentPhase() const;
+
+    /**
+     * @brief getLogger Get the logger controller.
+     * @return The logger controller.
+     */
+    static Logger *getLogger();
+
+    /**
+     * @brief getTeams Get the teams.
+     * @return The teams.
+     */
+    std::vector<Team *> *getTeams() const;
+
+    /**
+     * @brief newGame Begin a new game.
+     * @param teams The teams participating.
+     */
+    void newGame(std::vector<Team *> *teams);
+
+    /**
+     * @brief phaseInteraction ask for an interaction for the current phase.
+     */
+    void virtual phaseInteraction() = 0;
+
+private:
+    /**
+     * @brief beginTurn Begin a new turn.
+     */
+    void beginTurn();
+    /**
+     * @brief endTurn End the current turn.
+     */
+    void endTurn();
+
+    /**
+     * @brief teams The different teams of ships playing currently.
+     */
+    std::vector<Team*> *teams;
+    /**
+     * @brief currentPhase The current game phase. In order : energy -> command -> initiative -> movement -> fire -> crew, then new turn.
+     */
+    constants::gamePhase currentPhase;
+    /**
+     * @brief logger The logger controller. It is created with the game controller, so nothing should access it when no game controller exist.
+     */
+    static Logger *logger;
+    /**
+     * @brief turn The current turn number (begining at 0).
+     */
+    unsigned int turn;
+
     /**
      * @brief energyPhase Begin the energy phase.
      */
@@ -55,39 +103,10 @@ public:
      * @brief crewPhase Begin the crew phase.
      */
     void crewPhase();
-
     /**
-     * @brief getLogger Get the logger controller.
-     * @return The logger controller.
+     * @brief nextPhase Call for next phase methode. In order : energy -> command -> initiative -> movement -> fire -> crew, then new turn.
      */
-    static Logger *getLogger();
-
-private:
-    /**
-     * @brief beginTurn Begin a new turn.
-     */
-    void beginTurn();
-    /**
-     * @brief endTurn End the current turn.
-     */
-    void endTurn();
-
-    /**
-     * @brief currentPhase The current game phase. In order : energy -> command -> initiative -> movement -> fire -> crew, then new turn.
-     */
-    constants::gamePhase currentPhase;
-    /**
-     * @brief teams The different teams of ships playing currently.
-     */
-    std::vector<Team*> *teams;
-    /**
-     * @brief logger The logger controller. It is created with the game controller, so nothing should access it when no game controller exist.
-     */
-    static Logger *logger;
-    /**
-     * @brief turn The current turn number (begining at 0).
-     */
-    unsigned int turn;
+    void nextPhase();
 };
 
 #endif // GAMECONTROLLER_H

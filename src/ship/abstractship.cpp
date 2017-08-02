@@ -22,7 +22,7 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
                            NavThruster *backThruster, TranslationThruster *leftTThruster, TranslationThruster *frontTThruster, TranslationThruster *rightTThruster,
                            TranslationThruster *backTThruster, RotationThruster *rotationThruster, VectorialMovement *movement)
     :IShip(movement), armor(armor), stageGenerators(new std::vector<StageGenerator*>()), damageObservers(new std::vector<Observer *>()),
-      afterDamageObservers(new std::vector<Observer *>()),
+      afterDamageObservers(new std::vector<Observer *>()), parts(new std::vector<std::vector<IComponent*>*>()),
       coreComponents(new std::vector<IComponent*>()), bowComponents(new std::vector<IComponent*>()), starboardComponents(new std::vector<IComponent*>()),
       sternComponents(new std::vector<IComponent*>()), portComponents(new std::vector<IComponent*>()), sensors(new std::vector<Sensor*>())
       {
@@ -30,6 +30,12 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->name = name;
     this->description = description;
     this->control = new ShipControl(this);
+
+    this->parts->push_back(this->coreComponents);
+    this->parts->push_back(this->bowComponents);
+    this->parts->push_back(this->starboardComponents);
+    this->parts->push_back(this->sternComponents);
+    this->parts->push_back(this->portComponents);
 
     this->hull = hull;
     this->addAfterDamageObserver(this->hull);
@@ -462,4 +468,9 @@ void AbstractShip::loadAbstractFromXML(const pugi::xml_node &root, AbstractShip 
     shipToLoad->addComponentToPart(shipToLoad->rotationThruster, constants::CORE);
 
     AbstractGenerator::createGenFromXML(node.child("base_generator").first_child(), shipToLoad);
+}
+
+std::vector<std::vector<IComponent *> *> *AbstractShip::getParts()
+{
+    return this->parts;
 }

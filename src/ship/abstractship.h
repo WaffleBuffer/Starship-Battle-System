@@ -167,6 +167,11 @@ public:
      */
     static void loadAbstractFromXML(const pugi::xml_node &root, AbstractShip *shipToLoad);
 
+    /**
+     * @brief getParts Get all ship's parts (cors, port...)
+     * @return The ship's parts.
+     */
+    virtual std::vector<std::vector<IComponent*>*>* getParts();
 
 private:
     /**
@@ -246,6 +251,10 @@ private:
      */
     std::vector<Observer *> *afterDamageObservers;
 
+    /**
+     * @brief parts The ship's parts (core, port...).
+     */
+    std::vector<std::vector<IComponent*>*> *parts;
     /**
      * @brief coreComponents The components in the core part.
      */

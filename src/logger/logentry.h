@@ -5,13 +5,13 @@
  * @file logentry.h
  */
 
+#include "../utils/myobject.h"
 #include <ctime>
 #include <string>
-
 /**
  * @brief The LogEntry class An entry in the game log.
  */
-class LogEntry
+class LogEntry: public MyObject
 {
 public:
     /**
