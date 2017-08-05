@@ -85,8 +85,6 @@ void ConsoleIOController::loadMenu(ConsoleMenu *menu)
         args.erase(args.begin());
     }
 
-    std::cout << "patate" << std::endl;
-
     while (!menu->getIsOver()) {
         menu->checkInput(input, &args);
 
