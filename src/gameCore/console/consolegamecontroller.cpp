@@ -7,8 +7,13 @@
 #include "../../ship/shipcontrol.h"
 #include "../../ship/component/energyprovidable.h"
 #include "../../ioControler/Console/consoleiocontroller.h"
+#include "../../exception/ioexception.h"
+#include "../../ioControler/Console/consolemenuitemreturn.h"
+#include "../../utils/utils.cpp"
 
 #include <iostream>
+#include <vector>
+#include <string>
 
 ConsoleGameController::ConsoleGameController()
     :GameController(), ioController(nullptr){
@@ -57,13 +62,21 @@ void ConsoleGameController::setIoController(ConsoleIOController *value)
 
 void ConsoleGameController::energyInteraction()
 {
+    /* The item for each energy item */
     struct EnergyItem : ConsoleMenuItem {
-        EnergyItem(const std::string &title, const std::string &inputWaited)
-            :ConsoleMenuItem(title, inputWaited) {}
+        EnergyItem(const std::string &title, const std::string &inputWaited, ConsoleMenu *menu, EnergyProvidable *component)
+            :ConsoleMenuItem(title, inputWaited, menu), component(component) {}
+
         virtual void action(std::vector<std::string> *args = nullptr) {
 
-            std::cout << "TODO" << std::endl;
+            if(args == nullptr || args->size() == 0) {
+                throw new IOException("Need to provide an energy amount as argument", false);
+            }
+            utils::isUnsigned(args->at(0));
+
         }
+
+        EnergyProvidable *component;
     };
 
     for(size_t i = 0; i < this->getTeams()->size(); ++i) {
@@ -84,13 +97,24 @@ void ConsoleGameController::energyInteraction()
                         continue;
                     }
                     else {
-                        EnergyItem *item = new EnergyItem(component->getName(), std::to_string(energyComponentCount));
+                        EnergyItem *item = new EnergyItem(component->getName(), std::to_string(energyComponentCount), &energyMenu, component);
                         energyMenu.getMenuItems()->push_back(item);
                         energyComponentCount++;
                     }
                 }
             }
-            this->getIoController()->loadMenu(&energyMenu);
+            ConsoleMenuItemReturn *returnItem = new ConsoleMenuItemReturn("Finish" , "f" , &energyMenu);
+            energyMenu.getMenuItems()->push_back(returnItem);
+
+            try {
+                this->getIoController()->loadMenu(&energyMenu);
+            }
+            catch (IOException *e) {
+
+                std::cout << e->what() << std::endl;
+                delete (e);
+                this->getIoController()->loadMenu(&energyMenu);
+            }
         }
     }
 }

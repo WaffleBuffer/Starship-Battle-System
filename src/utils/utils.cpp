@@ -9,6 +9,7 @@
 
 #include <string>
 #include <stdexcept>
+#include <vector>
 
 namespace utils {
     /**
@@ -62,7 +63,7 @@ namespace utils {
             return "Stopped";
             break;
         default:
-            throw std::invalid_argument( "Unknown StageGeneratorStage in string" );
+            throw std::invalid_argument( "Unknown StageGeneratorStage as string" );
             break;
         }
     }
@@ -318,6 +319,31 @@ namespace utils {
         else {
             throw std::invalid_argument( "Unknown str to ship part" );
         }
+    }
+
+    /**
+     * @brief explode Like in PHP will create substring delimited by the delemiter.
+     * @param str The string to explode
+     * @param delimiter The delimiter for to seach to form each substring.
+     * @return A vector containing all created substring
+     */
+    inline const std::vector<std::string> explode(const std::string& str, const char& delimiter)
+    {
+        std::string buff = "";
+        std::vector<std::string> res;
+
+        for(auto n:str)
+        {
+            if(n != delimiter)
+                buff += n;
+            else if(n == delimiter && buff != "") {
+                res.push_back(buff);
+                buff = "";
+            }
+        }
+        if(buff != "") res.push_back(buff);
+
+        return res;
     }
 }
 

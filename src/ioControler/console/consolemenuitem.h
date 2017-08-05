@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+class ConsoleMenu;
+
 /**
  * @brief The ConsoleMenuItem class A basic menu item for the console game.
  *                                  You should use this class with a lambda expression to implement pure virtual methods (like Java ActionListener).
@@ -20,7 +22,7 @@ public:
      * @param title The title of this menu item.
      * @param inputWaited The input waited to trigger this menu item.
      */
-    ConsoleMenuItem(const std::string &title, const std::string &inputWaited);
+    ConsoleMenuItem(const std::string &title, const std::string &inputWaited, ConsoleMenu *menu);
     virtual ~ConsoleMenuItem();
     /**
      * @brief action The methode used when the menu item is triggered.
@@ -39,6 +41,8 @@ public:
      * @return true if it is the input waited, false otherwise.
      */
     virtual bool checkInput(const std::string &input);
+    ConsoleMenu *getMenu() const;
+
 private:
     /**
      * @brief title The title of this menu item.
@@ -48,6 +52,11 @@ private:
      * @brief inputWaited The input waited to trigger this menu item.
      */
     std::string inputWaited;
+
+    /**
+     * @brief menu The menu of this menu item (used to set if the menu is over).
+     */
+    ConsoleMenu *menu;
 };
 
 #endif // CONSOLEMENUITEM_H

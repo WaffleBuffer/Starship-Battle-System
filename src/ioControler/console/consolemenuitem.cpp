@@ -1,7 +1,7 @@
 #include "consolemenuitem.h"
 
-ConsoleMenuItem::ConsoleMenuItem(const std::string &title, const std::string &inputWaited)
-    :title(title), inputWaited(inputWaited){
+ConsoleMenuItem::ConsoleMenuItem(const std::string &title, const std::string &inputWaited, ConsoleMenu *menu)
+    :title(title), inputWaited(inputWaited), menu(menu){
 
 }
 
@@ -19,4 +19,9 @@ std::string ConsoleMenuItem::toString()
 bool ConsoleMenuItem::checkInput(const std::string &input)
 {
     return input == this->inputWaited;
+}
+
+ConsoleMenu *ConsoleMenuItem::getMenu() const
+{
+    return menu;
 }

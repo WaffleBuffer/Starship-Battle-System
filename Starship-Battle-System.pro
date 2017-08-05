@@ -85,7 +85,9 @@ SOURCES += main.cpp\
     src/ioControler/console/consolemenuitem.cpp \
     src/ioControler/console/consoleiocontroller.cpp \
     src/ship/shipfactory.cpp \
-    src/GameCore/console/consolegamecontroller.cpp
+    src/GameCore/console/consolegamecontroller.cpp \
+    src/ioControler/console/consolemenuitemreturn.cpp \
+    src/exception/ioexception.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -146,7 +148,9 @@ HEADERS  += mainwindow.h \
     src/ioControler/console/consolemenuitem.h \
     src/ioControler/console/consoleiocontroller.h \
     src/ship/shipfactory.h \
-    src/GameCore/console/consolegamecontroller.h
+    src/GameCore/console/consolegamecontroller.h \
+    src/ioControler/console/consolemenuitemreturn.h \
+    src/exception/ioexception.h
 
 FORMS    += mainwindow.ui
 

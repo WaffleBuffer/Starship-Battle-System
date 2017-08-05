@@ -2,7 +2,7 @@
 #include "consolemenuitem.h"
 
 ConsoleMenu::ConsoleMenu(const std::string &title)
-    :menuItems(new std::vector<ConsoleMenuItem*>()), title(title){
+    :menuItems(new std::vector<ConsoleMenuItem*>()), title(title), isOver(false){
 
 }
 
@@ -19,13 +19,11 @@ std::vector<ConsoleMenuItem *> *ConsoleMenu::getMenuItems() const
     return menuItems;
 }
 
-bool ConsoleMenu::checkInput(const std::string &input)
+bool ConsoleMenu::checkInput(const std::string &input, std::vector<std::string> *args)
 {
     for (size_t i = 0; i < this->menuItems->size(); ++i) {
         if(this->menuItems->at(i)->checkInput(input)) {
-            std::vector<std::string> args;
-            args.push_back(input);
-            this->menuItems->at(i)->action(&args);
+            this->menuItems->at(i)->action(args);
             return true;
         }
     }
@@ -39,4 +37,14 @@ std::string ConsoleMenu::toString()
         res += this->menuItems->at(i)->toString() + "\n";
     }
     return res;
+}
+
+bool ConsoleMenu::getIsOver() const
+{
+    return isOver;
+}
+
+void ConsoleMenu::setIsOver(bool value)
+{
+    isOver = value;
 }

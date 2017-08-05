@@ -8,6 +8,7 @@
 #include "../../exception/basicexception.h"
 #include "../../logger/logger.h"
 #include "../../logger/logentry.h"
+#include "../../utils/utils.cpp"
 
 #include <iostream>
 
@@ -30,8 +31,10 @@ void ConsoleIOController::launchGame()
     ConsoleMenu mainMenu("Main menu");
 
     struct PlayItem : ConsoleMenuItem {
-        PlayItem(const std::string &title, const std::string &inputWaited)
-            :ConsoleMenuItem(title, inputWaited) {}
+
+        PlayItem(const std::string &title, const std::string &inputWaited, ConsoleMenu *menu)
+            :ConsoleMenuItem(title, inputWaited, menu) {}
+
         virtual void action(std::vector<std::string> *args = nullptr) {
 
             std::cout << "PLAY!" << std::endl;
@@ -45,20 +48,21 @@ void ConsoleIOController::launchGame()
             GameController *gameController = ConsoleIOController::getController()->getGameController();
             gameController->newGame(&teams);
         }
-    } play("Play", "p");
+    } play("Play", "p", &mainMenu);
     mainMenu.getMenuItems()->push_back(&play);
 
     struct QuitItem : ConsoleMenuItem {
-        QuitItem(const std::string &title, const std::string &inputWaited, ConsoleIOController *controller)
-            :ConsoleMenuItem(title, inputWaited), controller(controller) {}
+        QuitItem(const std::string &title, const std::string &inputWaited, ConsoleMenu *menu, ConsoleIOController *controller)
+            :ConsoleMenuItem(title, inputWaited, menu), controller(controller) {}
 
         virtual void action(std::vector<std::string> *args = nullptr) {
             std::cout << "Bye !" << std::endl;
             this->controller->setQuit(true);
+            this->getMenu()->setIsOver(true);
         }
 
         ConsoleIOController *controller;
-    } quit("Quit", "q", this);
+    } quit("Quit", "q", &mainMenu, this);
     mainMenu.getMenuItems()->push_back(&quit);
 
     while(!this->quit) {
@@ -70,9 +74,34 @@ void ConsoleIOController::launchGame()
 void ConsoleIOController::loadMenu(ConsoleMenu *menu)
 {
     std::string input = "";
-    while (!menu->checkInput(input)) {
+    std::vector<std::string> args;
+
+    std::cout << menu->toString() << std::endl;
+    std::getline(std::cin, input);
+
+    args = utils::explode(input, ' ');
+    if(args.size() > 0) {
+        input = args.at(0);
+        args.erase(args.begin());
+    }
+
+    std::cout << "patate" << std::endl;
+
+    while (!menu->getIsOver()) {
+        menu->checkInput(input, &args);
+
+        if (menu->getIsOver()) {
+            break;
+        }
+
         std::cout << menu->toString() << std::endl;
         std::getline(std::cin, input);
+
+        args = utils::explode(input, ' ');
+        if(args.size() > 0) {
+            input = args.at(0);
+            args.erase(args.begin());
+        }
     }
 }
 
