@@ -48,3 +48,8 @@ void ConsoleMenu::setIsOver(bool value)
 {
     isOver = value;
 }
+
+void ConsoleMenu::setTitle(const std::string &value)
+{
+    title = value;
+}

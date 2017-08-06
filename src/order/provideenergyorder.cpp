@@ -25,8 +25,21 @@ void ProvideEnergyOrder::applyOrder()
 
 std::string ProvideEnergyOrder::toString()
 {
-    std::string msg = "Provide ";
-
-    //msg += energy + " to " + componentProvided->getName();
+    std::string msg = "Order to provide " + std::to_string(energy) + " to " + componentProvided->getName();
     return msg;
+}
+
+EnergyProvidable *ProvideEnergyOrder::getComponentProvided() const
+{
+    return componentProvided;
+}
+
+int ProvideEnergyOrder::getEnergy() const
+{
+    return energy;
+}
+
+void ProvideEnergyOrder::setEnergy(int value)
+{
+    energy = value;
 }

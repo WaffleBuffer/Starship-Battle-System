@@ -25,3 +25,8 @@ ConsoleMenu *ConsoleMenuItem::getMenu() const
 {
     return menu;
 }
+
+void ConsoleMenuItem::setTitle(const std::string &value)
+{
+    title = value;
+}

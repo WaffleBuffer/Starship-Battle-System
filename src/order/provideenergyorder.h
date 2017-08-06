@@ -32,6 +32,12 @@ public:
      * @return Get the string representation.
      */
     std::string toString() override;
+    EnergyProvidable *getComponentProvided() const;
+
+    int getEnergy() const;
+
+    void setEnergy(int value);
+
 private:
     /**
      * @brief energy The EU quantity to provide.

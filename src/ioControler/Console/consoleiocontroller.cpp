@@ -11,6 +11,8 @@
 #include "../../utils/utils.cpp"
 
 #include <iostream>
+#include <windows.h>
+#include <unistd.h>
 
 ConsoleIOController *ConsoleIOController::controller = nullptr;
 
@@ -78,6 +80,7 @@ void ConsoleIOController::loadMenu(ConsoleMenu *menu)
 
     std::cout << menu->toString() << std::endl;
     std::getline(std::cin, input);
+    ConsoleIOController::clearScreen();
 
     args = utils::explode(input, ' ');
     if(args.size() > 0) {
@@ -94,6 +97,7 @@ void ConsoleIOController::loadMenu(ConsoleMenu *menu)
 
         std::cout << menu->toString() << std::endl;
         std::getline(std::cin, input);
+        ConsoleIOController::clearScreen();
 
         args = utils::explode(input, ' ');
         if(args.size() > 0) {
@@ -122,10 +126,78 @@ void ConsoleIOController::notify(Observable *origin, MyObject *arg)
         return;
     }
 
-    std:: cout << entry->toString() << std::endl;
+    std::cout << entry->toString() << std::endl;
 }
 
 void ConsoleIOController::setQuit(bool value)
 {
     quit = value;
+}
+
+void clearScreenWindows() {
+
+#if defined(_WIN32) || defined(_WIN64)
+      HANDLE                     hStdOut;
+      CONSOLE_SCREEN_BUFFER_INFO csbi;
+      DWORD                      count;
+      DWORD                      cellCount;
+      COORD                      homeCoords = { 0, 0 };
+
+      hStdOut = GetStdHandle( STD_OUTPUT_HANDLE );
+      if (hStdOut == INVALID_HANDLE_VALUE) return;
+
+      /* Get the number of cells in the current buffer */
+      if (!GetConsoleScreenBufferInfo( hStdOut, &csbi )) return;
+      cellCount = csbi.dwSize.X *csbi.dwSize.Y;
+
+      /* Fill the entire buffer with spaces */
+      if (!FillConsoleOutputCharacter(
+        hStdOut,
+        (TCHAR) ' ',
+        cellCount,
+        homeCoords,
+        &count
+        )) return;
+
+      /* Fill the entire buffer with the current colors and attributes */
+      if (!FillConsoleOutputAttribute(
+        hStdOut,
+        csbi.wAttributes,
+        cellCount,
+        homeCoords,
+        &count
+        )) return;
+
+      /* Move the cursor home */
+      SetConsoleCursorPosition( hStdOut, homeCoords );
+#endif
+}
+
+void clearScreenPOSIX() {
+    /*if (!cur_term){
+        int result;
+        setupterm( NULL, STDOUT_FILENO, &result );
+        if (result <= 0) return;
+     }
+
+     putp(tigetstr("clear"));*/
+    std::cout << "\033[2J\033[1;1H";
+}
+
+void ConsoleIOController::clearScreen()
+{
+#ifdef _WIN32
+    clearScreenWindows();
+#elif _WIN64
+    clearScreenWindows();
+#elif __linux__
+    clearScreenPOSIX();
+#elif __unix__
+    clearScreenPOSIX();
+#elif defined(_POSIX_VERSION)
+    clearScreenPOSIX();
+#else
+    // Unsupported OS console
+    return;
+#endif
 }

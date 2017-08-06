@@ -52,6 +52,8 @@ private:
      * @brief quit Does the user want to quit.
      */
     bool quit;
+
+    static void clearScreen();
 };
 
 #endif // CONSOLEIOCONTROLLER_H

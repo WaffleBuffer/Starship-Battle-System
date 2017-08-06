@@ -53,6 +53,8 @@ public:
      */
     void setIsOver(bool value);
 
+    void setTitle(const std::string &value);
+
 private:
     /**
      * @brief menuItems The list of menu item.

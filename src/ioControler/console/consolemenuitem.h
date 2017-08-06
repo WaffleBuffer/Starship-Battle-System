@@ -43,6 +43,8 @@ public:
     virtual bool checkInput(const std::string &input);
     ConsoleMenu *getMenu() const;
 
+    void setTitle(const std::string &value);
+
 private:
     /**
      * @brief title The title of this menu item.
