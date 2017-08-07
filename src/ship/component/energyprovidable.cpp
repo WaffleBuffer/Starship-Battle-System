@@ -6,7 +6,7 @@ EnergyProvidable::EnergyProvidable(const std::string &name, const std::string &d
 
 }
 
-int EnergyProvidable::getMaxEnergy() {
+unsigned int EnergyProvidable::getMaxEnergy() {
     return this->maxEnergy;
 }
 

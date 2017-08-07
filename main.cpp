@@ -9,9 +9,9 @@
 #include "src/ship/component/energyComponents/stagegenerator.h"
 #include "src/ship/component/energyComponents/stoppedgeneratorstage.h"
 #include "src/ship/component/sensor.h"
-#include "src/ship/ship.h"
+#include "src/ship/playercontrolledship.h"
 #include "src/order/provideenergyorder.h"
-#include "src/ship/shipcontrol.h"
+#include "src/ship/shipcontrol/playershipcontrol.h"
 #include "src/exception/shipexception.h"
 #include "src/exception/orderexception.h"
 #include "src/ship/armor.h"
@@ -24,7 +24,6 @@
 #include "src/exception/xmlexception.h"
 #include "src/gameCore/gamecontroller.h"
 #include "src/ioControler/Console/consoleiocontroller.h"
-#include "src/gameCore/console/consolegamecontroller.h"
 
 #include <iostream>
 #include <time.h>
@@ -46,8 +45,8 @@ public:
 public slots:
     void run()
     {
-        ConsoleGameController *controller = new ConsoleGameController();
-        ConsoleIOController *ioController = new ConsoleIOController(controller);
+        GameController *controller = new GameController();
+        ConsoleIoController *ioController = new ConsoleIoController(controller);
         try {
             ioController->launchGame();
         }
@@ -70,7 +69,7 @@ int main(int argc, char *argv[])
     srand (time(NULL));
 
     // Testing dice expression
-    string simpleConst = "2D3 + 1 + D6";
+    /*string simpleConst = "2D3 + 1 + D6";
     DiceExpression expr(simpleConst);
 
     cout << expr.toString() << endl;
@@ -216,7 +215,7 @@ int main(int argc, char *argv[])
     xml_document doc;
     ship->saveXML(doc);
     doc.save_file("test.xml");
-    /*doc.load_string("");
+    doc.load_string("");
     xml_node node = doc.append_child("ship");
     ship->getMovement()->saveXML(node);
     hull->saveXML(node);
@@ -225,7 +224,7 @@ int main(int argc, char *argv[])
     doc.save(std::cout);
     doc.save_file("test.xml");*/
 
-    cout << "Testing loading previous saved ship from XML..." << endl;
+    /*cout << "Testing loading previous saved ship from XML..." << endl;
     xml_document fileDoc;
     if (fileDoc.load_file("test.xml")) {
         try {
@@ -241,7 +240,7 @@ int main(int argc, char *argv[])
         cout << "no test.xml" << endl;
     }
 
-    delete(ship);
+    delete(ship);*/
 
     /*GameController *controller = new GameController();
     ConsoleIOController IoController(controller);

@@ -9,8 +9,8 @@
 
 const char* Hull::rootName = "hull";
 
-Hull::Hull(IShip *ship, std::vector<HullLevel *> *hullLevels)
-    :AbstractComponent("", "", ship), hullLevels(hullLevels), currentLevel(hullLevels->at(0)), currentLevelIndex(0){
+Hull::Hull(std::vector<HullLevel *> *hullLevels)
+    :AbstractComponent("", "", nullptr), hullLevels(hullLevels), currentLevel(hullLevels->at(0)), currentLevelIndex(0){
 }
 
 Hull::~Hull()
@@ -84,7 +84,8 @@ Hull *Hull::loadFromXML(IShip *ship, const pugi::xml_node &root)
         hullLevels->push_back(HullLevel::loadFromXML(node));
     }
 
-    Hull *hull = new Hull(ship, hullLevels);
+    Hull *hull = new Hull(hullLevels);
+    hull->setShip(ship);
     AbstractComponent::loadAbstractFromXML(ship, root, hull);
     hull->currentLevelIndex = root.attribute("currentlevelindex").as_uint();
     hull->currentLevel = hull->hullLevels->at(hull->currentLevelIndex);

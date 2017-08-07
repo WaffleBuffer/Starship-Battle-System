@@ -4,6 +4,8 @@
 #include "../iship.h"
 #include "../../utils/utils.cpp"
 #include "../../exception/xmlexception.h"
+#include "../../exception/shipexception.h"
+
 #include <string.h>
 
 const char* TranslationThruster::rootName = "trans_thruster";
@@ -18,7 +20,11 @@ TranslationThruster::TranslationThruster(TranslationThruster *model)
 
 void TranslationThruster::provideEnergy(const int &energy)
 {
-    int currentEnergy = (energy > this->getMaxEnergy() ? this->getMaxEnergy() : energy);
+    if(energy > this->getMaxEnergy()) {
+        throw new ShipException("Too much energy provided to translation thruster", this->getShip());
+    }
+    unsigned int currentEnergy = 0;
+    energy < 0 ? currentEnergy = 0 : currentEnergy = energy;
 
     this->getShip()->translate(this->facingDirection, currentEnergy);
 }

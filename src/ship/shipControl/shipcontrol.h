@@ -36,7 +36,7 @@ public:
      * @brief getCurrentAvailableEnergy Get the current available Energy Unit (EU). To add some, use generate energy from the ship.
      * @return The current available energy.
      */
-    int getCurrentAvailableEnergy();
+    unsigned int getCurrentAvailableEnergy();
     /**
      * @brief setCurrentAvailableEnergy Set the current available energy.
      * @param energy The energy to set.
@@ -50,6 +50,13 @@ public:
      * @brief endTurn Reset what need to be reset in order to end a turn.
      */
     void endTurn();
+
+    /**
+     * @brief energyDecision Ask the ship to make energy phase decisions (ia or player).
+     */
+    virtual void energyDecision() = 0;
+    IShip *getShip() const;
+
 private:
     /**
      * @brief ship The ship of the control.
@@ -58,7 +65,7 @@ private:
     /**
      * @brief currentAvailableEnergy The current amount of Energy Unit (EU).
      */
-    int currentAvailableEnergy;
+    unsigned int currentAvailableEnergy;
     /**
      * @brief orders The unexecuted orders.
      */

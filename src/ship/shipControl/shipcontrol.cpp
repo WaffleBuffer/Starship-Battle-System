@@ -1,7 +1,7 @@
 #include "shipcontrol.h"
 
-#include "iship.h"
-#include "../order/shiporder.h"
+#include "../iship.h"
+#include "../../order/shiporder.h"
 
 ShipControl::ShipControl(IShip *ship)
     :ship(ship), currentAvailableEnergy(0), orders(new std::vector<ShipOrder*>()){
@@ -25,14 +25,14 @@ std::vector<ShipOrder *> *ShipControl::getOrders()
     return this->orders;
 }
 
-int ShipControl::getCurrentAvailableEnergy()
+unsigned int ShipControl::getCurrentAvailableEnergy()
 {
     return this->currentAvailableEnergy;
 }
 
 void ShipControl::setCurrentAvailableEnergy(const int &energy)
 {
-    this->currentAvailableEnergy = energy;
+    (energy < 0) ? this->currentAvailableEnergy = 0 : this->currentAvailableEnergy = energy;
 }
 
 void ShipControl::applyOrders()
@@ -50,4 +50,9 @@ void ShipControl::applyOrders()
 void ShipControl::endTurn()
 {
     this->currentAvailableEnergy = 0;
+}
+
+IShip *ShipControl::getShip() const
+{
+    return ship;
 }

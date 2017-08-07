@@ -4,6 +4,7 @@
 #include "../ship/iship.h"
 #include "../logger/logger.h"
 #include "../logger/logentry.h"
+#include "../ship/shipControl/shipcontrol.h"
 
 Logger *GameController::logger = nullptr;
 
@@ -63,6 +64,13 @@ void GameController::nextPhase()
     }
 }
 
+void GameController::gameLoop()
+{
+    while(true) {
+        this->nextPhase();
+    }
+}
+
 void GameController::beginTurn()
 {
 
@@ -88,42 +96,45 @@ constants::gamePhase GameController::getCurrentPhase() const
 
 void GameController::energyPhase()
 {
+    GameController::getLogger()->addEntry(new LogEntry("Beginning energy phase"));
     Team *team;
     IShip *ship;
+    //TODO: make this multi-thread : one thread for each team.
     for (size_t i = 0; i < this->teams->size(); ++i) {
         team = this->teams->at(i);
         for(size_t j = 0; j < team->getShips()->size(); ++j) {
             ship = team->getShips()->at(j);
             int amount = ship->generateEnergy();
             GameController::getLogger()->addEntry(new LogEntry(ship->getName() + " has generated " + std::to_string(amount) + " EU"));
+
+            ship->getControl()->energyDecision();
         }
     }
-    this->phaseInteraction();
 }
 
 void GameController::commandPhase()
 {
-
+    GameController::getLogger()->addEntry(new LogEntry("Beginning command phase"));
 }
 
 void GameController::initiativePhase()
 {
-
+    GameController::getLogger()->addEntry(new LogEntry("Beginning initiative phase"));
 }
 
 void GameController::movementPhase()
 {
-
+    GameController::getLogger()->addEntry(new LogEntry("Beginning movement phase"));
 }
 
 void GameController::firePhase()
 {
-
+    GameController::getLogger()->addEntry(new LogEntry("Beginning fire phase"));
 }
 
 void GameController::crewPhase()
 {
-
+    GameController::getLogger()->addEntry(new LogEntry("Beginning crew phase"));
 }
 
 std::vector<Team *> *GameController::getTeams() const
@@ -140,6 +151,6 @@ void GameController::newGame(std::vector<Team *> *teams)
     this->currentPhase = constants::NO_PHASE;
     this->turn = 0;
 
-    this->teams = new std::vector<Team*>(*teams);
-    this->nextPhase();
+    this->teams = teams;
+    this->gameLoop();
 }

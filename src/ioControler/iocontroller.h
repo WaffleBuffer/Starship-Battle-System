@@ -6,6 +6,7 @@
  */
 
 class GameController;
+class IShip;
 
 /**
  * @brief The IoController class The abstract controller of input and output. It is the interface between the user and the game controller.
@@ -29,6 +30,12 @@ public:
      * @return The game controller.
      */
     GameController *getGameController() const;
+
+    /**
+     * @brief energyPhaseInteraction Ask for a player interaction for energy phase decisions
+     * @param ship The ship that need an interaction.
+     */
+    virtual void energyPhaseInteraction(IShip *ship) = 0;
 
 private:
     /**

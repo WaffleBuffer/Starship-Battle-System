@@ -8,9 +8,9 @@
 #include "component/energyComponents/stagegenerator.h"
 #include "component/energyComponents/stoppedgeneratorstage.h"
 #include "component/sensor.h"
-#include "ship.h"
+#include "playercontrolledship.h"
 #include "src/order/provideenergyorder.h"
-#include "shipcontrol.h"
+#include "shipControl/playershipcontrol.h"
 #include "src/exception/shipexception.h"
 #include "src/exception/orderexception.h"
 #include "armor.h"
@@ -27,9 +27,9 @@ ShipFactory::ShipFactory()
 
 }
 
-Ship *ShipFactory::buildTestShip()
+PlayerControlledShip *ShipFactory::buildTestShip(IoController *ioController)
 {
-    Ship *ship;
+    PlayerControlledShip *ship;
 
     NavThruster *thrusterMK1 = new NavThruster("thruster MK1", "first sublight speed space thruster", nullptr, 3);
     TranslationThruster *tThrusterMK1 = new TranslationThruster("Translation thruster MK1", "Simple translation thruster", nullptr, 1);
@@ -44,7 +44,7 @@ Ship *ShipFactory::buildTestShip()
             hullLevels->push_back(new HullLevel(4));
         }
     }
-    Hull *hull = new Hull(ship, hullLevels);
+    Hull *hull = new Hull(hullLevels);
 
     Armor *armor = new Armor(2,2,2,2);
 
@@ -60,8 +60,8 @@ Ship *ShipFactory::buildTestShip()
 
     Sensor *sensor = new Sensor("Sensor Mk1", "Simple array of sensors", ship, 5);
 
-    ship = new Ship("UES Test", "First Union of Earth prototype of Starship", hull, armor, sensor, fThruster, bThruster, lTThruster, fTThruster, rTThruster, bTThruster,
-                    cTThruster, 0);
+    ship = new PlayerControlledShip("UES Test", "First Union of Earth prototype of Starship", hull, armor, sensor, fThruster, bThruster, lTThruster, fTThruster, rTThruster, bTThruster,
+                    cTThruster, 0, ioController);
 
     StageGenerator *generator = new StageGenerator("Stage Generator MK1", "First generation of stage generators", ship);
     generator->addStage(new GeneratorStage(constants::NORMAL, new DiceExpression("D10"), generator));

@@ -120,12 +120,6 @@ public:
     void addGenerator(AbstractGenerator *generator, constants::shipParts shipPart);
 
     /**
-     * @brief getControl Get the ship's control.
-     * @return The ship's control.
-     */
-    ShipControl *getControl() override;
-
-    /**
      * @brief addDamageObserver Add a damage observer.
      * @param observer The observer.
      */
@@ -236,11 +230,6 @@ private:
      *                        Used to deteriorate only one stage generator (randomly) per hit.
      */
     std::vector<StageGenerator*> *stageGenerators;
-
-    /**
-     * @brief control The ship's control.
-     */
-    ShipControl *control;
 
     /**
      * @brief damageObservers The ship's damage observers.

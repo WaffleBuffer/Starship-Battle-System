@@ -31,7 +31,7 @@ public:
      * @brief getMaxEnergy Get the maximum amount of energy units that can be provided (it may not be a strict maximum).
      * @return The maximum amount of energy units that can be provided (it may not be a strict maximum).
      */
-    int getMaxEnergy();
+    unsigned int getMaxEnergy();
 
     /**
      * @brief saveXML Save the EnergyProvidable infos of an EnergyProvidable.
@@ -51,7 +51,7 @@ private:
     /**
      * @brief maxEnergy The maximum amount of energy units that can be provided (it may not be a strict maximum).
      */
-    int maxEnergy;
+    unsigned int maxEnergy;
 };
 
 #endif // ENERGYPROVIDABLE_H

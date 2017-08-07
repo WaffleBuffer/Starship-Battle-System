@@ -32,6 +32,16 @@ public:
      * @param order The order involved
      */
     OrderException(const char* msg, ShipOrder *order);
+    /**
+     * @brief OrderException Constructor.
+     * @param msg The error message
+     */
+    OrderException(const std::string & msg);
+    /**
+     * @brief OrderException Constructor.
+     * @param msg The error message
+     */
+    OrderException(const char* msg);
     virtual ~OrderException() {}
     /**
      * @brief what Get what happened message.

@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     nbproject/private/cpp_standard_headers_indexer.cpp \
     nbproject/private/c_standard_headers_indexer.c \
     src/ship/abstractship.cpp \
-    src/ship/ship.cpp \
     src/ship/armor.cpp \
     src/utils/constants.cpp \
     src/ship/component/abstractcomponent.cpp \
@@ -51,7 +50,6 @@ SOURCES += main.cpp\
     src/ship/component/rotationthruster.cpp \
     src/exception/shipexception.cpp \
     src/order/shiporder.cpp \
-    src/ship/shipcontrol.cpp \
     src/order/provideenergyorder.cpp \
     src/utils/observable.cpp \
     src/utils/observer.cpp \
@@ -84,14 +82,16 @@ SOURCES += main.cpp\
     src/ioControler/console/consolemenuitem.cpp \
     src/ioControler/console/consoleiocontroller.cpp \
     src/ship/shipfactory.cpp \
-    src/GameCore/console/consolegamecontroller.cpp \
     src/ioControler/console/consolemenuitemreturn.cpp \
-    src/exception/ioexception.cpp
+    src/exception/ioexception.cpp \
+    src/ship/shipControl/shipcontrol.cpp \
+    src/ship/shipControl/playershipcontol.cpp \
+    src/ioControler/console/consolemenuitemenergy.cpp \
+    src/ship/playercontrolledship.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
     src/ship/abstractship.h \
-    src/ship/ship.h \
     src/ship/armor.h \
     src/ship/component/icomponent.h \
     src/ship/component/abstractcomponent.h \
@@ -114,7 +114,6 @@ HEADERS  += mainwindow.h \
     src/ship/component/rotationthruster.h \
     src/exception/shipexception.h \
     src/order/shiporder.h \
-    src/ship/shipcontrol.h \
     src/order/provideenergyorder.h \
     src/utils/observable.h \
     src/utils/observer.h \
@@ -147,9 +146,12 @@ HEADERS  += mainwindow.h \
     src/ioControler/console/consolemenuitem.h \
     src/ioControler/console/consoleiocontroller.h \
     src/ship/shipfactory.h \
-    src/GameCore/console/consolegamecontroller.h \
     src/ioControler/console/consolemenuitemreturn.h \
-    src/exception/ioexception.h
+    src/exception/ioexception.h \
+    src/ship/shipControl/shipcontrol.h \
+    src/ship/shipControl/playershipcontrol.h \
+    src/ioControler/console/consolemenuitemenergy.h \
+    src/ship/playercontrolledship.h
 
 FORMS    += mainwindow.ui
 

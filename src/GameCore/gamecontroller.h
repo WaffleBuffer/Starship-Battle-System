@@ -47,11 +47,6 @@ public:
      */
     void newGame(std::vector<Team *> *teams);
 
-    /**
-     * @brief phaseInteraction ask for an interaction for the current phase.
-     */
-    void virtual phaseInteraction() = 0;
-
 private:
     /**
      * @brief beginTurn Begin a new turn.
@@ -107,6 +102,11 @@ private:
      * @brief nextPhase Call for next phase methode. In order : energy -> command -> initiative -> movement -> fire -> crew, then new turn.
      */
     void nextPhase();
+
+    /**
+     * @brief gameLoop The main game loop for each phases
+     */
+    void gameLoop();
 };
 
 #endif // GAMECONTROLLER_H

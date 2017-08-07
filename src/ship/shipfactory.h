@@ -4,19 +4,20 @@
 #include<string>
 #include<vector>
 
-class Ship;
+class PlayerControlledShip;
 class Hull;
 class Armor;
 class Sensor;
 class NavThruster;
 class TranslationThruster;
 class RotationThruster;
+class IoController;
 
 class ShipFactory
 {
 public:
     ShipFactory();
-    Ship *buildTestShip();
+    PlayerControlledShip *buildTestShip(IoController *ioController);
 private:
     std::string name;
     std::string description;

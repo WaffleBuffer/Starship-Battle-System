@@ -2,6 +2,8 @@
 #include "../iship.h"
 #include "../../utils/utils.cpp"
 #include "../../exception/xmlexception.h"
+#include "../../exception/shipexception.h"
+
 #include <string.h>
 
 const char* RotationThruster::rootName = "rotation_thruster";
@@ -19,7 +21,11 @@ RotationThruster::RotationThruster(RotationThruster *model)
 
 void RotationThruster::provideEnergy(const int &energy)
 {
-    //int currentEnergy = (energy > this->getMaxEnergy() ? this->getMaxEnergy() : energy);
+    if(energy > this->getMaxEnergy()) {
+        throw new ShipException("Too much energy provided to rotation thruster", this->getShip());
+    }
+    /*unsigned int currentEnergy = 0;
+    energy < 0 ? currentEnergy = 0 : currentEnergy = energy;*/
 
     this->getShip()->rotate(this->getDirection());
 }

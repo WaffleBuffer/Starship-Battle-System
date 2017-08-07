@@ -1,7 +1,7 @@
 #include "provideenergyorder.h"
 
 #include "../ship/component/energyprovidable.h"
-#include "../ship/shipcontrol.h"
+#include "../ship/shipControl/shipcontrol.h"
 #include "../exception/orderexception.h"
 #include "../exception/shipexception.h"
 
@@ -11,8 +11,11 @@ ProvideEnergyOrder::ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentP
     if(this->getControl() == nullptr) {
         throw new ShipException("No ship control", this->getShip());
     }
-    if(this->energy > this->getControl()->getCurrentAvailableEnergy()) {
-        throw new OrderException("Not enough energy to create this order", nullptr);
+    if(energy < 0) {
+        throw new OrderException("Negativ energy asked");
+    }
+    if((unsigned int)this->energy > this->getControl()->getCurrentAvailableEnergy()) {
+        throw new OrderException("Not enough energy to create this order");
     }
 
 }

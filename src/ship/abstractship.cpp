@@ -7,7 +7,7 @@
 #include "component/rotationthruster.h"
 #include "../utils/utils.cpp"
 #include "../exception/shipexception.h"
-#include "shipcontrol.h"
+#include "shipControl/playershipcontrol.h"
 #include "../utils/observer.h"
 #include "../ship/damage.h"
 #include "armor.h"
@@ -28,8 +28,7 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
       {
 
     this->name = name;
-    this->description = description;
-    this->control = new ShipControl(this);
+    this->description = description;    
 
     this->parts->push_back(this->coreComponents);
     this->parts->push_back(this->bowComponents);
@@ -38,6 +37,8 @@ AbstractShip::AbstractShip(const std::string & name, const std::string & descrip
     this->parts->push_back(this->portComponents);
 
     this->hull = hull;
+    hull->setShip(this);
+
     this->addAfterDamageObserver(this->hull);
     this->addComponentToPart(hull, constants::CORE);
     this->addComponentToPart(armor, constants::CORE);
@@ -264,7 +265,7 @@ int AbstractShip::generateEnergy()
         energy += this->generators->at(i)->generateEnergy();
     }
 
-    this->control->setCurrentAvailableEnergy(energy);
+    this->getControl()->setCurrentAvailableEnergy(energy);
     return energy;
 }
 
@@ -283,11 +284,6 @@ void AbstractShip::addGenerator(AbstractGenerator *generator, constants::shipPar
     }
 
     this->addComponentToPart(generator, shipPart);
-}
-
-ShipControl *AbstractShip::getControl()
-{
-    return this->control;
 }
 
 void AbstractShip::addDamageObserver(Observer *observer)

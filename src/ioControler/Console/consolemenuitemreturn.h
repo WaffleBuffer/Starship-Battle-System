@@ -17,7 +17,7 @@ public:
      * @brief action The methode used when the menu item is triggered. Here it will just end the menu.
      * @param args The argument provided with the input (if there are some). Useless here.
      */
-    virtual void action(std::vector<std::string> *args = nullptr);
+    virtual void action(std::vector<std::string> *args = nullptr) override;
 private:
 
 };

@@ -26,7 +26,7 @@ public:
      * @param maxPoints The maximum number of hull points.
      * @param ship The ship of this hull.
      */
-    Hull(IShip *ship, std::vector<HullLevel*> *hullLevels);
+    Hull(std::vector<HullLevel*> *hullLevels);
     ~Hull();
     /**
      * @brief toString Get the string representaton.
