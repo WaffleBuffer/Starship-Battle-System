@@ -16,7 +16,11 @@ public:
     /**
      * @brief energyDecision Ask the ship to make energy phase decisions (player).
      */
-    virtual void energyDecision();
+    virtual void commandDecision() override;
+    /**
+     * @brief movementDecision Ask the ship control to make movement phase decisions (player).
+     */
+    virtual void movementDecision() override;
 
 private:
     IoController *ioController;

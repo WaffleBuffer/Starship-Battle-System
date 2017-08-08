@@ -4,6 +4,9 @@
 #include "../../utils/utils.cpp"
 #include "../../exception/xmlexception.h"
 #include "../../exception/shipexception.h"
+#include "../../order/moveorder.h"
+#include "../shipControl/shipcontrol.h"
+
 #include <string.h>
 
 const char* NavThruster::rootName = "nav_thruster";
@@ -18,13 +21,16 @@ NavThruster::NavThruster(NavThruster *model)
 
 void NavThruster::provideEnergy(const int &energy)
 {
-    if(energy > this->getMaxEnergy()) {
+    if(energy < 0) {
+        throw new ShipException("Negative energy on navThruster", this->getShip());
+    }
+    if((unsigned int)energy > this->getMaxEnergy()) {
         throw new ShipException("Too much energy provided to navthruster", this->getShip());
     }
-    unsigned int currentEnergy = 0;
-    energy < 0 ? currentEnergy = 0 : currentEnergy = energy;
+    unsigned int currentEnergy = energy;
 
-    this->getShip()->addInertia(utils::getInvertShipDir(this->facingDirection), currentEnergy);
+    MoveOrder *order = new MoveOrder(this->getShip(), utils::getInvertShipDir(this->getFacingDirection()), currentEnergy, true);
+    this->getShip()->getControl()->addOrder(order);
 }
 
 constants::ShipDirection NavThruster::getFacingDirection()

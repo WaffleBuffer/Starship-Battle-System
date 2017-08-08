@@ -31,12 +31,12 @@ public:
      * @param amount The amount of energy desired.
      * @return The actual amout get.
      */
-    int collectEnergy(const int &amount);
+    unsigned int collectEnergy(const int &amount);
 private:
     /**
      * @brief currentEnergy The current amount of energy stored.
      */
-    int currentEnergy;
+    unsigned int currentEnergy;
 };
 
 #endif // ACCUMULATOR_H

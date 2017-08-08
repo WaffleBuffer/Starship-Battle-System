@@ -40,7 +40,13 @@ public:
      * @brief energyPhaseInteraction Ask for a player interaction for energy phase decisions
      * @param ship The ship that need an interaction.
      */
-    virtual void energyPhaseInteraction(IShip *ship) override;
+    virtual void commandPhaseInteraction(IShip *ship) override;
+
+    /**
+     * @brief movementPhaseInteraction Ask for a player interaction for command phase decisions.
+     * @param ship The ship that need an interaction.
+     */
+    virtual void movementPhaseInteraction(IShip *ship) override;
 
 private:
 

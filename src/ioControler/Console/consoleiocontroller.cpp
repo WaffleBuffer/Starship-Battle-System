@@ -13,6 +13,8 @@
 #include "consolemenuitemenergy.h"
 #include "consolemenuitemreturn.h"
 #include "../../gameCore/gamecontroller.h"
+#include "../../order/moveorder.h"
+#include "../../exception/orderexception.h"
 
 #include <iostream>
 #include <windows.h>
@@ -131,7 +133,7 @@ void ConsoleIoController::setQuit(bool value)
     quit = value;
 }
 
-void ConsoleIoController::energyPhaseInteraction(IShip *ship)
+void ConsoleIoController::commandPhaseInteraction(IShip *ship)
 {
 
     std::string title = "Energy distribution : " + std::to_string(ship->getControl()->getCurrentAvailableEnergy()) + " EU available";
@@ -144,7 +146,7 @@ void ConsoleIoController::energyPhaseInteraction(IShip *ship)
         size_t energyComponentCount = 0;
         // For each component from this part
         for(size_t componentCount = 0; componentCount < part->size(); ++componentCount) {
-            // Is this component energy providable
+            // We look for an energy providable component
             EnergyProvidable *component = dynamic_cast<EnergyProvidable*> (part->at(componentCount));
             if (component == NULL) {
                 continue;
@@ -161,8 +163,29 @@ void ConsoleIoController::energyPhaseInteraction(IShip *ship)
     ConsoleMenuItemReturn *returnItem = new ConsoleMenuItemReturn("Finish" , "f" , &energyMenu);
     energyMenu.getMenuItems()->push_back(returnItem);
 
-    //try {
     this->loadMenu(&energyMenu);
+}
+
+void ConsoleIoController::movementPhaseInteraction(IShip *ship)
+{
+    std::string title = "Movement ordering";
+    ConsoleMenu movementMenu(title);
+
+    size_t movementOrderCount = 0;
+    for (size_t orderCount = 0; orderCount < ship->getControl()->getOrders()->size(); ++orderCount) {
+
+        // Make sure it is a valid order.
+        MoveOrder *moveOrder = dynamic_cast<MoveOrder*> (ship->getControl()->getOrders()->at(orderCount));
+        // If it is a move order
+        if(moveOrder != NULL) {
+            // TODO
+            ++movementOrderCount;
+        }
+        else {
+            throw new OrderException("Invalid order in movement phase in movementPhaseInteraction()", ship->getControl()->getOrders()->at(orderCount));
+            continue;
+        }
+    }
 }
 
 void clearScreenWindows() {

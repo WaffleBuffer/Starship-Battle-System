@@ -72,7 +72,7 @@ private:
     /**
      * @brief currentEnergy The current amount of energy stored.
      */
-    int currentEnergy;
+    unsigned int currentEnergy;
 
     /**
      * @brief rootName The name of the XML root for a Stabilizator

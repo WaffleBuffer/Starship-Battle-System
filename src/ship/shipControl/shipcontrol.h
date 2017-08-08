@@ -52,9 +52,14 @@ public:
     void endTurn();
 
     /**
-     * @brief energyDecision Ask the ship to make energy phase decisions (ia or player).
+     * @brief energyDecision Ask the ship to make command phase decisions (ia, net or player).
      */
-    virtual void energyDecision() = 0;
+    virtual void commandDecision() = 0;
+
+    /**
+     * @brief movementDecision Ask the ship control to make movement phase decisions (ia, net or player).
+     */
+    virtual void movementDecision() = 0;
     IShip *getShip() const;
 
 private:

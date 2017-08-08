@@ -87,7 +87,9 @@ SOURCES += main.cpp\
     src/ship/shipControl/shipcontrol.cpp \
     src/ship/shipControl/playershipcontol.cpp \
     src/ioControler/console/consolemenuitemenergy.cpp \
-    src/ship/playercontrolledship.cpp
+    src/ship/playercontrolledship.cpp \
+    src/order/moveorder.cpp \
+    src/ioControler/console/consolemenuitemmove.cpp
 
 HEADERS  += mainwindow.h \
     src/ship/iship.h \
@@ -151,7 +153,9 @@ HEADERS  += mainwindow.h \
     src/ship/shipControl/shipcontrol.h \
     src/ship/shipControl/playershipcontrol.h \
     src/ioControler/console/consolemenuitemenergy.h \
-    src/ship/playercontrolledship.h
+    src/ship/playercontrolledship.h \
+    src/order/moveorder.h \
+    src/ioControler/console/consolemenuitemmove.h
 
 FORMS    += mainwindow.ui
 

@@ -21,13 +21,17 @@ RotationThruster::RotationThruster(RotationThruster *model)
 
 void RotationThruster::provideEnergy(const int &energy)
 {
-    if(energy > this->getMaxEnergy()) {
+    if(energy < 0) {
+        throw new ShipException("Negative energy provided to RotationThruster", this->getShip());
+    }
+    if((unsigned int)energy > this->getMaxEnergy()) {
         throw new ShipException("Too much energy provided to rotation thruster", this->getShip());
     }
     /*unsigned int currentEnergy = 0;
     energy < 0 ? currentEnergy = 0 : currentEnergy = energy;*/
 
-    this->getShip()->rotate(this->getDirection());
+    // TODO ask for ioController to get a rotation angle
+    //this->getShip()->rotate(this->getDirection());
 }
 
 int RotationThruster::getDirection()

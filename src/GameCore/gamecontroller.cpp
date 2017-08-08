@@ -99,15 +99,13 @@ void GameController::energyPhase()
     GameController::getLogger()->addEntry(new LogEntry("Beginning energy phase"));
     Team *team;
     IShip *ship;
-    //TODO: make this multi-thread : one thread for each team.
+    // TODO: make this multi-thread : one thread for each team.
     for (size_t i = 0; i < this->teams->size(); ++i) {
         team = this->teams->at(i);
         for(size_t j = 0; j < team->getShips()->size(); ++j) {
             ship = team->getShips()->at(j);
             int amount = ship->generateEnergy();
             GameController::getLogger()->addEntry(new LogEntry(ship->getName() + " has generated " + std::to_string(amount) + " EU"));
-
-            ship->getControl()->energyDecision();
         }
     }
 }
@@ -115,6 +113,19 @@ void GameController::energyPhase()
 void GameController::commandPhase()
 {
     GameController::getLogger()->addEntry(new LogEntry("Beginning command phase"));
+    Team *team;
+    IShip *ship;
+    // TODO: make this multi-thread : one thread for each team.
+    for (size_t i = 0; i < this->teams->size(); ++i) {
+        team = this->teams->at(i);
+        for(size_t j = 0; j < team->getShips()->size(); ++j) {
+            ship = team->getShips()->at(j);
+
+            ship->getControl()->commandDecision();
+            // Apply all energy orders
+            ship->getControl()->applyOrders();
+        }
+    }
 }
 
 void GameController::initiativePhase()
@@ -125,6 +136,21 @@ void GameController::initiativePhase()
 void GameController::movementPhase()
 {
     GameController::getLogger()->addEntry(new LogEntry("Beginning movement phase"));
+    Team *team;
+    IShip *ship;
+    // TODO: make this multi-thread : one thread for each team.
+    // TODO: order teams by team initiative.
+    for (size_t i = 0; i < this->teams->size(); ++i) {
+        team = this->teams->at(i);
+        // TODO : order ships by initiative.
+        for(size_t j = 0; j < team->getShips()->size(); ++j) {
+            ship = team->getShips()->at(j);
+
+            ship->getControl()->movementDecision();
+            // Apply all movement orders
+            ship->getControl()->applyOrders();
+        }
+    }
 }
 
 void GameController::firePhase()

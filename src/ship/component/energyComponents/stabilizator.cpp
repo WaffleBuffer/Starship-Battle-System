@@ -24,6 +24,10 @@ void Stabilizator::setGenerator(StageGenerator *generator)
 
 void Stabilizator::provideEnergy(const int &energy)
 {
+    if(energy < 0) {
+        throw new ShipException("Negative energy provided to Stabilizator", this->getShip());
+    }
+
     this->currentEnergy += energy;
     if(this->currentEnergy > this->getMaxEnergy()) {
         this->currentEnergy = this->currentEnergy;
@@ -33,9 +37,9 @@ void Stabilizator::provideEnergy(const int &energy)
 void Stabilizator::stabilize()
 {
     if(this->generator == nullptr) {
-        throw new ShipException("No generator attached", this->getShip());
+        throw new ShipException("No generator attached to Stabilizator", this->getShip());
     }
-    int level = this->generator->getCurrentStageIndex() + 1;
+    unsigned int level = this->generator->getCurrentStageIndex() + 1;
     if(this->currentEnergy < level) {
         return;
     }

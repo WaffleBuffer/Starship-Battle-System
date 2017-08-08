@@ -7,7 +7,12 @@ PlayerShipControl::PlayerShipControl(IShip *ship, IoController *ioController)
 
 }
 
-void PlayerShipControl::energyDecision()
+void PlayerShipControl::commandDecision()
 {
-    this->ioController->energyPhaseInteraction(this->getShip());
+    this->ioController->commandPhaseInteraction(this->getShip());
+}
+
+void PlayerShipControl::movementDecision()
+{
+    this->ioController->movementPhaseInteraction(this->getShip());
 }

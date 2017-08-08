@@ -32,10 +32,16 @@ public:
     GameController *getGameController() const;
 
     /**
-     * @brief energyPhaseInteraction Ask for a player interaction for energy phase decisions
+     * @brief energyPhaseInteraction Ask for a player interaction for command phase decisions
      * @param ship The ship that need an interaction.
      */
-    virtual void energyPhaseInteraction(IShip *ship) = 0;
+    virtual void commandPhaseInteraction(IShip *ship) = 0;
+
+    /**
+     * @brief movementPhaseInteraction Ask for a player interaction for command phase decisions.
+     * @param ship The ship that need an interaction.
+     */
+    virtual void movementPhaseInteraction(IShip *ship) = 0;
 
 private:
     /**

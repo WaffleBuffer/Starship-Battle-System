@@ -65,6 +65,16 @@ namespace constants {
      * @brief criticalDamageRoll The value on a damage roll that count as critical.
      */
     const int criticalDamageRoll = 1;
+
+    /**
+     * @brief acceptConsoleInput The input for console interaction meaning "accept".
+     */
+    const std::string acceptConsoleInput = "a";
+
+    /**
+     * @brief cancelConsoleInput The input for console interaction meaning "cancel".
+     */
+    const std::string cancelConsoleInput = "c";
 }
 
 #endif

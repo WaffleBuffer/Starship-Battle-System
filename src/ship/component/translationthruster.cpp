@@ -5,6 +5,8 @@
 #include "../../utils/utils.cpp"
 #include "../../exception/xmlexception.h"
 #include "../../exception/shipexception.h"
+#include "../../order/moveorder.h"
+#include "../shipControl/shipcontrol.h"
 
 #include <string.h>
 
@@ -20,13 +22,17 @@ TranslationThruster::TranslationThruster(TranslationThruster *model)
 
 void TranslationThruster::provideEnergy(const int &energy)
 {
-    if(energy > this->getMaxEnergy()) {
+    if(energy < 0) {
+        throw new ShipException("Negative energy on TranslationThruster", this->getShip());
+    }
+    if((unsigned int)energy > this->getMaxEnergy()) {
         throw new ShipException("Too much energy provided to translation thruster", this->getShip());
     }
     unsigned int currentEnergy = 0;
     energy < 0 ? currentEnergy = 0 : currentEnergy = energy;
 
-    this->getShip()->translate(this->facingDirection, currentEnergy);
+    MoveOrder *order = new MoveOrder(this->getShip(), utils::getInvertShipDir(this->getFacingDirection()), currentEnergy, true);
+    this->getShip()->getControl()->addOrder(order);
 }
 
 constants::ShipDirection TranslationThruster::getFacingDirection()

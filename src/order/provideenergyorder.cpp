@@ -23,7 +23,9 @@ ProvideEnergyOrder::ProvideEnergyOrder(IShip *ship, EnergyProvidable *componentP
 void ProvideEnergyOrder::applyOrder()
 {
     this->componentProvided->provideEnergy(this->energy);
-    this->getControl()->setCurrentAvailableEnergy(this->getControl()->getCurrentAvailableEnergy() - this->energy);
+
+    // Already done at ioController level
+    //this->getControl()->setCurrentAvailableEnergy(this->getControl()->getCurrentAvailableEnergy() - this->energy);
 }
 
 std::string ProvideEnergyOrder::toString()
