@@ -3,6 +3,8 @@
 #include "../utils/utils.cpp"
 
 #include <string>
+#include <iomanip>
+#include <sstream>
 
 MoveOrder::MoveOrder(IShip *ship, const constants::ShipDirection &direction, const double &distance, const bool &addInertia)
     :ShipOrder(ship), addInertia(addInertia), direction(direction), distance(distance) {
@@ -19,7 +21,9 @@ void MoveOrder::applyOrder()
 
 std::string MoveOrder::toString()
 {
-    std::string res = "Move for " + std::to_string(this->distance) + " to " + utils::shipDirectionToStr(this->direction);
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << this->distance;
+    std::string res = "Move for " + stream.str() + " to " + utils::shipDirectionToStr(this->direction);
     if(this->addInertia) {
         res += " with inertia";
     }

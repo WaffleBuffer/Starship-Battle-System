@@ -15,6 +15,8 @@
 #include "../../gameCore/gamecontroller.h"
 #include "../../order/moveorder.h"
 #include "../../exception/orderexception.h"
+#include "consolemenuitemmove.h"
+#include "../../utils/vectorialmovement.h"
 
 #include <iostream>
 #include <windows.h>
@@ -168,7 +170,8 @@ void ConsoleIoController::commandPhaseInteraction(IShip *ship)
 
 void ConsoleIoController::movementPhaseInteraction(IShip *ship)
 {
-    std::string title = "Movement ordering";
+    std::cout << "begin movementPhaseInteraction() -> " << std::to_string(ship->getControl()->getOrders()->size()) << " orders" <<  std::endl;
+    std::string title = ship->getMovement()->toString() + "\nMovement ordering";
     ConsoleMenu movementMenu(title);
 
     size_t movementOrderCount = 0;
@@ -178,14 +181,18 @@ void ConsoleIoController::movementPhaseInteraction(IShip *ship)
         MoveOrder *moveOrder = dynamic_cast<MoveOrder*> (ship->getControl()->getOrders()->at(orderCount));
         // If it is a move order
         if(moveOrder != NULL) {
-            // TODO
+            ConsoleMenuItemMove *moveMenuItem = new ConsoleMenuItemMove(moveOrder->toString(), std::to_string(movementOrderCount), &movementMenu, moveOrder);
+            movementMenu.getMenuItems()->push_back(moveMenuItem);
             ++movementOrderCount;
         }
         else {
+            std::cout << "Invalid order found in movement phase in movementPhaseInteraction()" << std::endl;
             throw new OrderException("Invalid order in movement phase in movementPhaseInteraction()", ship->getControl()->getOrders()->at(orderCount));
             continue;
         }
     }
+
+    this->loadMenu(&movementMenu);
 }
 
 void clearScreenWindows() {

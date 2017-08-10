@@ -1,5 +1,13 @@
 #include "consolemenuitemmove.h"
 #include "../../order/moveorder.h"
+#include "../../utils/constants.cpp"
+#include "../../exception/basicexception.h"
+#include "../../gameCore/gamecontroller.h"
+#include "../../logger/logentry.h"
+#include "../../logger/logger.h"
+#include "consolemenu.h"
+#include "../../ship/iship.h"
+#include "../../utils/vectorialmovement.h"
 
 #include <iostream>
 
@@ -15,13 +23,45 @@ void ConsoleMenuItemMove::action(std::vector<std::string> *args)
         return;
     }
 
-    // TODO : check input
+    bool correctInput = false;
 
-    // TODO : accept case
+    if(args->at(0) == constants::acceptConsoleInput) {
 
-    // TODO : cancel case
+        // TODO : accept case
+        correctInput = true;
+        this->order->applyOrder();
+        Logger *logger = GameController::getLogger();
+        if(logger != nullptr) {
+            LogEntry logEntry(this->toString() + " applied");
+            logger->addEntry(&logEntry);
+        }
+    }
+    else if(args->at(0) == constants::cancelConsoleInput) {
 
-    // TODO : if correct input, delete this menu item from menu
+        // TODO : cancel case
+        correctInput = true;
+    }
+    else {
+        std::cout << "Invalid argument for movement menu item" << std::endl;
+        return;
+    }
 
-    // TODO : check if no menu item, end menu.
+    // If a correct input has been processed normally, delete this menu item.
+    if (correctInput) {
+
+        std::string title = this->order->getShip()->getMovement()->toString() + "\nMovement ordering";
+        this->getMenu()->setTitle(title);
+
+        for(auto it = this->getMenu()->getMenuItems()->begin(); it != this->getMenu()->getMenuItems()->end(); ++it) {
+            if(*it == this) {
+                this->getMenu()->getMenuItems()->erase(it);
+                break;
+            }
+        }
+
+        if(this->getMenu()->getMenuItems()->size() == 0) {
+            this->getMenu()->setIsOver(true);
+        }
+        delete(this);
+    }
 }

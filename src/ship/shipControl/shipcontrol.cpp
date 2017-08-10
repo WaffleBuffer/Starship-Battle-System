@@ -37,14 +37,16 @@ void ShipControl::setCurrentAvailableEnergy(const int &energy)
 
 void ShipControl::applyOrders()
 {
+    // Need to do in two loops because some order create new orders that change vector size etc.
     for(size_t i = 0; i < this->orders->size(); ++i) {
-        this->orders->at(i)->applyOrder();
+        ShipOrder *order = this->orders->at(i);
+        order->applyOrder();
     }
-    for(size_t i = 0; i < this->orders->size(); ++i) {
-        delete(this->orders->at(i));
+    for(auto it = this->orders->begin(); it != this->orders->end();) {
+        ShipOrder *order = *it;
+        it = this->orders->erase(it);
+        delete(order);
     }
-    delete(this->orders);
-    this->orders = new std::vector<ShipOrder*>();
 }
 
 void ShipControl::endTurn()

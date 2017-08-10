@@ -5,6 +5,7 @@
 #include "../logger/logger.h"
 #include "../logger/logentry.h"
 #include "../ship/shipControl/shipcontrol.h"
+#include "../order/provideenergyorder.h"
 
 Logger *GameController::logger = nullptr;
 
@@ -122,8 +123,30 @@ void GameController::commandPhase()
             ship = team->getShips()->at(j);
 
             ship->getControl()->commandDecision();
-            // Apply all energy orders
-            ship->getControl()->applyOrders();
+
+            ShipControl *shipControl = ship->getControl();
+            // Apply all energy orders and only them (since some energy order result in creation of other orders)
+            for(size_t i = 0; i < shipControl->getOrders()->size(); ++i) {
+                ProvideEnergyOrder *provideOrder = dynamic_cast<ProvideEnergyOrder*>(shipControl->getOrders()->at(i));
+                // If a non-energy order found, that mean there are no more energy order (as they are all at the beginning).
+                if(provideOrder == NULL) {
+                    break;
+                }
+                else {
+                    provideOrder->applyOrder();
+                }
+            }
+            // Now we erase those order. We do it here because some order create new ones that invalidate iterator.
+            for(auto it = shipControl->getOrders()->begin(); it != shipControl->getOrders()->end();) {
+                ProvideEnergyOrder *provideOrder = dynamic_cast<ProvideEnergyOrder*>(*it);
+                // If a non-energy order found, that mean there are no more energy order (as they are all at the beginning).
+                if(provideOrder == NULL) {
+                    break;
+                }
+                else {
+                    it = shipControl->getOrders()->erase(it);
+                }
+            }
         }
     }
 }

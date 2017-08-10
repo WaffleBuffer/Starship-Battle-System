@@ -7,6 +7,7 @@
 
 class ConsoleMenu;
 class MoveOrder;
+class GameController;
 
 class ConsoleMenuItemMove: public ConsoleMenuItem
 {

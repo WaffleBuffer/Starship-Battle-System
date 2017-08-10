@@ -4,6 +4,8 @@
 #include "../thirdParty/pugixml-1.8/src/pugixml.hpp"
 #include <cmath>
 #include <string.h>
+#include <iomanip>
+#include <sstream>
 
 const char* VectorialMovement::rootName = "vectorial_movement";
 
@@ -92,10 +94,30 @@ void VectorialMovement::setAngle(double value)
 std::string VectorialMovement::toString()
 {
     std::string str = "";
-    str += "(" + std::to_string(this->xPos) + ", " + std::to_string(this->yPos) +
-           ") -> (" + std::to_string(this->getXB()) + ", " +
-           std::to_string(this->getYB()) + ") : " + std::to_string(this->getDistance()) +
-           " : " + std::to_string(this->getAngle()) + "° (" + (this->goingForward ? "forward)" : "backward") + "\n";
+    std::stringstream stream;
+
+    stream << std::fixed << std::setprecision(2) << this->xPos;
+    str += "(" + stream.str() + ", ";
+
+    stream.str(std::string());
+    stream << std::fixed << std::setprecision(2) << this->yPos;
+    str += stream.str() + ") -> (";
+
+    stream.str(std::string());
+    stream << std::fixed << std::setprecision(2) << this->getXB();
+    str += stream.str() + ", ";
+
+    stream.str(std::string());
+    stream << std::fixed << std::setprecision(2) << this->getYB();
+    str += stream.str() + ") : distance ";
+
+    stream.str(std::string());
+    stream << std::fixed << std::setprecision(2) << this->getDistance();
+    str += stream.str() + " : angle ";
+
+    stream.str(std::string());
+    stream << std::fixed << std::setprecision(2) << this->getAngle();
+    str += stream.str() + "° (" + (this->goingForward ? "forward)" : "backward") + "\n";
 
     return str;
 }
