@@ -171,7 +171,7 @@ void ConsoleIoController::commandPhaseInteraction(IShip *ship)
 void ConsoleIoController::movementPhaseInteraction(IShip *ship)
 {
     std::cout << "begin movementPhaseInteraction() -> " << std::to_string(ship->getControl()->getOrders()->size()) << " orders" <<  std::endl;
-    std::string title = ship->getMovement()->toString() + "\nMovement ordering";
+    std::string title = "\nOrdering" + ship->getMovement()->toString() + "\nUse \"" + constants::acceptConsoleInput + "\" to execute order or \"" + constants::cancelConsoleInput + "\" to cancel it (with cost)";
     ConsoleMenu movementMenu(title);
 
     size_t movementOrderCount = 0;
